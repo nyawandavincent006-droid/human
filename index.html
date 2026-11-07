@@ -3,272 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HUMAN - You Can't Talk About Yourself</title>
+<title>HUMAN - Be Human</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#FFF8F0;color:#1a1a1a;transition:.3s}
-body.dark{background:#111;color:#fff}
-body.dark .card,body.dark .post{background:#222;color:#fff}
-body.dark .leader{background:#333;color:#fff}
-header{background:#111;color:#fff;padding:40px 20px;text-align:center;position:relative}
-header h1{font-size:55px;letter-spacing:8px}
-header h1 span{color:#FF5A5F}
-header p{font-size:16px;opacity:.8;margin-top:10px;max-width:600px;margin:12px auto 0;line-height:1.5}
-.rule{background:#FF5A5F;color:#fff;text-align:center;padding:12px;font-weight:bold;font-size:14px}
-.container{max-width:900px;margin:auto;padding:18px}
-.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 25px rgba(0,0,0,.07);margin-bottom:18px}
-.card h2{font-size:21px;margin-bottom:5px}
-.card p.small{color:#777;font-size:13px;margin-bottom:12px}
-label{font-weight:bold;font-size:13px;display:block;margin:11px 0 5px}
-input,select,textarea{width:100%;padding:12px;border:2px solid #eee;border-radius:12px;font-size:14px;outline:none;background:#fff}
-input:focus,textarea:focus{border-color:#FF5A5F}
-textarea{min-height:85px;resize:vertical}
-.btn{background:#111;color:#fff;border:none;padding:13px;border-radius:12px;width:100%;font-size:15px;font-weight:bold;cursor:pointer;margin-top:12px}
-.btn:hover{background:#FF5A5F}
-.btn-pink{background:#FF5A5F}
-.btn-green{background:#25D366}
-.btn-outline{background:#fff;color:#111;border:2px solid #111}
-.btn-small{width:auto;padding:8px 14px;font-size:13px;margin:5px 5px 0 0;display:inline-block}
-.tabs{display:flex;gap:8px;margin:10px 0 18px;flex-wrap:wrap}
-.tab{flex:1;padding:11px;border-radius:12px;border:2px solid #eee;background:#fff;font-weight:bold;cursor:pointer;text-align:center;min-width:110px}
-.tab.active{background:#111;color:#fff;border-color:#111}
-.post{background:#fff;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 18px rgba(0,0,0,.06);border-left:6px solid #FF5A5F}
-.post-to{font-size:21px;font-weight:900}
-.post-to span{color:#FF5A5F}
-.post-from{font-size:12px;color:#888;margin-top:2px}
-.post-text{font-size:16px;line-height:1.6;margin:11px 0}
-.post-tag{display:inline-block;background:#FFF0F0;color:#FF5A5F;padding:5px 11px;border-radius:20px;font-size:11px;font-weight:bold}
-.heart,.share-btn,.cmt-btn,.del-btn{border:none;padding:8px 14px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:13px;margin:4px 4px 0 0}
-.heart{background:#FFF0F0}
-.share-btn{background:#25D366;color:#fff}
-.cmt-btn{background:#FFE8D6}
-.del-btn{background:#eee}
-.profile-box{background:#111;color:#fff;border-radius:18px;padding:22px;text-align:center}
-.big-num{font-size:42px;font-weight:900;color:#FFD166}
-.search-row{display:flex;gap:8px}
-.search-row input{flex:1}
-.leader{display:flex;justify-content:space-between;align-items:center;background:#FFF8F0;padding:12px 14px;border-radius:14px;margin-bottom:8px;border:1px solid #FFE8D6}
-.leader b{font-size:15px}
-.leader span{font-weight:bold;color:#FF5A5F;font-size:13px}
-.stats{display:flex;gap:10px;text-align:center}
-.stat{flex:1;background:#FFF0F0;border-radius:14px;padding:14px}
-.stat b{font-size:24px;display:block}
-.stat span{font-size:12px;color:#666}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
-.filter-btn{padding:8px 13px;border-radius:20px;border:2px solid #eee;background:#fff;cursor:pointer;font-weight:bold;font-size:13px}
-.filter-btn.active{background:#FF5A5F;color:#fff;border-color:#FF5A5F}
-.comment{background:#f7f7f7;padding:10px 12px;border-radius:12px;margin-top:8px;font-size:14px}
-body.dark .comment{background:#333}
-.comment-input{margin-top:8px;display:flex;gap:6px}
-.comment-input input{flex:1}
-.badge{display:inline-block;background:#FFD166;color:#111;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:bold;margin-left:6px}
-footer{text-align:center;padding:25px;color:#999;font-size:12px}
-.dark-toggle{position:absolute;top:15px;right:15px;background:#fff;color:#111;border:none;padding:9px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
-.kotd{background:linear-gradient(135deg,#FF5A5F,#FF8A5C);color:#fff;border-radius:18px;padding:20px}
-.kotd h2{color:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f0f2f5;color:#111}
+header{background:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;box-shadow:0 1px 5px #0001;z-index:10}
+.logo{font-size:24px;font-weight:900} .logo span{color:#ff3b5c}
+.btn{background:#111;color:#fff;border:0;padding:9px 14px;border-radius:20px;font-weight:700;cursor:pointer}
+.btn-pink{background:#ff3b5c}
+.wrap{max-width:520px;margin:0 auto;padding:12px}
+.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px #0001}
+input,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:5px 0;font-size:15px}
+.post-top{display:flex;gap:10px;align-items:center}.ava{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ff3b5c,#ff9a00);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px}
+.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1;border:1px solid #eee;background:#f8f8f8;padding:8px;border-radius:20px;cursor:pointer;font-weight:600}
+.actions button.active{background:#ffe1e7;color:#ff3b5c}
+.comment{background:#f5f5f5;padding:8px 10px;border-radius:12px;margin-top:6px;font-size:14px}
+.badge{background:#ff3b5c;color:#fff;font-size:11px;padding:2px 7px;border-radius:10px}
+.status{font-size:12px;color:#666;text-align:center;padding:6px}
 </style>
 </head>
 <body>
-<header>
-<button class="dark-toggle" onclick="toggleDark()">🌙 Dark</button>
-<h1>HUMAN<span>.</span></h1>
-<p>The first social app where you are <b>BANNED</b> from talking about yourself.<br>You can only say good things about <b>someone else</b>.</p>
-</header>
-<div class="rule">⚠ RULE: If you post about yourself, your post will be rejected by HUMAN.</div>
-<div class="container">
-
+<header><div class="logo">HUMAN<span>.</span></div><div id="myNameBtn">👤 <b id="myName">Guest</b></div></header>
+<div class="wrap">
 <div class="card">
-<div class="stats">
-<div class="stat"><b id="statPosts">0</b><span>Total Kindness</span></div>
-<div class="stat"><b id="statHearts">0</b><span>Total Love ❤️</span></div>
-<div class="stat"><b id="statPeople">0</b><span>People Loved</span></div>
+<b>🌍 GLOBAL FEED - Everyone sees same posts!</b>
+<div class="status" id="status">Connecting to world...</div>
+<input id="nameInput" placeholder="Your name e.g. Otieno">
+<input id="titleInput" placeholder="What are you thinking? Title...">
+<textarea id="textInput" rows="3" placeholder="Write your story..."></textarea>
+<input id="imgInput" placeholder="Image link (optional) - paste image URL">
+<button class="btn btn-pink" onclick="makePost()" style="width:100%">🚀 POST TO THE WORLD</button>
 </div>
-</div>
-
-<div class="card kotd">
-<h2>✨ Kindness of the Day</h2>
-<div id="kotdText" style="font-size:16px;line-height:1.6;margin-top:8px"></div>
-<button class="btn" style="background:#fff;color:#111;width:auto;padding:10px 18px" onclick="randomKindness()">🎲 Surprise Me - Random Kindness</button>
-</div>
-
-<div class="card" style="background:#111;color:#fff">
-<h2 style="color:#fff">🏆 Kindest People - Leaderboard</h2>
-<p class="small" style="color:#ccc">Who has received the most love?</p>
-<div id="leaderboard"></div>
-<div id="topCats" style="margin-top:12px;font-size:13px;color:#FFD166"></div>
-<button class="btn btn-green" onclick="shareSite()">Share HUMAN on WhatsApp →</button>
-<button class="btn" style="background:#fff;color:#111" onclick="copyLink()">Copy Link To Share Anywhere</button>
-<p id="copyMsg" style="font-size:13px;margin-top:8px;color:#25D366"></p>
-</div>
-
-<div class="card">
-<h2>💛 Say Something Good About Someone</h2>
-<p class="small">Not about you. About THEM. That's the rule.</p>
-<label>Who is this about? *</label>
-<input id="toName" placeholder="e.g. Ian, Amina, Mama Otis...">
-<label>Your name</label>
-<input id="fromName" placeholder="e.g. Kevin">
-<label><input type="checkbox" id="anon" style="width:auto"> Post as Anonymous</label>
-<label>What did they do?</label>
-<select id="kind">
-<option value="Kindness">💛 Kindness</option>
-<option value="Bravery">🦁 Bravery</option>
-<option value="Hard Work">💪 Hard Work</option>
-<option value="Made Me Laugh">😂 Made Me Laugh</option>
-<option value="Helped Me">🤝 Helped Me</option>
-<option value="Inspiration">✨ Inspiration</option>
-</select>
-<label>Write it from your heart</label>
-<textarea id="text" placeholder="e.g. Ian gave me his last 100 bob for fare..."></textarea>
-<button class="btn btn-pink" onclick="postKindness()">Post To The World →</button>
-<p id="error" style="color:red;font-weight:bold;margin-top:10px"></p>
-</div>
-
-<div class="tabs">
-<div class="tab active" id="tabAll" onclick="showTab('all')">🌍 All Kindness</div>
-<div class="tab" id="tabMe" onclick="showTab('me')">👤 What World Says About Me</div>
-</div>
-
-<div class="filter-row" id="filters">
-<button class="filter-btn active" onclick="setFilter('All',this)">All</button>
-<button class="filter-btn" onclick="setFilter('Kindness',this)">💛 Kindness</button>
-<button class="filter-btn" onclick="setFilter('Bravery',this)">🦁 Bravery</button>
-<button class="filter-btn" onclick="setFilter('Hard Work',this)">💪 Hard Work</button>
-<button class="filter-btn" onclick="setFilter('Made Me Laugh',this)">😂 Funny</button>
-<button class="filter-btn" onclick="setFilter('Helped Me',this)">🤝 Helped</button>
-<button class="filter-btn" onclick="setFilter('Inspiration',this)">✨ Inspiration</button>
-</div>
-
-<div style="display:flex;gap:8px;margin-bottom:14px">
-<select id="sortBy" onchange="render()" style="flex:1"><option value="new">Sort: Newest First</option><option value="loved">Sort: Most Loved First</option></select>
-<input id="searchFeed" placeholder="🔍 Search in feed..." oninput="render()" style="flex:1">
-</div>
-
-<div class="card" id="searchCard" style="display:none">
-<h2>See what the world says about someone</h2>
-<p class="small">Type their name. Your profile is built by others, not by you.</p>
-<div class="search-row">
-<input id="searchName" placeholder="Type a name, e.g. Ian">
-<button class="btn" style="width:130px;margin:0" onclick="searchPerson()">Search</button>
-</div>
-<div id="profileResult"></div>
-</div>
-
+<div style="display:flex;gap:8px;margin-bottom:12px"><button class="btn" onclick="filter='all';render()">🌍 All</button><button class="btn" onclick="filter='top';render()">🔥 Top</button><button class="btn" onclick="filter='new';render()">🆕 New</button></div>
 <div id="feed"></div>
 </div>
-<footer>HUMAN. — Built to remind the world that kindness is more viral than hate.<br>Made with ❤️ in Kenya, for the World.<br><b>https://nyawandavincent006-droid.github.io/human/</b></footer>
 <script>
-let posts = JSON.parse(localStorage.getItem('human_posts_v3') || '[]');
-if(posts.length===0){
-posts=[
-{to:"Ian",from:"Kevin",kind:"Kindness",text:"Ian gave me his last 100 bob for fare when I was stranded. He didn't have to. I will never forget it.",hearts:24,comments:[{from:"Grace",text:"Ian is always like this!"}]},
-{to:"Amina",from:"Grace",kind:"Hard Work",text:"Amina studied all night and still helped all of us pass the exam in the morning. She is a real one.",hearts:18,comments:[]},
-{to:"Mama Otis",from:"Anonymous",kind:"Inspiration",text:"Mama Otis sells mandazi from 5AM every day to pay school fees for 3 kids. She never complains.",hearts:41,comments:[{from:"Kevin",text:"Legend!"}]},
-{to:"Daniel",from:"Sarah",kind:"Made Me Laugh",text:"Daniel made me laugh when I wanted to cry. He didn't know I was sad, he just has that gift.",hearts:12,comments:[]},
-{to:"Vincent",from:"Ian",kind:"Bravery",text:"Vincent built HUMAN so the world can spread kindness instead of hate. That's brave.",hearts:50,comments:[]}
-];
-save();
+const DB="https://human-app-cea91-default-rtdb.firebaseio.com/posts";
+let posts=[]; let filter='all';
+let myName=localStorage.getItem('human_name')||'';
+if(myName){document.getElementById('myName').textContent=myName; document.getElementById('nameInput').value=myName;}
+document.getElementById('nameInput').onchange=e=>{myName=e.target.value.trim()||'Guest'; localStorage.setItem('human_name',myName); document.getElementById('myName').textContent=myName;};
+
+async function load(){
+ try{
+  let r=await fetch(DB+'.json'); let data=await r.json()||{};
+  posts=Object.keys(data).map(k=>({...data[k], _key:k})).sort((a,b)=>b.time-a.time);
+  document.getElementById('status').textContent='✅ Connected - '+posts.length+' posts from around the world';
+  render();
+ }catch(e){document.getElementById('status').textContent='⚠️ Offline - check internet';}
 }
-let currentFilter='All';
-function save(){localStorage.setItem('human_posts_v3',JSON.stringify(posts));}
-function getBadge(to){
-let c=posts.filter(p=>p.to.toLowerCase()===to.toLowerCase()).length;
-if(c>=5) return '<span class="badge">👑 LEGEND</span>';
-if(c>=3) return '<span class="badge">⭐ RISING STAR</span>';
-if(c>=1) return '<span class="badge">🌱 NEW</span>';
-return '';
+async function makePost(){
+ let name=document.getElementById('nameInput').value.trim()||'Guest';
+ let title=document.getElementById('titleInput').value.trim();
+ let text=document.getElementById('textInput').value.trim();
+ let img=document.getElementById('imgInput').value.trim();
+ if(!title && !text) return alert('Write something first!');
+ localStorage.setItem('human_name',name); myName=name; document.getElementById('myName').textContent=name;
+ let p={name,title,text,img,likes:0,comments:[],time:Date.now()};
+ await fetch(DB+'.json',{method:'POST',body:JSON.stringify(p)});
+ document.getElementById('titleInput').value=''; document.getElementById('textInput').value=''; document.getElementById('imgInput').value='';
+ load();
 }
-function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('human_dark',document.body.classList.contains('dark')?'1':'0');}
-if(localStorage.getItem('human_dark')==='1') document.body.classList.add('dark');
-function postKindness(){
-let to=document.getElementById('toName').value.trim();
-let from=document.getElementById('fromName').value.trim();
-let text=document.getElementById('text').value.trim();
-let kind=document.getElementById('kind').value;
-let anon=document.getElementById('anon').checked;
-let err=document.getElementById('error');
-if(!to||!text){err.innerText="Please fill who it's about and what they did.";return;}
-if(!anon && !from){err.innerText="Put your name or tick Anonymous.";return;}
-if(!anon && to.toLowerCase()===from.toLowerCase()){err.innerText="⛔ REJECTED BY HUMAN: You cannot post about yourself!";return;}
-if(!anon && from.toLowerCase().split(' ').some(w=>to.toLowerCase().includes(w)) && to.length<12){err.innerText="⛔ REJECTED: That looks like your own name.";return;}
-err.innerText="";
-posts.unshift({to,from:anon?"Anonymous":from,kind,text,hearts:0,comments:[]});
-save();render();
-document.getElementById('toName').value="";document.getElementById('text').value="";
-confetti();alert("Posted! You just made the world more HUMAN 💛");
+async function love(key){
+ let p=posts.find(x=>x._key===key); p.likes=(p.likes||0)+1;
+ await fetch(DB+'/'+key+'.json',{method:'PATCH',body:JSON.stringify({likes:p.likes})}); load();
 }
-function confetti(){
-for(let i=0;i<30;i++){let d=document.createElement('div');d.innerText=['💛','❤️','✨','🎉'][i%4];d.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-20px;font-size:24px;z-index:9999;transition:2s`;document.body.appendChild(d);setTimeout(()=>{d.style.top='100vh';d.style.transform='rotate(360deg)'},10);setTimeout(()=>d.remove(),2100);}
+async function addComment(key){
+ let inp=document.getElementById('c-'+key); let txt=inp.value.trim(); if(!txt) return;
+ let p=posts.find(x=>x._key===key); p.comments=p.comments||[]; p.comments.push({name:myName||'Guest',text:txt});
+ await fetch(DB+'/'+key+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load();
 }
-function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
+function sharePost(title){
+ let link=location.href; if(navigator.share){navigator.share({title:'HUMAN - '+title,text:title,url:link})} else {navigator.clipboard.writeText(link); alert('Link copied! Share it!')}
+}
 function render(){
-let sortBy=document.getElementById('sortBy').value;
-let q=(document.getElementById('searchFeed').value||'').toLowerCase();
-let list=[...posts];
-if(currentFilter!=='All') list=list.filter(p=>p.kind===currentFilter);
-if(q) list=list.filter(p=>(p.to+p.from+p.text).toLowerCase().includes(q));
-if(sortBy==='loved') list.sort((a,b)=>b.hearts-a.hearts);
-let feed=document.getElementById('feed');
-if(list.length===0) feed.innerHTML='<div class="card" style="text-align:center;color:#999">No kindness found. Be the first!</div>';
-else feed.innerHTML=list.map((p)=>{
-let realIdx=posts.indexOf(p);
-return `<div class="post"><div style="display:flex;justify-content:space-between"><div><div class="post-to">To <span>${p.to}</span> ${getBadge(p.to)}</div><div class="post-from">From ${p.from} • ${p.kind} • ${p.comments.length} comments</div></div><span class="post-tag">${p.kind}</span></div><div class="post-text">"${p.text}"</div><button class="heart" onclick="love(${realIdx})">❤️ ${p.hearts} Love</button><button class="share-btn" onclick="sharePost(${realIdx})">Share on WhatsApp</button><button class="cmt-btn" onclick="toggleComments(${realIdx})">💬 Comments (${p.comments.length})</button><button class="del-btn" onclick="deletePost(${realIdx})">🗑️</button><div id="cmt-${realIdx}" style="display:none">${p.comments.map(c=>`<div class="comment"><b>${c.from}:</b> ${c.text}</div>`).join('')}<div class="comment-input"><input id="cmtIn-${realIdx}" placeholder="Write a kind comment..."><button class="btn btn-small" onclick="addComment(${realIdx})">Send</button></div></div></div>`
-}).join('');
-// Stats
-document.getElementById('statPosts').innerText=posts.length;
-document.getElementById('statHearts').innerText=posts.reduce((s,p)=>s+p.hearts,0);
-document.getElementById('statPeople').innerText=new Set(posts.map(p=>p.to.toLowerCase())).size;
-// Leaderboard
-let counts={};posts.forEach(p=>{counts[p.to]=counts[p.to]||{posts:0,hearts:0};counts[p.to].posts++;counts[p.to].hearts+=p.hearts;});
-let sorted=Object.entries(counts).sort((a,b)=>(b[1].hearts+b[1].posts*5)-(a[1].hearts+a[1].posts*5)).slice(0,5);
-let medals=["🥇","🥈","🥉","4.","5."];
-document.getElementById('leaderboard').innerHTML=sorted.map((e,i)=>`<div class="leader"><b>${medals[i]} ${e[0]} ${getBadge(e[0])}</b><span>${e[1].posts} posts • ❤️ ${e[1].hearts}</span></div>`).join('');
-// Top cats
-let cats={};posts.forEach(p=>cats[p.kind]=(cats[p.kind]||0)+1);
-let topCat=Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
-document.getElementById('topCats').innerHTML=`🔥 Trending: <b>${topCat?topCat[0]:''}</b> (${topCat?topCat[1]:0} posts) • Total categories: ${Object.keys(cats).length}`;
-// KOTD
-if(posts.length){
-let best=[...posts].sort((a,b)=>b.hearts-a.hearts)[0];
-document.getElementById('kotdText').innerHTML=`"${best.text}"<br><b>— To ${best.to}, from ${best.from} ❤️ ${best.hearts}</b>`;
+ let list=[...posts]; if(filter==='top') list.sort((a,b)=>b.likes-a.likes);
+ let h='';
+ list.forEach(p=>{
+  let date=new Date(p.time).toLocaleString();
+  h+=`<div class="card"><div class="post-top"><div class="ava">${(p.name||'G')[0].toUpperCase()}</div><div><b>${p.name} <span class="badge">🌍 GLOBAL</span></b><br><small>${date}</small></div></div><h3>${p.title||''}</h3><p>${p.text||''}</p>${p.img?`<img src="${p.img}" style="width:100%;border-radius:12px" onerror="this.style.display='none'">`:''}<div class="actions"><button onclick="love('${p._key}')">❤️ ${p.likes||0} Love</button><button onclick="sharePost('${(p.title||'').replace(/'/g,'')}')">🔗 Share</button></div><div>${(p.comments||[]).map(c=>`<div class="comment"><b>${c.name}:</b> ${c.text}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px"><input id="c-${p._key}" placeholder="Write a comment..."><button class="btn" onclick="addComment('${p._key}')">Send</button></div></div>`;
+ });
+ document.getElementById('feed').innerHTML=h||'<div class="card"><center>Be the FIRST to post to the world! 🌍</center></div>';
 }
-}
-function love(i){posts[i].hearts++;save();render();}
-function deletePost(i){if(confirm('Delete this kindness?')){posts.splice(i,1);save();render();}}
-function toggleComments(i){let el=document.getElementById('cmt-'+i);el.style.display=el.style.display==='none'?'block':'none';}
-function addComment(i){
-let inp=document.getElementById('cmtIn-'+i);let t=inp.value.trim();if(!t) return;
-let name=prompt('Your name for comment?')||'Anonymous';
-posts[i].comments.push({from:name,text:t});save();render();
-setTimeout(()=>{let el=document.getElementById('cmt-'+i);if(el)el.style.display='block';},100);
-}
-function showTab(t){
-document.getElementById('tabAll').classList.toggle('active',t==='all');
-document.getElementById('tabMe').classList.toggle('active',t==='me');
-document.getElementById('searchCard').style.display=t==='me'?'block':'none';
-if(t==='me') document.getElementById('profileResult').innerHTML='<p class="small" style="margin-top:12px">Search your name above to see your HUMAN profile.</p>';
-}
-function searchPerson(){
-let name=document.getElementById('searchName').value.trim().toLowerCase();if(!name) return;
-let found=posts.filter(p=>p.to.toLowerCase()===name);
-let totalHearts=found.reduce((s,p)=>s+p.hearts,0);
-let result=document.getElementById('profileResult');
-if(found.length===0){result.innerHTML=`<div style="margin-top:18px;text-align:center"><h3>No one has posted about "${document.getElementById('searchName').value}" yet.</h3><p>Be the first!</p><button class="btn btn-green" onclick="shareProfile('${document.getElementById('searchName').value}')">Invite them via WhatsApp</button></div>`;}
-else{
-result.innerHTML=`<div class="profile-box" style="margin-top:18px"><p>WHAT THE WORLD SAYS ABOUT</p><h2>${found[0].to} ${getBadge(found[0].to)}</h2><div class="big-num">${found.length} Kindnesses</div><p>❤️ ${totalHearts} total love</p><button class="btn btn-green" onclick="shareProfile('${found[0].to}')">Share ${found[0].to}'s Profile on WhatsApp</button></div>`+found.map(p=>`<div class="post"><div class="post-text">"${p.text}"</div><div class="post-from">— From ${p.from} • ${p.kind} • ❤️ ${p.hearts}</div></div>`).join('');
-}
-}
-function sharePost(i){let p=posts[i];let msg=`💛 HUMAN - Someone said something good about ${p.to}:\n\n"${p.text}"\n\n- From ${p.from}\n\nSee more:\nhttps://nyawandavincent006-droid.github.io/human/`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
-function shareProfile(name){let msg=`👀 Someone searched for ${name} on HUMAN!\n\nHUMAN is the app where you CAN'T talk about yourself - only about others.\n\nCheck what the world says about ${name}:\nhttps://nyawandavincent006-droid.github.io/human/`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
-function shareSite(){let msg=`🔥 I found HUMAN - The app where you CAN'T talk about yourself!\n\nYou can ONLY say good things about someone else.\n\nPost about someone you love:\nhttps://nyawandavincent006-droid.github.io/human/`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
-function copyLink(){navigator.clipboard.writeText('https://nyawandavincent006-droid.github.io/human/').then(()=>{document.getElementById('copyMsg').innerText='✅ Link copied! Paste it in WhatsApp / TikTok / Status';});}
-function randomKindness(){
-if(!posts.length) return;
-let p=posts[Math.floor(Math.random()*posts.length)];
-document.getElementById('kotdText').innerHTML=`"${p.text}"<br><b>— To ${p.to}, from ${p.from} ❤️ ${p.hearts}</b>`;
-window.scrollTo({top:0,behavior:'smooth'});
-}
-render();
+load(); setInterval(load,5000);
 </script>
 </body>
 </html>
