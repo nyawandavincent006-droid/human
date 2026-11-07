@@ -5,32 +5,45 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HUMAN - Be Human</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f0f2f5;color:#111}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f0f2f5;color:#111;transition:.3s}
+body.dark{background:#0f0f0f;color:#fff}
 header{background:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;box-shadow:0 1px 5px #0001;z-index:10}
-.logo{font-size:24px;font-weight:900} .logo span{color:#ff3b5c}
+body.dark header{background:#1a1a1a}
+.logo{font-size:26px;font-weight:900;letter-spacing:-1px}.logo span{color:#ff3b5c}
 .btn{background:#111;color:#fff;border:0;padding:9px 14px;border-radius:20px;font-weight:700;cursor:pointer}
-.btn-pink{background:#ff3b5c}
+body.dark .btn{background:#fff;color:#111}
+.btn-pink{background:#ff3b5c!important;color:#fff!important}
 .wrap{max-width:520px;margin:0 auto;padding:12px}
-.card{background:#fff;border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 1px 4px #0001}
-input,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;margin:5px 0;font-size:15px}
-.post-top{display:flex;gap:10px;align-items:center}.ava{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#ff3b5c,#ff9a00);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px}
-.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1;border:1px solid #eee;background:#f8f8f8;padding:8px;border-radius:20px;cursor:pointer;font-weight:600}
-.actions button.active{background:#ffe1e7;color:#ff3b5c}
+.card{background:#fff;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px #0001}
+body.dark .card{background:#1e1e1e}
+input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:5px 0;font-size:15px;background:#fff}
+body.dark input,body.dark textarea{background:#2a2a2a;border-color:#333;color:#fff}
+.stories{display:flex;gap:12px;overflow-x:auto;padding:10px 2px}
+.story{flex:0 0 68px;text-align:center;cursor:pointer}.story-ring{width:62px;height:62px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#ff3b5c,#ff9a00,#ff3b5c)}
+.story img,.story div{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px}
+.story small{font-size:11px;display:block;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff3b5c,#ff9a00);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;overflow:hidden;flex-shrink:0}.ava img{width:100%;height:100%;object-fit:cover}
+.actions{display:flex;gap:8px;margin-top:10px}.actions button{flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer;font-weight:600}
+body.dark .actions button{background:#2a2a2a;border-color:#333;color:#fff}
+.actions button.active{background:#ffe1e7!important;color:#ff3b5c!important}
 .comment{background:#f5f5f5;padding:8px 10px;border-radius:12px;margin-top:6px;font-size:14px}
+body.dark .comment{background:#2a2a2a}
 .badge{background:#ff3b5c;color:#fff;font-size:11px;padding:2px 7px;border-radius:10px}
 .status{font-size:12px;color:#666;text-align:center;padding:6px}
+.post-img{width:100%;border-radius:14px;margin-top:8px}
 </style>
 </head>
 <body>
-<header><div class="logo">HUMAN<span>.</span></div><div id="myNameBtn">👤 <b id="myName">Guest</b></div></header>
+<header><div class="logo">HUMAN<span>.</span></div><div><button class="btn" onclick="toggleDark()">🌙 Dark</button> <span id="myNameBtn">👤 <b id="myName">Guest</b></span></div></header>
 <div class="wrap">
+<div class="stories" id="stories"></div>
 <div class="card">
-<b>🌍 GLOBAL FEED - Everyone sees same posts!</b>
-<div class="status" id="status">Connecting to world...</div>
-<input id="nameInput" placeholder="Your name e.g. Otieno">
-<input id="titleInput" placeholder="What are you thinking? Title...">
+<b>🌍 GLOBAL FEED</b><div class="status" id="status">Connecting...</div>
+<input id="nameInput" placeholder="Your name">
+<input id="avaInput" placeholder="Your photo link (optional) - paste image URL">
+<input id="titleInput" placeholder="Title...">
 <textarea id="textInput" rows="3" placeholder="Write your story..."></textarea>
-<input id="imgInput" placeholder="Image link (optional) - paste image URL">
+<input id="imgInput" placeholder="Post image link (optional)">
 <button class="btn btn-pink" onclick="makePost()" style="width:100%">🚀 POST TO THE WORLD</button>
 </div>
 <div style="display:flex;gap:8px;margin-bottom:12px"><button class="btn" onclick="filter='all';render()">🌍 All</button><button class="btn" onclick="filter='top';render()">🔥 Top</button><button class="btn" onclick="filter='new';render()">🆕 New</button></div>
@@ -39,50 +52,40 @@ input,textarea{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;
 <script>
 const DB="https://human-app-cea91-default-rtdb.firebaseio.com/posts";
 let posts=[]; let filter='all';
-let myName=localStorage.getItem('human_name')||'';
-if(myName){document.getElementById('myName').textContent=myName; document.getElementById('nameInput').value=myName;}
-document.getElementById('nameInput').onchange=e=>{myName=e.target.value.trim()||'Guest'; localStorage.setItem('human_name',myName); document.getElementById('myName').textContent=myName;};
-
+let myName=localStorage.getItem('human_name')||''; let myAva=localStorage.getItem('human_ava')||'';
+if(localStorage.getItem('human_dark')==='1') document.body.classList.add('dark');
+if(myName){document.getElementById('myName').textContent=myName; document.getElementById('nameInput').value=myName; document.getElementById('avaInput').value=myAva;}
+function toggleDark(){document.body.classList.toggle('dark'); localStorage.setItem('human_dark',document.body.classList.contains('dark')?'1':'0');}
 async function load(){
- try{
-  let r=await fetch(DB+'.json'); let data=await r.json()||{};
-  posts=Object.keys(data).map(k=>({...data[k], _key:k})).sort((a,b)=>b.time-a.time);
-  document.getElementById('status').textContent='✅ Connected - '+posts.length+' posts from around the world';
-  render();
- }catch(e){document.getElementById('status').textContent='⚠️ Offline - check internet';}
+ try{let r=await fetch(DB+'.json'); let d=await r.json()||{}; posts=Object.keys(d).map(k=>({...d[k],_key:k})).sort((a,b)=>b.time-a.time); document.getElementById('status').textContent='✅ '+posts.length+' posts from around the world'; renderStories(); render();}
+ catch(e){document.getElementById('status').textContent='⚠️ Offline';}
+}
+function avaHtml(p,size){ if(p.ava) return `<div class="ava"><img src="${p.ava}" onerror="this.parentElement.textContent='${(p.name||'G')[0]}'"></div>`; return `<div class="ava">${(p.name||'G')[0].toUpperCase()}</div>`; }
+function renderStories(){
+ let uniq=[]; let seen=new Set();
+ posts.forEach(p=>{if(!seen.has(p.name)){seen.add(p.name); uniq.push(p);}});
+ let h=`<div class="story" onclick="document.getElementById('textInput').focus()"><div class="story-ring"><div style="background:#ff3b5c;color:#fff">+</div></div><small>You</small></div>`;
+ uniq.slice(0,12).forEach(p=>{ h+=`<div class="story" onclick="alert('${p.name}: ${p.title||''} - ${p.text||''}'.slice(0,200))"><div class="story-ring">${p.ava?`<img src="${p.ava}">`:`<div>${(p.name||'G')[0].toUpperCase()}</div>`}</div><small>${p.name}</small></div>`;});
+ document.getElementById('stories').innerHTML=h;
 }
 async function makePost(){
- let name=document.getElementById('nameInput').value.trim()||'Guest';
- let title=document.getElementById('titleInput').value.trim();
- let text=document.getElementById('textInput').value.trim();
- let img=document.getElementById('imgInput').value.trim();
- if(!title && !text) return alert('Write something first!');
- localStorage.setItem('human_name',name); myName=name; document.getElementById('myName').textContent=name;
- let p={name,title,text,img,likes:0,comments:[],time:Date.now()};
- await fetch(DB+'.json',{method:'POST',body:JSON.stringify(p)});
- document.getElementById('titleInput').value=''; document.getElementById('textInput').value=''; document.getElementById('imgInput').value='';
- load();
+ let name=document.getElementById('nameInput').value.trim()||'Guest'; let ava=document.getElementById('avaInput').value.trim();
+ let title=document.getElementById('titleInput').value.trim(); let text=document.getElementById('textInput').value.trim(); let img=document.getElementById('imgInput').value.trim();
+ if(!title && !text) return alert('Write something!');
+ localStorage.setItem('human_name',name); localStorage.setItem('human_ava',ava); myName=name; myAva=ava; document.getElementById('myName').textContent=name;
+ await fetch(DB+'.json',{method:'POST',body:JSON.stringify({name,ava,title,text,img,likes:0,comments:[],time:Date.now()})});
+ document.getElementById('titleInput').value=''; document.getElementById('textInput').value=''; document.getElementById('imgInput').value=''; load();
 }
-async function love(key){
- let p=posts.find(x=>x._key===key); p.likes=(p.likes||0)+1;
- await fetch(DB+'/'+key+'.json',{method:'PATCH',body:JSON.stringify({likes:p.likes})}); load();
-}
-async function addComment(key){
- let inp=document.getElementById('c-'+key); let txt=inp.value.trim(); if(!txt) return;
- let p=posts.find(x=>x._key===key); p.comments=p.comments||[]; p.comments.push({name:myName||'Guest',text:txt});
- await fetch(DB+'/'+key+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load();
-}
-function sharePost(title){
- let link=location.href; if(navigator.share){navigator.share({title:'HUMAN - '+title,text:title,url:link})} else {navigator.clipboard.writeText(link); alert('Link copied! Share it!')}
-}
+async function love(k){let p=posts.find(x=>x._key===k); p.likes=(p.likes||0)+1; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({likes:p.likes})}); load();}
+async function addComment(k){let inp=document.getElementById('c-'+k); let txt=inp.value.trim(); if(!txt) return; let p=posts.find(x=>x._key===k); p.comments=p.comments||[]; p.comments.push({name:myName||'Guest',text:txt}); await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load();}
+function sharePost(t){if(navigator.share){navigator.share({title:'HUMAN - '+t,text:t,url:location.href})} else {navigator.clipboard.writeText(location.href); alert('Link copied!');}}
 function render(){
  let list=[...posts]; if(filter==='top') list.sort((a,b)=>b.likes-a.likes);
- let h='';
- list.forEach(p=>{
+ let h=''; list.forEach(p=>{
   let date=new Date(p.time).toLocaleString();
-  h+=`<div class="card"><div class="post-top"><div class="ava">${(p.name||'G')[0].toUpperCase()}</div><div><b>${p.name} <span class="badge">🌍 GLOBAL</span></b><br><small>${date}</small></div></div><h3>${p.title||''}</h3><p>${p.text||''}</p>${p.img?`<img src="${p.img}" style="width:100%;border-radius:12px" onerror="this.style.display='none'">`:''}<div class="actions"><button onclick="love('${p._key}')">❤️ ${p.likes||0} Love</button><button onclick="sharePost('${(p.title||'').replace(/'/g,'')}')">🔗 Share</button></div><div>${(p.comments||[]).map(c=>`<div class="comment"><b>${c.name}:</b> ${c.text}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px"><input id="c-${p._key}" placeholder="Write a comment..."><button class="btn" onclick="addComment('${p._key}')">Send</button></div></div>`;
+  h+=`<div class="card"><div style="display:flex;gap:10px;align-items:center">${avaHtml(p)}<div><b>${p.name} <span class="badge">🌍 GLOBAL</span></b><br><small>${date}</small></div></div><h3>${p.title||''}</h3><p>${p.text||''}</p>${p.img?`<img class="post-img" src="${p.img}" onerror="this.style.display='none'">`:''}<div class="actions"><button onclick="love('${p._key}')">❤️ ${p.likes||0} Love</button><button onclick="sharePost('${(p.title||'').replace(/'/g,'')}')">🔗 Share</button></div><div>${(p.comments||[]).map(c=>`<div class="comment"><b>${c.name}:</b> ${c.text}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px"><input id="c-${p._key}" placeholder="Write a comment..."><button class="btn" onclick="addComment('${p._key}')">Send</button></div></div>`;
  });
- document.getElementById('feed').innerHTML=h||'<div class="card"><center>Be the FIRST to post to the world! 🌍</center></div>';
+ document.getElementById('feed').innerHTML=h||'<div class="card"><center>Be the FIRST to post! 🌍</center></div>';
 }
 load(); setInterval(load,5000);
 </script>
