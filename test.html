@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html><body style="text-align:center;padding:30px;font-family:system-ui">
+<h1>TEST</h1>
+<input id="u" placeholder="Username" style="padding:12px;width:90%">
+<br><br>
+<input id="p" type="password" placeholder="Password" style="padding:12px;width:90%">
+<br><br>
+<button onclick="doLogin()" style="padding:15px 30px;background:#ff3b5c;color:#fff;border:0;border-radius:20px;font-size:18px">🔐 LOGIN / SIGN UP</button>
+<p id="msg" style="color:red"></p>
+<script>
+function doLogin(){
+  var u = document.getElementById('u').value;
+  var p = document.getElementById('p').value;
+  alert('BUTTON WORKS! You typed: ' + u);
+  document.getElementById('msg').textContent = '✅ BUTTON WORKS! Username: ' + u;
+  localStorage.setItem('human_name', u);
+}
+alert('PAGE LOADED OK - If you see this, JavaScript works');
+</script>
+</body></html>
