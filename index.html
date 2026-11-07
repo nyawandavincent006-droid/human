@@ -6,63 +6,109 @@
 <title>HUMAN - You Can't Talk About Yourself</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#FFF8F0;color:#1a1a1a}
-header{background:#111;color:#fff;padding:50px 20px;text-align:center}
+body{background:#FFF8F0;color:#1a1a1a;transition:.3s}
+body.dark{background:#111;color:#fff}
+body.dark .card,body.dark .post{background:#222;color:#fff}
+body.dark .leader{background:#333;color:#fff}
+header{background:#111;color:#fff;padding:40px 20px;text-align:center;position:relative}
 header h1{font-size:55px;letter-spacing:8px}
 header h1 span{color:#FF5A5F}
-header p{font-size:18px;opacity:.8;margin-top:10px;max-width:600px;margin:15px auto 0;line-height:1.5}
-.rule{background:#FF5A5F;color:#fff;text-align:center;padding:14px;font-weight:bold;font-size:15px}
-.container{max-width:900px;margin:auto;padding:20px}
-.card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 6px 25px rgba(0,0,0,.07);margin-bottom:20px}
-.card h2{font-size:22px;margin-bottom:5px}
-.card p.small{color:#777;font-size:14px;margin-bottom:15px}
-label{font-weight:bold;font-size:14px;display:block;margin:12px 0 5px}
-input,select,textarea{width:100%;padding:13px;border:2px solid #eee;border-radius:12px;font-size:15px;outline:none}
+header p{font-size:16px;opacity:.8;margin-top:10px;max-width:600px;margin:12px auto 0;line-height:1.5}
+.rule{background:#FF5A5F;color:#fff;text-align:center;padding:12px;font-weight:bold;font-size:14px}
+.container{max-width:900px;margin:auto;padding:18px}
+.card{background:#fff;border-radius:18px;padding:20px;box-shadow:0 6px 25px rgba(0,0,0,.07);margin-bottom:18px}
+.card h2{font-size:21px;margin-bottom:5px}
+.card p.small{color:#777;font-size:13px;margin-bottom:12px}
+label{font-weight:bold;font-size:13px;display:block;margin:11px 0 5px}
+input,select,textarea{width:100%;padding:12px;border:2px solid #eee;border-radius:12px;font-size:14px;outline:none;background:#fff}
 input:focus,textarea:focus{border-color:#FF5A5F}
-textarea{min-height:90px;resize:vertical}
-.btn{background:#111;color:#fff;border:none;padding:15px;border-radius:12px;width:100%;font-size:16px;font-weight:bold;cursor:pointer;margin-top:15px}
+textarea{min-height:85px;resize:vertical}
+.btn{background:#111;color:#fff;border:none;padding:13px;border-radius:12px;width:100%;font-size:15px;font-weight:bold;cursor:pointer;margin-top:12px}
 .btn:hover{background:#FF5A5F}
 .btn-pink{background:#FF5A5F}
-.tabs{display:flex;gap:10px;margin:10px 0 20px}
-.tab{flex:1;padding:12px;border-radius:12px;border:2px solid #eee;background:#fff;font-weight:bold;cursor:pointer;text-align:center}
+.btn-green{background:#25D366}
+.btn-outline{background:#fff;color:#111;border:2px solid #111}
+.btn-small{width:auto;padding:8px 14px;font-size:13px;margin:5px 5px 0 0;display:inline-block}
+.tabs{display:flex;gap:8px;margin:10px 0 18px;flex-wrap:wrap}
+.tab{flex:1;padding:11px;border-radius:12px;border:2px solid #eee;background:#fff;font-weight:bold;cursor:pointer;text-align:center;min-width:110px}
 .tab.active{background:#111;color:#fff;border-color:#111}
-.post{background:#fff;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,.06);border-left:6px solid #FF5A5F}
-.post-top{display:flex;justify-content:space-between;align-items:center}
-.post-to{font-size:22px;font-weight:900}
+.post{background:#fff;border-radius:18px;padding:18px;margin-bottom:14px;box-shadow:0 4px 18px rgba(0,0,0,.06);border-left:6px solid #FF5A5F}
+.post-to{font-size:21px;font-weight:900}
 .post-to span{color:#FF5A5F}
-.post-from{font-size:13px;color:#888;margin-top:2px}
-.post-text{font-size:17px;line-height:1.6;margin:12px 0}
-.post-tag{display:inline-block;background:#FFF0F0;color:#FF5A5F;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:bold}
-.heart{border:none;background:#FFF0F0;padding:9px 16px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:14px}
-.heart.loved{background:#FF5A5F;color:#fff}
-.profile-box{background:#111;color:#fff;border-radius:18px;padding:25px;text-align:center}
-.profile-box h2{font-size:28px}
-.profile-box p{opacity:.8;margin-top:8px}
-.big-num{font-size:48px;font-weight:900;color:#FFD166}
-.search-row{display:flex;gap:10px}
+.post-from{font-size:12px;color:#888;margin-top:2px}
+.post-text{font-size:16px;line-height:1.6;margin:11px 0}
+.post-tag{display:inline-block;background:#FFF0F0;color:#FF5A5F;padding:5px 11px;border-radius:20px;font-size:11px;font-weight:bold}
+.heart,.share-btn,.cmt-btn,.del-btn{border:none;padding:8px 14px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:13px;margin:4px 4px 0 0}
+.heart{background:#FFF0F0}
+.share-btn{background:#25D366;color:#fff}
+.cmt-btn{background:#FFE8D6}
+.del-btn{background:#eee}
+.profile-box{background:#111;color:#fff;border-radius:18px;padding:22px;text-align:center}
+.big-num{font-size:42px;font-weight:900;color:#FFD166}
+.search-row{display:flex;gap:8px}
 .search-row input{flex:1}
-.empty{text-align:center;padding:40px;color:#999}
-footer{text-align:center;padding:30px;color:#999;font-size:13px}
+.leader{display:flex;justify-content:space-between;align-items:center;background:#FFF8F0;padding:12px 14px;border-radius:14px;margin-bottom:8px;border:1px solid #FFE8D6}
+.leader b{font-size:15px}
+.leader span{font-weight:bold;color:#FF5A5F;font-size:13px}
+.stats{display:flex;gap:10px;text-align:center}
+.stat{flex:1;background:#FFF0F0;border-radius:14px;padding:14px}
+.stat b{font-size:24px;display:block}
+.stat span{font-size:12px;color:#666}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.filter-btn{padding:8px 13px;border-radius:20px;border:2px solid #eee;background:#fff;cursor:pointer;font-weight:bold;font-size:13px}
+.filter-btn.active{background:#FF5A5F;color:#fff;border-color:#FF5A5F}
+.comment{background:#f7f7f7;padding:10px 12px;border-radius:12px;margin-top:8px;font-size:14px}
+body.dark .comment{background:#333}
+.comment-input{margin-top:8px;display:flex;gap:6px}
+.comment-input input{flex:1}
+.badge{display:inline-block;background:#FFD166;color:#111;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:bold;margin-left:6px}
+footer{text-align:center;padding:25px;color:#999;font-size:12px}
+.dark-toggle{position:absolute;top:15px;right:15px;background:#fff;color:#111;border:none;padding:9px 14px;border-radius:20px;font-weight:bold;cursor:pointer}
+.kotd{background:linear-gradient(135deg,#FF5A5F,#FF8A5C);color:#fff;border-radius:18px;padding:20px}
+.kotd h2{color:#fff}
 </style>
 </head>
 <body>
-
 <header>
+<button class="dark-toggle" onclick="toggleDark()">🌙 Dark</button>
 <h1>HUMAN<span>.</span></h1>
 <p>The first social app where you are <b>BANNED</b> from talking about yourself.<br>You can only say good things about <b>someone else</b>.</p>
 </header>
 <div class="rule">⚠ RULE: If you post about yourself, your post will be rejected by HUMAN.</div>
-
 <div class="container">
 
-<!-- POST FORM -->
+<div class="card">
+<div class="stats">
+<div class="stat"><b id="statPosts">0</b><span>Total Kindness</span></div>
+<div class="stat"><b id="statHearts">0</b><span>Total Love ❤️</span></div>
+<div class="stat"><b id="statPeople">0</b><span>People Loved</span></div>
+</div>
+</div>
+
+<div class="card kotd">
+<h2>✨ Kindness of the Day</h2>
+<div id="kotdText" style="font-size:16px;line-height:1.6;margin-top:8px"></div>
+<button class="btn" style="background:#fff;color:#111;width:auto;padding:10px 18px" onclick="randomKindness()">🎲 Surprise Me - Random Kindness</button>
+</div>
+
+<div class="card" style="background:#111;color:#fff">
+<h2 style="color:#fff">🏆 Kindest People - Leaderboard</h2>
+<p class="small" style="color:#ccc">Who has received the most love?</p>
+<div id="leaderboard"></div>
+<div id="topCats" style="margin-top:12px;font-size:13px;color:#FFD166"></div>
+<button class="btn btn-green" onclick="shareSite()">Share HUMAN on WhatsApp →</button>
+<button class="btn" style="background:#fff;color:#111" onclick="copyLink()">Copy Link To Share Anywhere</button>
+<p id="copyMsg" style="font-size:13px;margin-top:8px;color:#25D366"></p>
+</div>
+
 <div class="card">
 <h2>💛 Say Something Good About Someone</h2>
 <p class="small">Not about you. About THEM. That's the rule.</p>
-<label>Who is this about?</label>
+<label>Who is this about? *</label>
 <input id="toName" placeholder="e.g. Ian, Amina, Mama Otis...">
-<label>Your name (the one giving love)</label>
+<label>Your name</label>
 <input id="fromName" placeholder="e.g. Kevin">
+<label><input type="checkbox" id="anon" style="width:auto"> Post as Anonymous</label>
 <label>What did they do?</label>
 <select id="kind">
 <option value="Kindness">💛 Kindness</option>
@@ -73,18 +119,31 @@ footer{text-align:center;padding:30px;color:#999;font-size:13px}
 <option value="Inspiration">✨ Inspiration</option>
 </select>
 <label>Write it from your heart</label>
-<textarea id="text" placeholder="e.g. Ian gave me his last 100 bob for fare when I was stranded in Bondo. He didn't have to. I will never forget it."></textarea>
+<textarea id="text" placeholder="e.g. Ian gave me his last 100 bob for fare..."></textarea>
 <button class="btn btn-pink" onclick="postKindness()">Post To The World →</button>
 <p id="error" style="color:red;font-weight:bold;margin-top:10px"></p>
 </div>
 
-<!-- TABS -->
 <div class="tabs">
 <div class="tab active" id="tabAll" onclick="showTab('all')">🌍 All Kindness</div>
 <div class="tab" id="tabMe" onclick="showTab('me')">👤 What World Says About Me</div>
 </div>
 
-<!-- SEARCH FOR A PERSON -->
+<div class="filter-row" id="filters">
+<button class="filter-btn active" onclick="setFilter('All',this)">All</button>
+<button class="filter-btn" onclick="setFilter('Kindness',this)">💛 Kindness</button>
+<button class="filter-btn" onclick="setFilter('Bravery',this)">🦁 Bravery</button>
+<button class="filter-btn" onclick="setFilter('Hard Work',this)">💪 Hard Work</button>
+<button class="filter-btn" onclick="setFilter('Made Me Laugh',this)">😂 Funny</button>
+<button class="filter-btn" onclick="setFilter('Helped Me',this)">🤝 Helped</button>
+<button class="filter-btn" onclick="setFilter('Inspiration',this)">✨ Inspiration</button>
+</div>
+
+<div style="display:flex;gap:8px;margin-bottom:14px">
+<select id="sortBy" onchange="render()" style="flex:1"><option value="new">Sort: Newest First</option><option value="loved">Sort: Most Loved First</option></select>
+<input id="searchFeed" placeholder="🔍 Search in feed..." oninput="render()" style="flex:1">
+</div>
+
 <div class="card" id="searchCard" style="display:none">
 <h2>See what the world says about someone</h2>
 <p class="small">Type their name. Your profile is built by others, not by you.</p>
@@ -95,75 +154,119 @@ footer{text-align:center;padding:30px;color:#999;font-size:13px}
 <div id="profileResult"></div>
 </div>
 
-<!-- FEED -->
 <div id="feed"></div>
-
 </div>
-
-<footer>HUMAN. — Built to remind the world that kindness is more viral than hate.<br>Made with ❤️ in Kenya, for the World.</footer>
-
+<footer>HUMAN. — Built to remind the world that kindness is more viral than hate.<br>Made with ❤️ in Kenya, for the World.<br><b>https://nyawandavincent006-droid.github.io/human/</b></footer>
 <script>
-let posts = JSON.parse(localStorage.getItem('human_posts') || '[]');
+let posts = JSON.parse(localStorage.getItem('human_posts_v3') || '[]');
 if(posts.length===0){
-posts = [
-{to:"Ian", from:"Kevin", kind:"Kindness", text:"Ian gave me his last 100 bob for fare when I was stranded. He didn't have to. I will never forget it.", hearts:24},
-{to:"Amina", from:"Grace", kind:"Hard Work", text:"Amina studied all night and still helped all of us pass the exam in the morning. She is a real one.", hearts:18},
-{to:"Mama Otis", from:"Anonymous", kind:"Inspiration", text:"Mama Otis sells mandazi from 5AM every day to pay school fees for 3 kids. She never complains.", hearts:41},
-{to:"Daniel", from:"Sarah", kind:"Made Me Laugh", text:"Daniel made me laugh when I wanted to cry. He didn't know I was sad, he just has that gift.", hearts:12}
+posts=[
+{to:"Ian",from:"Kevin",kind:"Kindness",text:"Ian gave me his last 100 bob for fare when I was stranded. He didn't have to. I will never forget it.",hearts:24,comments:[{from:"Grace",text:"Ian is always like this!"}]},
+{to:"Amina",from:"Grace",kind:"Hard Work",text:"Amina studied all night and still helped all of us pass the exam in the morning. She is a real one.",hearts:18,comments:[]},
+{to:"Mama Otis",from:"Anonymous",kind:"Inspiration",text:"Mama Otis sells mandazi from 5AM every day to pay school fees for 3 kids. She never complains.",hearts:41,comments:[{from:"Kevin",text:"Legend!"}]},
+{to:"Daniel",from:"Sarah",kind:"Made Me Laugh",text:"Daniel made me laugh when I wanted to cry. He didn't know I was sad, he just has that gift.",hearts:12,comments:[]},
+{to:"Vincent",from:"Ian",kind:"Bravery",text:"Vincent built HUMAN so the world can spread kindness instead of hate. That's brave.",hearts:50,comments:[]}
 ];
 save();
 }
-function save(){ localStorage.setItem('human_posts', JSON.stringify(posts)); }
+let currentFilter='All';
+function save(){localStorage.setItem('human_posts_v3',JSON.stringify(posts));}
+function getBadge(to){
+let c=posts.filter(p=>p.to.toLowerCase()===to.toLowerCase()).length;
+if(c>=5) return '<span class="badge">👑 LEGEND</span>';
+if(c>=3) return '<span class="badge">⭐ RISING STAR</span>';
+if(c>=1) return '<span class="badge">🌱 NEW</span>';
+return '';
+}
+function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('human_dark',document.body.classList.contains('dark')?'1':'0');}
+if(localStorage.getItem('human_dark')==='1') document.body.classList.add('dark');
 function postKindness(){
 let to=document.getElementById('toName').value.trim();
 let from=document.getElementById('fromName').value.trim();
 let text=document.getElementById('text').value.trim();
 let kind=document.getElementById('kind').value;
+let anon=document.getElementById('anon').checked;
 let err=document.getElementById('error');
-// THE HUMAN RULE: You cannot post about yourself
-if(!to || !from || !text){ err.innerText="Please fill all fields."; return; }
-if(to.toLowerCase()===from.toLowerCase()){ err.innerText="⛔ REJECTED BY HUMAN: You cannot post about yourself. Post about someone else!"; return; }
-let selfWords=[" i ", " my ", " me ", " myself"];
-let low=" "+text.toLowerCase()+" ";
-if(selfWords.some(w=>low.includes(w)) && text.toLowerCase().startsWith("i")){
-err.innerText="⛔ HUMAN says: This sounds like it's about YOU. Try again - talk about THEM."; return;
-}
+if(!to||!text){err.innerText="Please fill who it's about and what they did.";return;}
+if(!anon && !from){err.innerText="Put your name or tick Anonymous.";return;}
+if(!anon && to.toLowerCase()===from.toLowerCase()){err.innerText="⛔ REJECTED BY HUMAN: You cannot post about yourself!";return;}
+if(!anon && from.toLowerCase().split(' ').some(w=>to.toLowerCase().includes(w)) && to.length<12){err.innerText="⛔ REJECTED: That looks like your own name.";return;}
 err.innerText="";
-posts.unshift({to,from,kind,text,hearts:0});
-save(); render();
-document.getElementById('toName').value=""; document.getElementById('text').value="";
-alert("Posted! You just made the world a little more HUMAN 💛");
+posts.unshift({to,from:anon?"Anonymous":from,kind,text,hearts:0,comments:[]});
+save();render();
+document.getElementById('toName').value="";document.getElementById('text').value="";
+confetti();alert("Posted! You just made the world more HUMAN 💛");
 }
+function confetti(){
+for(let i=0;i<30;i++){let d=document.createElement('div');d.innerText=['💛','❤️','✨','🎉'][i%4];d.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-20px;font-size:24px;z-index:9999;transition:2s`;document.body.appendChild(d);setTimeout(()=>{d.style.top='100vh';d.style.transform='rotate(360deg)'},10);setTimeout(()=>d.remove(),2100);}
+}
+function setFilter(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');render();}
 function render(){
+let sortBy=document.getElementById('sortBy').value;
+let q=(document.getElementById('searchFeed').value||'').toLowerCase();
+let list=[...posts];
+if(currentFilter!=='All') list=list.filter(p=>p.kind===currentFilter);
+if(q) list=list.filter(p=>(p.to+p.from+p.text).toLowerCase().includes(q));
+if(sortBy==='loved') list.sort((a,b)=>b.hearts-a.hearts);
 let feed=document.getElementById('feed');
-if(posts.length===0){ feed.innerHTML='<div class="empty">No kindness yet. Be the first.</div>'; return; }
-feed.innerHTML = posts.map((p,i)=>`
-<div class="post">
-<div class="post-top"><div><div class="post-to">To <span>${p.to}</span></div><div class="post-from">From ${p.from} • ${p.kind}</div></div><span class="post-tag">${p.kind}</span></div>
-<div class="post-text">"${p.text}"</div>
-<button class="heart" onclick="love(${i},this)">❤️ ${p.hearts} Love</button>
-</div>`).join('');
+if(list.length===0) feed.innerHTML='<div class="card" style="text-align:center;color:#999">No kindness found. Be the first!</div>';
+else feed.innerHTML=list.map((p)=>{
+let realIdx=posts.indexOf(p);
+return `<div class="post"><div style="display:flex;justify-content:space-between"><div><div class="post-to">To <span>${p.to}</span> ${getBadge(p.to)}</div><div class="post-from">From ${p.from} • ${p.kind} • ${p.comments.length} comments</div></div><span class="post-tag">${p.kind}</span></div><div class="post-text">"${p.text}"</div><button class="heart" onclick="love(${realIdx})">❤️ ${p.hearts} Love</button><button class="share-btn" onclick="sharePost(${realIdx})">Share on WhatsApp</button><button class="cmt-btn" onclick="toggleComments(${realIdx})">💬 Comments (${p.comments.length})</button><button class="del-btn" onclick="deletePost(${realIdx})">🗑️</button><div id="cmt-${realIdx}" style="display:none">${p.comments.map(c=>`<div class="comment"><b>${c.from}:</b> ${c.text}</div>`).join('')}<div class="comment-input"><input id="cmtIn-${realIdx}" placeholder="Write a kind comment..."><button class="btn btn-small" onclick="addComment(${realIdx})">Send</button></div></div></div>`
+}).join('');
+// Stats
+document.getElementById('statPosts').innerText=posts.length;
+document.getElementById('statHearts').innerText=posts.reduce((s,p)=>s+p.hearts,0);
+document.getElementById('statPeople').innerText=new Set(posts.map(p=>p.to.toLowerCase())).size;
+// Leaderboard
+let counts={};posts.forEach(p=>{counts[p.to]=counts[p.to]||{posts:0,hearts:0};counts[p.to].posts++;counts[p.to].hearts+=p.hearts;});
+let sorted=Object.entries(counts).sort((a,b)=>(b[1].hearts+b[1].posts*5)-(a[1].hearts+a[1].posts*5)).slice(0,5);
+let medals=["🥇","🥈","🥉","4.","5."];
+document.getElementById('leaderboard').innerHTML=sorted.map((e,i)=>`<div class="leader"><b>${medals[i]} ${e[0]} ${getBadge(e[0])}</b><span>${e[1].posts} posts • ❤️ ${e[1].hearts}</span></div>`).join('');
+// Top cats
+let cats={};posts.forEach(p=>cats[p.kind]=(cats[p.kind]||0)+1);
+let topCat=Object.entries(cats).sort((a,b)=>b[1]-a[1])[0];
+document.getElementById('topCats').innerHTML=`🔥 Trending: <b>${topCat?topCat[0]:''}</b> (${topCat?topCat[1]:0} posts) • Total categories: ${Object.keys(cats).length}`;
+// KOTD
+if(posts.length){
+let best=[...posts].sort((a,b)=>b.hearts-a.hearts)[0];
+document.getElementById('kotdText').innerHTML=`"${best.text}"<br><b>— To ${best.to}, from ${best.from} ❤️ ${best.hearts}</b>`;
 }
-function love(i,btn){
-posts[i].hearts++; save(); render();
+}
+function love(i){posts[i].hearts++;save();render();}
+function deletePost(i){if(confirm('Delete this kindness?')){posts.splice(i,1);save();render();}}
+function toggleComments(i){let el=document.getElementById('cmt-'+i);el.style.display=el.style.display==='none'?'block':'none';}
+function addComment(i){
+let inp=document.getElementById('cmtIn-'+i);let t=inp.value.trim();if(!t) return;
+let name=prompt('Your name for comment?')||'Anonymous';
+posts[i].comments.push({from:name,text:t});save();render();
+setTimeout(()=>{let el=document.getElementById('cmt-'+i);if(el)el.style.display='block';},100);
 }
 function showTab(t){
-document.getElementById('tabAll').classList.toggle('active', t==='all');
-document.getElementById('tabMe').classList.toggle('active', t==='me');
-document.getElementById('searchCard').style.display = t==='me' ? 'block':'none';
-if(t==='me'){ document.getElementById('profileResult').innerHTML='<p class="small" style="margin-top:15px">Search your name above to see your HUMAN profile.</p>'; }
+document.getElementById('tabAll').classList.toggle('active',t==='all');
+document.getElementById('tabMe').classList.toggle('active',t==='me');
+document.getElementById('searchCard').style.display=t==='me'?'block':'none';
+if(t==='me') document.getElementById('profileResult').innerHTML='<p class="small" style="margin-top:12px">Search your name above to see your HUMAN profile.</p>';
 }
 function searchPerson(){
-let name=document.getElementById('searchName').value.trim().toLowerCase();
-if(!name) return;
+let name=document.getElementById('searchName').value.trim().toLowerCase();if(!name) return;
 let found=posts.filter(p=>p.to.toLowerCase()===name);
 let totalHearts=found.reduce((s,p)=>s+p.hearts,0);
 let result=document.getElementById('profileResult');
-if(found.length===0){
-result.innerHTML=`<div style="margin-top:20px;text-align:center"><h3>No one has posted about "${document.getElementById('searchName').value}" yet.</h3><p>Be the first to say something good about them above.</p></div>`;
-}else{
-result.innerHTML=`<div class="profile-box" style="margin-top:20px"><p>WHAT THE WORLD SAYS ABOUT</p><h2>${found[0].to}</h2><div class="big-num">${found.length} Kindnesses</div><p>❤️ ${totalHearts} total love from strangers</p></div>` + found.map(p=>`<div class="post"><div class="post-text">"${p.text}"</div><div class="post-from">— From ${p.from} • ${p.kind}</div></div>`).join('');
+if(found.length===0){result.innerHTML=`<div style="margin-top:18px;text-align:center"><h3>No one has posted about "${document.getElementById('searchName').value}" yet.</h3><p>Be the first!</p><button class="btn btn-green" onclick="shareProfile('${document.getElementById('searchName').value}')">Invite them via WhatsApp</button></div>`;}
+else{
+result.innerHTML=`<div class="profile-box" style="margin-top:18px"><p>WHAT THE WORLD SAYS ABOUT</p><h2>${found[0].to} ${getBadge(found[0].to)}</h2><div class="big-num">${found.length} Kindnesses</div><p>❤️ ${totalHearts} total love</p><button class="btn btn-green" onclick="shareProfile('${found[0].to}')">Share ${found[0].to}'s Profile on WhatsApp</button></div>`+found.map(p=>`<div class="post"><div class="post-text">"${p.text}"</div><div class="post-from">— From ${p.from} • ${p.kind} • ❤️ ${p.hearts}</div></div>`).join('');
 }
+}
+function sharePost(i){let p=posts[i];let msg=`💛 HUMAN - Someone said something good about ${p.to}:\n\n"${p.text}"\n\n- From ${p.from}\n\nSee more:\nhttps://nyawandavincent006-droid.github.io/human/`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function shareProfile(name){let msg=`👀 Someone searched for ${name} on HUMAN!\n\nHUMAN is the app where you CAN'T talk about yourself - only about others.\n\nCheck what the world says about ${name}:\nhttps://nyawandavincent006-droid.github.io/human/`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function shareSite(){let msg=`🔥 I found HUMAN - The app where you CAN'T talk about yourself!\n\nYou can ONLY say good things about someone else.\n\nPost about someone you love:\nhttps://nyawandavincent006-droid.github.io/human/`;window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');}
+function copyLink(){navigator.clipboard.writeText('https://nyawandavincent006-droid.github.io/human/').then(()=>{document.getElementById('copyMsg').innerText='✅ Link copied! Paste it in WhatsApp / TikTok / Status';});}
+function randomKindness(){
+if(!posts.length) return;
+let p=posts[Math.floor(Math.random()*posts.length)];
+document.getElementById('kotdText').innerHTML=`"${p.text}"<br><b>— To ${p.to}, from ${p.from} ❤️ ${p.hearts}</b>`;
+window.scrollTo({top:0,behavior:'smooth'});
 }
 render();
 </script>
