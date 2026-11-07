@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUMAN - You Can't Talk About Yourself</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#FFF8F0;color:#1a1a1a}
+header{background:#111;color:#fff;padding:50px 20px;text-align:center}
+header h1{font-size:55px;letter-spacing:8px}
+header h1 span{color:#FF5A5F}
+header p{font-size:18px;opacity:.8;margin-top:10px;max-width:600px;margin:15px auto 0;line-height:1.5}
+.rule{background:#FF5A5F;color:#fff;text-align:center;padding:14px;font-weight:bold;font-size:15px}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:#fff;border-radius:18px;padding:22px;box-shadow:0 6px 25px rgba(0,0,0,.07);margin-bottom:20px}
+.card h2{font-size:22px;margin-bottom:5px}
+.card p.small{color:#777;font-size:14px;margin-bottom:15px}
+label{font-weight:bold;font-size:14px;display:block;margin:12px 0 5px}
+input,select,textarea{width:100%;padding:13px;border:2px solid #eee;border-radius:12px;font-size:15px;outline:none}
+input:focus,textarea:focus{border-color:#FF5A5F}
+textarea{min-height:90px;resize:vertical}
+.btn{background:#111;color:#fff;border:none;padding:15px;border-radius:12px;width:100%;font-size:16px;font-weight:bold;cursor:pointer;margin-top:15px}
+.btn:hover{background:#FF5A5F}
+.btn-pink{background:#FF5A5F}
+.tabs{display:flex;gap:10px;margin:10px 0 20px}
+.tab{flex:1;padding:12px;border-radius:12px;border:2px solid #eee;background:#fff;font-weight:bold;cursor:pointer;text-align:center}
+.tab.active{background:#111;color:#fff;border-color:#111}
+.post{background:#fff;border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,.06);border-left:6px solid #FF5A5F}
+.post-top{display:flex;justify-content:space-between;align-items:center}
+.post-to{font-size:22px;font-weight:900}
+.post-to span{color:#FF5A5F}
+.post-from{font-size:13px;color:#888;margin-top:2px}
+.post-text{font-size:17px;line-height:1.6;margin:12px 0}
+.post-tag{display:inline-block;background:#FFF0F0;color:#FF5A5F;padding:6px 12px;border-radius:20px;font-size:12px;font-weight:bold}
+.heart{border:none;background:#FFF0F0;padding:9px 16px;border-radius:20px;font-weight:bold;cursor:pointer;font-size:14px}
+.heart.loved{background:#FF5A5F;color:#fff}
+.profile-box{background:#111;color:#fff;border-radius:18px;padding:25px;text-align:center}
+.profile-box h2{font-size:28px}
+.profile-box p{opacity:.8;margin-top:8px}
+.big-num{font-size:48px;font-weight:900;color:#FFD166}
+.search-row{display:flex;gap:10px}
+.search-row input{flex:1}
+.empty{text-align:center;padding:40px;color:#999}
+footer{text-align:center;padding:30px;color:#999;font-size:13px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>HUMAN<span>.</span></h1>
+<p>The first social app where you are <b>BANNED</b> from talking about yourself.<br>You can only say good things about <b>someone else</b>.</p>
+</header>
+<div class="rule">⚠ RULE: If you post about yourself, your post will be rejected by HUMAN.</div>
+
+<div class="container">
+
+<!-- POST FORM -->
+<div class="card">
+<h2>💛 Say Something Good About Someone</h2>
+<p class="small">Not about you. About THEM. That's the rule.</p>
+<label>Who is this about?</label>
+<input id="toName" placeholder="e.g. Ian, Amina, Mama Otis...">
+<label>Your name (the one giving love)</label>
+<input id="fromName" placeholder="e.g. Kevin">
+<label>What did they do?</label>
+<select id="kind">
+<option value="Kindness">💛 Kindness</option>
+<option value="Bravery">🦁 Bravery</option>
+<option value="Hard Work">💪 Hard Work</option>
+<option value="Made Me Laugh">😂 Made Me Laugh</option>
+<option value="Helped Me">🤝 Helped Me</option>
+<option value="Inspiration">✨ Inspiration</option>
+</select>
+<label>Write it from your heart</label>
+<textarea id="text" placeholder="e.g. Ian gave me his last 100 bob for fare when I was stranded in Bondo. He didn't have to. I will never forget it."></textarea>
+<button class="btn btn-pink" onclick="postKindness()">Post To The World →</button>
+<p id="error" style="color:red;font-weight:bold;margin-top:10px"></p>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+<div class="tab active" id="tabAll" onclick="showTab('all')">🌍 All Kindness</div>
+<div class="tab" id="tabMe" onclick="showTab('me')">👤 What World Says About Me</div>
+</div>
+
+<!-- SEARCH FOR A PERSON -->
+<div class="card" id="searchCard" style="display:none">
+<h2>See what the world says about someone</h2>
+<p class="small">Type their name. Your profile is built by others, not by you.</p>
+<div class="search-row">
+<input id="searchName" placeholder="Type a name, e.g. Ian">
+<button class="btn" style="width:130px;margin:0" onclick="searchPerson()">Search</button>
+</div>
+<div id="profileResult"></div>
+</div>
+
+<!-- FEED -->
+<div id="feed"></div>
+
+</div>
+
+<footer>HUMAN. — Built to remind the world that kindness is more viral than hate.<br>Made with ❤️ in Kenya, for the World.</footer>
+
+<script>
+let posts = JSON.parse(localStorage.getItem('human_posts') || '[]');
+if(posts.length===0){
+posts = [
+{to:"Ian", from:"Kevin", kind:"Kindness", text:"Ian gave me his last 100 bob for fare when I was stranded. He didn't have to. I will never forget it.", hearts:24},
+{to:"Amina", from:"Grace", kind:"Hard Work", text:"Amina studied all night and still helped all of us pass the exam in the morning. She is a real one.", hearts:18},
+{to:"Mama Otis", from:"Anonymous", kind:"Inspiration", text:"Mama Otis sells mandazi from 5AM every day to pay school fees for 3 kids. She never complains.", hearts:41},
+{to:"Daniel", from:"Sarah", kind:"Made Me Laugh", text:"Daniel made me laugh when I wanted to cry. He didn't know I was sad, he just has that gift.", hearts:12}
+];
+save();
+}
+function save(){ localStorage.setItem('human_posts', JSON.stringify(posts)); }
+function postKindness(){
+let to=document.getElementById('toName').value.trim();
+let from=document.getElementById('fromName').value.trim();
+let text=document.getElementById('text').value.trim();
+let kind=document.getElementById('kind').value;
+let err=document.getElementById('error');
+// THE HUMAN RULE: You cannot post about yourself
+if(!to || !from || !text){ err.innerText="Please fill all fields."; return; }
+if(to.toLowerCase()===from.toLowerCase()){ err.innerText="⛔ REJECTED BY HUMAN: You cannot post about yourself. Post about someone else!"; return; }
+let selfWords=[" i ", " my ", " me ", " myself"];
+let low=" "+text.toLowerCase()+" ";
+if(selfWords.some(w=>low.includes(w)) && text.toLowerCase().startsWith("i")){
+err.innerText="⛔ HUMAN says: This sounds like it's about YOU. Try again - talk about THEM."; return;
+}
+err.innerText="";
+posts.unshift({to,from,kind,text,hearts:0});
+save(); render();
+document.getElementById('toName').value=""; document.getElementById('text').value="";
+alert("Posted! You just made the world a little more HUMAN 💛");
+}
+function render(){
+let feed=document.getElementById('feed');
+if(posts.length===0){ feed.innerHTML='<div class="empty">No kindness yet. Be the first.</div>'; return; }
+feed.innerHTML = posts.map((p,i)=>`
+<div class="post">
+<div class="post-top"><div><div class="post-to">To <span>${p.to}</span></div><div class="post-from">From ${p.from} • ${p.kind}</div></div><span class="post-tag">${p.kind}</span></div>
+<div class="post-text">"${p.text}"</div>
+<button class="heart" onclick="love(${i},this)">❤️ ${p.hearts} Love</button>
+</div>`).join('');
+}
+function love(i,btn){
+posts[i].hearts++; save(); render();
+}
+function showTab(t){
+document.getElementById('tabAll').classList.toggle('active', t==='all');
+document.getElementById('tabMe').classList.toggle('active', t==='me');
+document.getElementById('searchCard').style.display = t==='me' ? 'block':'none';
+if(t==='me'){ document.getElementById('profileResult').innerHTML='<p class="small" style="margin-top:15px">Search your name above to see your HUMAN profile.</p>'; }
+}
+function searchPerson(){
+let name=document.getElementById('searchName').value.trim().toLowerCase();
+if(!name) return;
+let found=posts.filter(p=>p.to.toLowerCase()===name);
+let totalHearts=found.reduce((s,p)=>s+p.hearts,0);
+let result=document.getElementById('profileResult');
+if(found.length===0){
+result.innerHTML=`<div style="margin-top:20px;text-align:center"><h3>No one has posted about "${document.getElementById('searchName').value}" yet.</h3><p>Be the first to say something good about them above.</p></div>`;
+}else{
+result.innerHTML=`<div class="profile-box" style="margin-top:20px"><p>WHAT THE WORLD SAYS ABOUT</p><h2>${found[0].to}</h2><div class="big-num">${found.length} Kindnesses</div><p>❤️ ${totalHearts} total love from strangers</p></div>` + found.map(p=>`<div class="post"><div class="post-text">"${p.text}"</div><div class="post-from">— From ${p.from} • ${p.kind}</div></div>`).join('');
+}
+}
+render();
+</script>
+</body>
+</html>
