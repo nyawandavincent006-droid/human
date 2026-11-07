@@ -104,6 +104,58 @@ font-size:11px;
 font-weight:800;
 margin-top:5px;
 }
+.section-title{
+font-size:16px;
+font-weight:850;
+margin:15px 0 7px;
+}
+.setting-row{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+padding:12px 0;
+border-bottom:1px solid var(--line);
+}
+.setting-row:last-child{border-bottom:0}
+.setting-row small{
+display:block;
+color:var(--muted);
+font-size:11px;
+margin-top:3px;
+}
+.setting-row input[type=checkbox]{
+width:20px;
+height:20px;
+accent-color:var(--pink);
+flex-shrink:0;
+}
+.info-box{
+background:#f5f5f8;
+padding:12px;
+border-radius:12px;
+margin:8px 0;
+overflow-wrap:anywhere;
+}
+.avatar-preview{
+width:90px;
+height:90px;
+border-radius:50%;
+margin:10px auto;
+overflow:hidden;
+background:linear-gradient(135deg,#ff3b65,#ff9b49);
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+font-weight:900;
+}
+.avatar-preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
 @media(max-width:420px){
 .wrap{padding:9px}
 .card{padding:13px}
@@ -143,7 +195,7 @@ margin-top:5px;
 </div>
 
 <div id="registerFields" class="hidden">
-<input id="regEmail" type="email" placeholder="Your real email address">
+<input id="regEmail" type="email" placeholder="Your email address">
 <input id="regUsername" placeholder="Choose a username">
 <input id="regBio" placeholder="Tell people about yourself">
 </div>
@@ -176,7 +228,6 @@ Forgot password?
 
 <div class="demo-label">LOCAL DEMO ACCOUNT</div>
 </div>
-
 </div>
 </section>
 
@@ -198,7 +249,7 @@ Forgot password?
 <div class="tabs">
 <button id="feedTab" class="active" onclick="showView('feed')">🌍 FEED</button>
 <button id="savedTab" onclick="showView('saved')">🔖 SAVED</button>
-<button id="profileTab" onclick="showView('profile')">👤 PROFILE</button>
+<button id="profileTab" onclick="showView('profile')">👤 IDENTITY</button>
 </div>
 
 <!-- FEED -->
@@ -222,30 +273,125 @@ Forgot password?
 </div>
 </div>
 
-<!-- PROFILE -->
+<!-- HUMAN IDENTITY -->
 <div id="profileView" class="hidden">
+
 <div class="card">
 <div style="text-align:center">
-<div class="avatar" id="bigAvatar" style="width:85px;height:85px;margin:auto;font-size:28px">?</div>
-<h2 id="profileUsername"></h2>
-<p id="profileBio"></p>
+<div class="avatar-preview" id="bigAvatar">?</div>
+<h2 id="profileUsername">@human</h2>
+<p id="profileBio">No bio yet.</p>
+<div class="demo-label" id="identityModeLabel">IDENTITY</div>
+</div>
 </div>
 
-<hr>
+<!-- PROFILE EDITOR -->
+<div class="card">
+<h3>👤 Profile settings</h3>
+<p class="muted">Manage how other people see your HUMAN profile.</p>
 
-<b>Edit your profile</b>
-<input id="editBio" placeholder="Your bio">
-<input id="editAvatar" placeholder="Profile picture URL">
+<label class="section-title">Username</label>
+<input id="editUsername" maxlength="20" placeholder="Your username">
+<p class="muted">3-20 characters. Letters, numbers and underscores only.</p>
 
-<button class="primary full" onclick="saveProfile()">Save changes</button>
+<label class="section-title">About you</label>
+<textarea id="editBio" rows="3" maxlength="160" placeholder="Write something about yourself"></textarea>
+<p class="muted">Maximum 160 characters.</p>
 
-<hr>
+<label class="section-title">Profile picture URL</label>
+<input id="editAvatar" type="url" placeholder="https://example.com/photo.jpg">
+
+<div class="muted">Use a publicly accessible image URL. Image uploads are not enabled yet.</div>
+
+<button class="primary full" onclick="saveProfile()">💾 Save profile changes</button>
+</div>
+
+<!-- ACCOUNT INFORMATION -->
+<div class="card">
+<h3>📋 Account information</h3>
+
+<div class="info-box">
+<div class="muted">Username</div>
+<b id="accountUsername">@human</b>
+</div>
+
+<div class="info-box">
+<div class="muted">Email address</div>
+<b id="accountEmail">Not available</b>
+</div>
+
+<div class="info-box">
+<div class="muted">Account type</div>
+<b id="accountType">Development account</b>
+</div>
+
+<div class="info-box">
+<div class="muted">Email verification</div>
+<b id="accountVerification">Demo account</b>
+</div>
+
+<div class="info-box">
+<div class="muted">Account created</div>
+<b id="accountCreated">Not available</b>
+</div>
+
+<button class="light full" onclick="refreshAccountInfo()">↻ Refresh account information</button>
+</div>
+
+<!-- PRIVACY SETTINGS -->
+<div class="card">
+<h3>🔐 Privacy settings</h3>
+<p class="muted">Choose your preferred profile visibility settings.</p>
+
+<div class="setting-row">
+<div>
+<b>Private profile</b>
+<small>Preference for limiting who can view your profile.</small>
+</div>
+<input type="checkbox" id="privacyPrivate">
+</div>
+
+<div class="setting-row">
+<div>
+<b>Show email on profile</b>
+<small>Controls your profile display preference.</small>
+</div>
+<input type="checkbox" id="privacyEmail">
+</div>
+
+<div class="setting-row">
+<div>
+<b>Show activity status</b>
+<small>Controls your activity visibility preference.</small>
+</div>
+<input type="checkbox" id="privacyActivity">
+</div>
+
+<div class="setting-row">
+<div>
+<b>Allow discovery</b>
+<small>Preference for appearing in discovery features.</small>
+</div>
+<input type="checkbox" id="privacyDiscovery">
+</div>
+
+<button class="primary full" onclick="savePrivacy()">Save privacy preferences</button>
+
+<p class="muted">
+Important: These settings currently save your preferences. Real privacy enforcement requires matching Firebase Database Security Rules and server-side access controls. They do not yet prevent other users from reading data.
+</p>
+</div>
+
+<!-- ACCOUNT ACTIONS -->
+<div class="card">
+<h3>⚙️ Account actions</h3>
 
 <button class="light full" onclick="resetPassword()">Change password through email</button>
+
 <button class="danger full" onclick="logout()">Logout</button>
 </div>
-</div>
 
+</div>
 </section>
 </div>
 
@@ -261,7 +407,7 @@ Forgot password?
 // ========================================
 
 const firebaseConfig = {
-apiKey: "AIzaSyCFAciNfH_-OboP14XOMpeO7WRCAJecpHU",
+apiKey: "AIzaSyCFAciNf_-ObpO14XOMpeO7WRCAJecpHU",
 authDomain: "human-app-cea91.firebaseapp.com",
 databaseURL: "https://human-app-cea91-default-rtdb.firebaseio.com",
 projectId: "human-app-cea91",
@@ -279,16 +425,23 @@ const database = firebase.database();
 let currentUser = null;
 let currentProfile = null;
 let posts = [];
-let savedPosts = [];
+let savedPosts = {};
 
 let currentMode = "login";
 let activeView = "feed";
-
-// ========================================
-// DEVELOPMENT MODE
-// ========================================
-
 let demoMode = false;
+let registrationInProgress = false;
+
+const defaultPrivacy = {
+privateProfile:false,
+showEmail:false,
+showActivity:false,
+allowDiscovery:true
+};
+
+// ========================================
+// DEVELOPMENT STORAGE
+// ========================================
 
 function readDemoStorage(key,fallback){
 try{
@@ -297,6 +450,10 @@ return value ? JSON.parse(value) : fallback;
 }catch(error){
 return fallback;
 }
+}
+
+function saveDemoProfile(){
+localStorage.setItem("human_demo_profile",JSON.stringify(currentProfile));
 }
 
 let demoPosts = readDemoStorage("human_demo_posts",null);
@@ -326,13 +483,16 @@ love:1,
 comments:{}
 }
 ];
-
 localStorage.setItem("human_demo_posts",JSON.stringify(demoPosts));
 }
 
 function saveDemoPosts(){
 localStorage.setItem("human_demo_posts",JSON.stringify(demoPosts));
 }
+
+// ========================================
+// ENTER DEVELOPMENT MODE
+// ========================================
 
 function enterDemoMode(){
 
@@ -341,31 +501,42 @@ demoMode=true;
 currentUser={
 uid:"human-demo",
 email:"demo@human.local",
-emailVerified:true
+emailVerified:true,
+metadata:{creationTime:new Date().toISOString()}
 };
+
+const savedProfile=readDemoStorage("human_demo_profile",null);
 
 currentProfile={
 uid:"human-demo",
 username:"human_demo",
 bio:"HUMAN development test account.",
-avatar:""
+avatar:"",
+createdAt:Date.now(),
+privacy:{...defaultPrivacy},
+...(savedProfile||{})
 };
 
-posts=[];
+currentProfile.privacy={
+...defaultPrivacy,
+...(currentProfile.privacy||{})
+};
+
 savedPosts=readDemoStorage("human_demo_saved",{});
+posts=[];
 
 document.getElementById("authSection").classList.add("hidden");
 document.getElementById("appSection").classList.remove("hidden");
 
-document.getElementById("displayName").textContent="@human_demo";
+document.getElementById("displayName").textContent="@"+currentProfile.username;
 document.getElementById("displayEmail").textContent="LOCAL TEST ACCOUNT";
-document.getElementById("profileUsername").textContent="@human_demo";
-document.getElementById("profileBio").textContent=currentProfile.bio;
 document.getElementById("demoBadge").classList.remove("hidden");
-
 document.getElementById("connection").textContent="🧪 Demo Mode";
 
 updateAvatar();
+updateIdentityDisplay();
+loadPrivacyControls();
+refreshAccountInfo();
 showView("feed");
 loadSaved();
 loadFeed();
@@ -400,6 +571,12 @@ return /^[a-zA-Z0-9_]{3,20}$/.test(name);
 
 function profilePath(uid){
 return database.ref("users/"+uid);
+}
+
+function formatDate(value){
+if(!value)return "Not available";
+const date=new Date(value);
+return isNaN(date.getTime())?"Not available":date.toLocaleString();
 }
 
 // ========================================
@@ -468,10 +645,11 @@ if(!reservation.committed){
 throw new Error("That username is already taken.");
 }
 
+registrationInProgress=true;
+
 try{
 
 const credential=await auth.createUserWithEmailAndPassword(email,password);
-
 const uid=credential.user.uid;
 
 await profilePath(uid).set({
@@ -479,12 +657,12 @@ uid:uid,
 username:username,
 bio:bio,
 avatar:"",
+privacy:{...defaultPrivacy},
 createdAt:firebase.database.ServerValue.TIMESTAMP,
 verified:false
 });
 
 await usernameRef.set(uid);
-
 await credential.user.sendEmailVerification();
 
 toast("Account created! Please verify your email.");
@@ -498,6 +676,11 @@ await auth.currentUser.delete().catch(()=>{});
 }
 
 throw error;
+
+}finally{
+
+registrationInProgress=false;
+
 }
 
 }else{
@@ -548,14 +731,10 @@ return;
 }
 
 try{
-
 await auth.sendPasswordResetEmail(email);
 toast("Password reset email sent.");
-
 }catch(error){
-
 toast(error.message);
-
 }
 
 }
@@ -566,7 +745,7 @@ toast(error.message);
 
 auth.onAuthStateChanged(async user=>{
 
-if(demoMode)return;
+if(demoMode || registrationInProgress)return;
 
 currentUser=user;
 
@@ -604,16 +783,22 @@ return;
 
 currentProfile=snapshot.val();
 
+currentProfile.privacy={
+...defaultPrivacy,
+...(currentProfile.privacy||{})
+};
+
 document.getElementById("authSection").classList.add("hidden");
 document.getElementById("appSection").classList.remove("hidden");
 document.getElementById("demoBadge").classList.add("hidden");
 
 document.getElementById("displayName").textContent="@"+currentProfile.username;
 document.getElementById("displayEmail").textContent=user.email;
-document.getElementById("profileUsername").textContent="@"+currentProfile.username;
-document.getElementById("profileBio").textContent=currentProfile.bio||"No bio yet.";
 
 updateAvatar();
+updateIdentityDisplay();
+loadPrivacyControls();
+refreshAccountInfo();
 
 loadSaved();
 loadFeed();
@@ -627,7 +812,7 @@ toast("Unable to load your profile: "+error.message);
 });
 
 // ========================================
-// PROFILE
+// AVATAR AND PROFILE DISPLAY
 // ========================================
 
 function updateAvatar(){
@@ -643,10 +828,54 @@ const html=avatar
 document.getElementById(id).innerHTML=html;
 });
 
+if(document.getElementById("editBio")){
 document.getElementById("editBio").value=currentProfile.bio||"";
 document.getElementById("editAvatar").value=avatar;
+document.getElementById("editUsername").value=currentProfile.username||"";
+}
 
 }
+
+function updateIdentityDisplay(){
+
+if(!currentProfile)return;
+
+const username="@"+currentProfile.username;
+
+document.getElementById("profileUsername").textContent=username;
+document.getElementById("profileBio").textContent=currentProfile.bio||"No bio yet.";
+document.getElementById("displayName").textContent=username;
+document.getElementById("accountUsername").textContent=username;
+
+}
+
+// ========================================
+// ACCOUNT INFORMATION
+// ========================================
+
+function refreshAccountInfo(){
+
+if(!currentUser || !currentProfile)return;
+
+document.getElementById("accountUsername").textContent="@"+currentProfile.username;
+
+document.getElementById("accountEmail").textContent=
+demoMode?"demo@human.local":currentUser.email||"Not available";
+
+document.getElementById("accountType").textContent=
+demoMode?"Local Development Account":"Firebase Account";
+
+document.getElementById("accountVerification").textContent=
+demoMode?"Demo account":currentUser.emailVerified?"Verified":"Not verified";
+
+document.getElementById("accountCreated").textContent=
+formatDate(currentProfile.createdAt||currentUser.metadata?.creationTime);
+
+}
+
+// ========================================
+// PROFILE EDITING
+// ========================================
 
 function openProfile(){
 showView("profile");
@@ -656,47 +885,186 @@ async function saveProfile(){
 
 if(!currentUser)return;
 
+const username=document.getElementById("editUsername").value.trim().toLowerCase();
 const bio=document.getElementById("editBio").value.trim();
 const avatar=document.getElementById("editAvatar").value.trim();
+
+if(!usernameValid(username)){
+toast("Username must be 3-20 letters, numbers or underscores.");
+return;
+}
+
+if(bio.length>160){
+toast("Your bio must be 160 characters or less.");
+return;
+}
 
 if(avatar && !/^https?:\/\//i.test(avatar)){
 toast("Profile picture must use an HTTP or HTTPS URL.");
 return;
 }
 
+const oldUsername=currentProfile.username;
+
 try{
 
 if(demoMode){
 
+if(username!==oldUsername){
+
+const taken=demoPosts.some(post=>
+post.uid!=="human-demo" &&
+String(post.name||"").toLowerCase()===username
+);
+
+if(taken){
+toast("That username is already in use in this demo.");
+return;
+}
+
+}
+
+currentProfile.username=username;
 currentProfile.bio=bio;
 currentProfile.avatar=avatar;
 
-localStorage.setItem("human_demo_profile",JSON.stringify(currentProfile));
+saveDemoProfile();
 
-document.getElementById("profileBio").textContent=bio||"No bio yet.";
+document.getElementById("displayEmail").textContent="LOCAL TEST ACCOUNT";
 
 updateAvatar();
-toast("Demo profile updated.");
+updateIdentityDisplay();
+refreshAccountInfo();
+
+toast("Your demo identity has been updated.");
 return;
 
 }
+
+// LIVE FIREBASE PROFILE UPDATE
+
+if(username!==oldUsername){
+
+const newUsernameRef=database.ref("usernameIndex/"+username);
+const oldUsernameRef=database.ref("usernameIndex/"+oldUsername);
+
+const oldSnapshot=await oldUsernameRef.once("value");
+
+if(oldSnapshot.val()!==currentUser.uid){
+throw new Error("Your current username reservation could not be verified.");
+}
+
+const reservation=await newUsernameRef.transaction(current=>{
+if(current===null)return "__RESERVED__";
+return;
+});
+
+if(!reservation.committed){
+throw new Error("That username is already taken.");
+}
+
+try{
+
+await profilePath(currentUser.uid).update({
+username:username,
+bio:bio,
+avatar:avatar
+});
+
+await newUsernameRef.set(currentUser.uid);
+await oldUsernameRef.remove();
+
+}catch(error){
+
+const check=await newUsernameRef.once("value");
+
+if(check.val()==="__RESERVED__"){
+await newUsernameRef.remove().catch(()=>{});
+}
+
+throw error;
+
+}
+
+}else{
 
 await profilePath(currentUser.uid).update({
 bio:bio,
 avatar:avatar
 });
 
+}
+
+currentProfile.username=username;
 currentProfile.bio=bio;
 currentProfile.avatar=avatar;
 
-document.getElementById("profileBio").textContent=bio||"No bio yet.";
-
 updateAvatar();
-toast("Profile updated.");
+updateIdentityDisplay();
+refreshAccountInfo();
+
+toast("Your HUMAN identity has been updated.");
 
 }catch(error){
 
-toast(error.message);
+toast("Profile update failed: "+error.message);
+
+}
+
+}
+
+// ========================================
+// PRIVACY SETTINGS
+// ========================================
+
+function loadPrivacyControls(){
+
+if(!currentProfile)return;
+
+const privacy={
+...defaultPrivacy,
+...(currentProfile.privacy||{})
+};
+
+document.getElementById("privacyPrivate").checked=!!privacy.privateProfile;
+document.getElementById("privacyEmail").checked=!!privacy.showEmail;
+document.getElementById("privacyActivity").checked=!!privacy.showActivity;
+document.getElementById("privacyDiscovery").checked=!!privacy.allowDiscovery;
+
+}
+
+async function savePrivacy(){
+
+if(!currentUser || !currentProfile)return;
+
+const privacy={
+privateProfile:document.getElementById("privacyPrivate").checked,
+showEmail:document.getElementById("privacyEmail").checked,
+showActivity:document.getElementById("privacyActivity").checked,
+allowDiscovery:document.getElementById("privacyDiscovery").checked
+};
+
+try{
+
+if(demoMode){
+
+currentProfile.privacy=privacy;
+saveDemoProfile();
+
+toast("Demo privacy preferences saved.");
+return;
+
+}
+
+await profilePath(currentUser.uid).child("privacy").set(privacy);
+
+currentProfile.privacy=privacy;
+
+toast("Privacy preferences saved.");
+
+}catch(error){
+
+toast("Unable to save privacy settings: "+error.message);
 
 }
 
@@ -723,8 +1091,13 @@ document.getElementById(id).classList.remove("active");
 document.getElementById(view+"Tab").classList.add("active");
 
 if(view==="saved")renderSaved();
-
 if(view==="feed")loadFeed();
+if(view==="profile"){
+updateAvatar();
+updateIdentityDisplay();
+loadPrivacyControls();
+refreshAccountInfo();
+}
 
 }
 
@@ -1091,13 +1464,13 @@ return;
 
 }
 
-database.ref("saved/"+currentUser.uid).on("value",snapshot=>{
+database.ref("saved/"+currentUser.uid).once("value").then(snapshot=>{
 
 savedPosts=snapshot.val()||{};
 
 if(activeView==="saved")renderSaved();
 
-});
+}).catch(error=>toast(error.message));
 
 }
 
@@ -1143,6 +1516,8 @@ toast("Post saved.");
 
 }
 
+loadSaved();
+
 }catch(error){
 
 toast(error.message);
@@ -1178,9 +1553,9 @@ async function refreshApp(){
 if(!currentUser)return;
 
 await loadFeed();
+loadSaved();
 
 if(demoMode){
-loadSaved();
 toast("Development environment refreshed.");
 return;
 }
@@ -1203,7 +1578,7 @@ demoMode=false;
 currentUser=null;
 currentProfile=null;
 posts=[];
-savedPosts=[];
+savedPosts={};
 
 document.getElementById("appSection").classList.add("hidden");
 document.getElementById("authSection").classList.remove("hidden");
@@ -1221,6 +1596,7 @@ await auth.signOut();
 
 currentProfile=null;
 posts=[];
+savedPosts={};
 
 toast("Logged out successfully.");
 
@@ -1233,10 +1609,8 @@ toast("Logged out successfully.");
 database.ref(".info/connected").on("value",snapshot=>{
 
 if(demoMode){
-
 document.getElementById("connection").textContent="🧪 Demo Mode";
 return;
-
 }
 
 document.getElementById("connection").textContent=
