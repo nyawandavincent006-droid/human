@@ -5,150 +5,83 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HUMAN - Be Human</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f0f2f5;color:#111}
-header{background:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;box-shadow:0 1px 5px #0001;z-index:10}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f0f2f5}
+header{background:#fff;padding:12px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;box-shadow:0 1px 5px #0001}
 .logo{font-size:26px;font-weight:900}.logo span{color:#ff3b5c}
-.btn{background:#111;color:#fff;border:0;padding:9px 14px;border-radius:20px;font-weight:700;cursor:pointer}
+.btn{background:#111;color:#fff;border:0;padding:10px 14px;border-radius:20px;font-weight:700;cursor:pointer}
 .btn-pink{background:#ff3b5c!important;color:#fff!important}
-.btn-red{background:#ff4444!important;color:#fff!important}
 .wrap{max-width:520px;margin:0 auto;padding:12px}
 .card{background:#fff;border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px #0001}
 input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:5px 0;font-size:15px}
-.ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff3b5c,#ff9a00);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;font-size:18px;overflow:hidden;flex-shrink:0}.ava img{width:100%;height:100%;object-fit:cover}
-.actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.actions button{flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer;font-weight:600;min-width:60px}
+.ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff3b5c,#ff9a00);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;overflow:hidden;flex-shrink:0}.ava img{width:100%;height:100%;object-fit:cover}
+.actions{display:flex;gap:6px;margin-top:10px}.actions button{flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer;font-weight:600}
 .comment{background:#f5f5f5;padding:8px 10px;border-radius:12px;margin-top:6px;font-size:14px}
-.badge{background:#ff3b5c;color:#fff;font-size:11px;padding:2px 7px;border-radius:10px}
-.status{font-size:12px;color:#666;text-align:center;padding:6px}
-.mood-row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}.mood-row button{border:1px solid #ddd;background:#fff;padding:7px 10px;border-radius:20px;cursor:pointer}
-.mood-row button.sel{background:#ff3b5c;color:#fff}
+.status{font-size:12px;text-align:center;padding:6px;color:#666}
+.mood-row{display:flex;gap:6px;flex-wrap:wrap}.mood-row button{border:1px solid #ddd;background:#fff;padding:7px 10px;border-radius:20px;cursor:pointer}.mood-row button.sel{background:#ff3b5c;color:#fff}
 .poll-opt{background:#f0f0f0;padding:10px;border-radius:12px;margin:5px 0;cursor:pointer;position:relative;overflow:hidden}.poll-bar{position:absolute;left:0;top:0;bottom:0;background:#ff3b5c33}
 .challenge{background:linear-gradient(135deg,#6a11cb,#2575fc);color:#fff;border-radius:18px;padding:16px;margin-bottom:12px}
 .tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{flex:1;padding:12px;border-radius:14px;border:0;font-weight:800;cursor:pointer;background:#ddd}.tabs button.on{background:#111;color:#fff}
-.chat-box{height:280px;overflow-y:auto;background:#f9f9f9;padding:10px;border-radius:14px;margin-bottom:8px}
-.msg{background:#fff;padding:8px 12px;border-radius:14px;margin:5px 0;max-width:85%;box-shadow:0 1px 3px #0001}.msg.me{background:#111;color:#fff;margin-left:auto}
-.own-tools{display:flex;gap:6px;margin-top:8px}.own-tools button{padding:6px 12px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer;font-size:12px;font-weight:700}
+.chat-box{height:250px;overflow-y:auto;background:#f9f9f9;padding:10px;border-radius:14px;margin-bottom:8px}
+.msg{background:#fff;padding:8px 12px;border-radius:14px;margin:5px 0;max-width:85%}.msg.me{background:#111;color:#fff;margin-left:auto}
 .preview{width:100%;border-radius:14px;margin-top:8px;display:none}
 </style>
 </head>
 <body>
-<header><div class="logo">HUMAN<span>.</span></div><div>👤 <b id="myName">Guest</b> • <span id="status2">...</span></div></header>
+<header><div class="logo">HUMAN<span>.</span></div><div>👤 <b id="myName">Guest</b></div></header>
 <div class="wrap">
 <div class="tabs"><button id="tabFeed" class="on" onclick="showTab('feed')">🌍 FEED</button><button id="tabChat" onclick="showTab('chat')">💬 CHAT</button></div>
-
 <div id="feedView">
-<div class="challenge"><small>✨ TODAY'S HUMAN QUESTION</small><h3 id="dailyQ">What made you smile today?</h3><button class="btn" style="background:#fff;color:#111" onclick="document.getElementById('titleInput').value='Today: '+document.getElementById('dailyQ').textContent;document.getElementById('textInput').focus()">💬 Answer This</button></div>
+<div class="challenge"><small>✨ TODAY'S QUESTION</small><h3 id="dailyQ">What made you smile today?</h3></div>
 <div class="card">
 <b>🌍 Post to the World</b><div class="status" id="status">Connecting...</div>
 <input id="nameInput" placeholder="Your name">
-<label style="font-size:13px">📸 Your Profile Photo:</label>
 <input type="file" id="avaFile" accept="image/*" onchange="uploadAva(this)">
-<input id="avaInput" placeholder="Or paste photo link">
-<div class="mood-row"><button onclick="setMood('😊 Happy',this)">😊 Happy</button><button onclick="setMood('😢 Sad',this)">😢 Sad</button><button onclick="setMood('🔥 Motivated',this)">🔥 Motivated</button><button onclick="setMood('😍 In Love',this)">😍 In Love</button><button onclick="setMood('🤔 Thinking',this)">🤔 Thinking</button></div>
-<label><input type="checkbox" id="anonCheck" style="width:auto"> 🎭 Post Anonymously</label>
+<input id="avaInput" placeholder="Or photo link">
+<div class="mood-row"><button onclick="setMood('😊 Happy',this)">😊 Happy</button><button onclick="setMood('😢 Sad',this)">😢 Sad</button><button onclick="setMood('🔥 Motivated',this)">🔥 Motivated</button><button onclick="setMood('😍 In Love',this)">😍 In Love</button></div>
+<label><input type="checkbox" id="anonCheck" style="width:auto"> 🎭 Anonymous</label>
 <input id="titleInput" placeholder="Title...">
 <textarea id="textInput" rows="3" placeholder="Write your story..."></textarea>
-<label style="font-size:13px">📸 Post Photo - Pick from Gallery:</label>
-<input type="file" id="imgFile" accept="image/*" onchange="uploadImg(this)">
-<img id="imgPreview" class="preview">
-<input id="imgInput" placeholder="Or paste image link">
+<label>📸 Post Photo:</label><input type="file" id="imgFile" accept="image/*" onchange="uploadImg(this)"><img id="imgPreview" class="preview">
+<input id="imgInput" placeholder="Or image link">
 <input id="pollInput" placeholder="📊 Poll? Question? | Option1 | Option2">
 <button class="btn btn-pink" id="postBtn" onclick="makePost()" style="width:100%">🚀 POST TO THE WORLD</button>
 </div>
-<div style="display:flex;gap:6px;margin-bottom:12px"><button class="btn" onclick="filter='all';render()">🌍 All</button><button class="btn" onclick="filter='top';render()">🔥 Top</button><button class="btn" onclick="filter='mine';render()">👤 Mine</button><button class="btn" onclick="filter='anon';render()">🎭 Anonymous</button><button class="btn" onclick="filter='poll';render()">📊 Polls</button></div>
+<div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+<button class="btn" onclick="setFilter('all')">🌍 All</button><button class="btn" onclick="setFilter('top')">🔥 Top</button><button class="btn" onclick="setFilter('mine')">👤 Mine</button><button class="btn" onclick="setFilter('anon')">🎭 Anonymous</button><button class="btn" onclick="setFilter('poll')">📊 Polls</button>
+</div>
 <div id="feed"></div>
 </div>
-
 <div id="chatView" style="display:none">
-<div class="card">
-<b>💬 GLOBAL CHAT - Talk to anyone live</b><div class="status">Everyone in HUMAN can see this chat</div>
-<div class="chat-box" id="chatBox"></div>
-<div style="display:flex;gap:6px"><input id="chatInput" placeholder="Type a message..."><button class="btn btn-pink" onclick="sendChat()">Send</button></div>
-<small>Tip: Type @name to talk to someone. Example: @Vincent hello!</small>
+<div class="card"><b>💬 GLOBAL CHAT</b><div class="chat-box" id="chatBox">Loading chat...</div><div style="display:flex;gap:6px"><input id="chatInput" placeholder="Type message..."><button class="btn btn-pink" onclick="sendChat()">Send</button></div></div>
+<div class="card"><b>👥 People</b><div id="peopleList"></div></div>
 </div>
-<div class="card"><b>👥 People on HUMAN</b><div id="peopleList"></div></div>
-</div>
-
 </div>
 <script>
-const BASE="https://human-app-cea91-default-rtdb.firebaseio.com";
-const DB=BASE+"/posts"; const CHATDB=BASE+"/chats";
-let posts=[]; let chats=[]; let filter='all'; let selMood=''; let currentTab='feed';
-const QUESTIONS=["What's one thing that made you smile today?","If you could talk to your 10-year-old self, what would you say?","What is your city missing?","What is your biggest dream right now?","What are you grateful for today?","What's a secret talent you have?","If you had 1M KES, what would you do first?","What makes you feel most alive?"];
+var BASE="https://human-app-cea91-default-rtdb.firebaseio.com";
+var DB=BASE+"/posts"; var CHATDB=BASE+"/chats";
+var posts=[]; var chats=[]; var filter='all'; var selMood='';
+var QUESTIONS=["What made you smile today?","What is your biggest dream?","What are you grateful for?","If you had 1M KES what would you do?","What makes you feel alive?"];
 document.getElementById('dailyQ').textContent=QUESTIONS[new Date().getDate()%QUESTIONS.length];
-let myName=localStorage.getItem('human_name')||''; let myAva=localStorage.getItem('human_ava')||'';
+var myName=localStorage.getItem('human_name')||''; var myAva=localStorage.getItem('human_ava')||'';
 if(myName){document.getElementById('myName').textContent=myName; document.getElementById('nameInput').value=myName; document.getElementById('avaInput').value=myAva;}
-function showTab(t){currentTab=t; document.getElementById('feedView').style.display=t==='feed'?'block':'none'; document.getElementById('chatView').style.display=t==='chat'?'block':'none'; document.getElementById('tabFeed').className=t==='feed'?'on':''; document.getElementById('tabChat').className=t==='chat'?'on':'';}
-function setMood(m,el){selMood=m; document.querySelectorAll('.mood-row button').forEach(b=>b.classList.remove('sel')); el.classList.add('sel');}
-function uploadAva(input){let f=input.files[0]; if(!f) return; let r=new FileReader(); r.onload=e=>{document.getElementById('avaInput').value=e.target.result; alert('✅ Profile photo ready! Now post something.');}; r.readAsDataURL(f);}
-function uploadImg(input){let f=input.files[0]; if(!f) return; let r=new FileReader(); r.onload=e=>{document.getElementById('imgInput').value=e.target.result; let p=document.getElementById('imgPreview'); p.src=e.target.result; p.style.display='block';}; r.readAsDataURL(f);}
-async function load(){
- try{
-  let r=await fetch(DB+'.json'); let d=await r.json()||{};
-  posts=Object.keys(d).map(k=>({...d[k],_key:k})).sort((a,b)=>b.time-a.time);
-  document.getElementById('status').textContent='✅ Connected - '+posts.length+' posts';
-  document.getElementById('status2').textContent=posts.length+' posts';
-  render(); renderPeople();
- }catch(e){document.getElementById('status').textContent='⚠️ Offline';}
-}
-async function loadChat(){
- try{let r=await fetch(CHATDB+'.json'); let d=await r.json()||{}; chats=Object.keys(d).map(k=>({...d[k],_key:k})).sort((a,b)=>a.time-b.time).slice(-50); let box=document.getElementById('chatBox'); box.innerHTML=chats.map(c=>`<div class="msg ${c.name===myName?'me':''}"><b>${c.name}:</b> ${c.text}<br><small>${new Date(c.time).toLocaleTimeString()}</small></div>`).join('')||'No messages yet. Be first!'; box.scrollTop=box.scrollHeight;}catch(e){}
-}
-async function sendChat(){
- let txt=document.getElementById('chatInput').value.trim(); if(!txt) return;
- let name=document.getElementById('nameInput').value.trim()||myName||'Guest';
- if(name!=='Guest'){localStorage.setItem('human_name',name); myName=name; document.getElementById('myName').textContent=name;}
- await fetch(CHATDB+'.json',{method:'POST',body:JSON.stringify({name,text:txt,time:Date.now()})});
- document.getElementById('chatInput').value=''; loadChat();
-}
-function renderPeople(){
- let seen={}; posts.forEach(p=>{if(p.name && !p.anon) seen[p.name]=p.ava||'';});
- let h=Object.keys(seen).map(n=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #eee"><div class="ava" style="width:32px;height:32px;font-size:14px">${seen[n]?`<img src="${seen[n]}">`:n[0].toUpperCase()}</div><b>${n}</b> <button class="btn" style="padding:4px 10px;font-size:12px;margin-left:auto" onclick="chatTo('${n}')">💬 Chat</button></div>`).join('');
- document.getElementById('peopleList').innerHTML=h||'No people yet. Be first to post!';
-}
+function showTab(t){document.getElementById('feedView').style.display=(t==='feed'?'block':'none'); document.getElementById('chatView').style.display=(t==='chat'?'block':'none'); document.getElementById('tabFeed').className=(t==='feed'?'on':''); document.getElementById('tabChat').className=(t==='chat'?'on':''); if(t==='chat') loadChat();}
+function setFilter(f){filter=f; alert('Filter: '+f+' - showing '+posts.length+' posts'); render();}
+function setMood(m,el){selMood=m; var b=document.querySelectorAll('.mood-row button'); for(var i=0;i<b.length;i++) b[i].classList.remove('sel'); el.classList.add('sel');}
+function uploadAva(inp){var f=inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(e){document.getElementById('avaInput').value=e.target.result; alert('✅ Profile photo ready');}; r.readAsDataURL(f);}
+function uploadImg(inp){var f=inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(e){document.getElementById('imgInput').value=e.target.result; var p=document.getElementById('imgPreview'); p.src=e.target.result; p.style.display='block';}; r.readAsDataURL(f);}
+async function load(){try{var r=await fetch(DB+'.json'); var d=await r.json()||{}; posts=Object.keys(d).map(function(k){var o=d[k]; o._key=k; return o;}).sort(function(a,b){return b.time-a.time}); document.getElementById('status').textContent='✅ '+posts.length+' posts - Tap All/Top/Mine to filter'; render(); renderPeople();}catch(e){document.getElementById('status').textContent='⚠️ Offline '+e.message;}}
+async function loadChat(){try{var r=await fetch(CHATDB+'.json'); var d=await r.json()||{}; chats=Object.keys(d).map(function(k){var o=d[k]; o._key=k; return o;}).sort(function(a,b){return a.time-b.time}).slice(-50); var box=document.getElementById('chatBox'); box.innerHTML=''; for(var i=0;i<chats.length;i++){var c=chats[i]; var div=document.createElement('div'); div.className='msg'+(c.name===myName?' me':''); div.innerHTML='<b>'+c.name+':</b> '+c.text; box.appendChild(div);} if(chats.length===0) box.innerHTML='No messages yet. Be first!'; box.scrollTop=box.scrollHeight;}catch(e){document.getElementById('chatBox').innerHTML='Chat offline';}}
+async function sendChat(){var txt=document.getElementById('chatInput').value.trim(); if(!txt){alert('Type a message first'); return;} var name=document.getElementById('nameInput').value.trim()||myName||'Guest'; if(name!=='Guest'){localStorage.setItem('human_name',name); myName=name; document.getElementById('myName').textContent=name;} await fetch(CHATDB+'.json',{method:'POST',body:JSON.stringify({name:name,text:txt,time:Date.now()})}); document.getElementById('chatInput').value=''; loadChat();}
 function chatTo(name){showTab('chat'); document.getElementById('chatInput').value='@'+name+' '; document.getElementById('chatInput').focus();}
-async function makePost(){
- let btn=document.getElementById('postBtn'); btn.textContent='⏳ Posting...'; btn.disabled=true;
- try{
-  let anon=document.getElementById('anonCheck').checked;
-  let name=anon?'Anonymous 🎭':(document.getElementById('nameInput').value.trim()||'Guest');
-  let ava=anon?'':document.getElementById('avaInput').value.trim();
-  let title=document.getElementById('titleInput').value.trim(); let text=document.getElementById('textInput').value.trim(); let img=document.getElementById('imgInput').value.trim();
-  let pollRaw=document.getElementById('pollInput').value.trim(); let poll=null;
-  if(pollRaw.includes('|')){let p=pollRaw.split('|').map(s=>s.trim()); poll={q:p[0],opts:p.slice(1).map(t=>({t,votes:0}))};}
-  if(!title && !text && !poll && !img){alert('Write something first!'); btn.textContent='🚀 POST TO THE WORLD'; btn.disabled=false; return;}
-  if(!anon){localStorage.setItem('human_name',name); localStorage.setItem('human_ava',ava); myName=name; document.getElementById('myName').textContent=name;}
-  let res=await fetch(DB+'.json',{method:'POST',body:JSON.stringify({name,ava,title,text,img,mood:selMood,anon,poll,likes:0,love:0,hug:0,wow:0,comments:[],time:Date.now()})});
-  if(!res.ok) throw new Error('Firebase blocked - Code '+res.status);
-  alert('✅ POSTED!');
-  document.getElementById('titleInput').value=''; document.getElementById('textInput').value=''; document.getElementById('imgInput').value=''; document.getElementById('pollInput').value=''; document.getElementById('imgPreview').style.display='none';
-  await load();
- }catch(e){alert('❌ FAILED: '+e.message);}
- btn.textContent='🚀 POST TO THE WORLD'; btn.disabled=false;
-}
-async function deletePost(k){
- if(!confirm('Delete this post forever?')) return;
- await fetch(DB+'/'+k+'.json',{method:'DELETE'}); alert('🗑️ Deleted!'); load();
-}
-async function editPost(k){
- let p=posts.find(x=>x._key===k); let newText=prompt('Edit your post:',p.text||''); if(newText===null) return; let newTitle=prompt('Edit title:',p.title||''); if(newTitle===null) return;
- await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({text:newText,title:newTitle})}); alert('✅ Edited!'); load();
-}
-async function react(k,type){let p=posts.find(x=>x._key===k); p[type]=(p[type]||0)+1; let o={}; o[type]=p[type]; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify(o)}); load();}
-async function vote(k,idx){let p=posts.find(x=>x._key===k); p.poll.opts[idx].votes++; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({poll:p.poll})}); load();}
-async function addComment(k){let inp=document.getElementById('c-'+k); let txt=inp.value.trim(); if(!txt) return; let p=posts.find(x=>x._key===k); p.comments=p.comments||[]; p.comments.push({name:myName||'Guest',text:txt}); await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load();}
-function render(){
- let list=[...posts]; if(filter==='top') list.sort((a,b)=>((b.likes||0)+(b.love||0))-(a.likes||0)-(a.love||0))); if(filter==='anon') list=list.filter(p=>p.anon); if(filter==='poll') list=list.filter(p=>p.poll); if(filter==='mine') list=list.filter(p=>p.name===myName);
- let h=''; list.forEach(p=>{
-  let date=new Date(p.time).toLocaleString(); let totalVotes=p.poll?p.poll.opts.reduce((s,o)=>s+o.votes,0):0;
-  let pollHtml=''; if(p.poll){pollHtml=`<div style="background:#f9f9ff;padding:10px;border-radius:12px;margin-top:8px"><b>📊 ${p.poll.q}</b>`+p.poll.opts.map((o,i)=>{let pct=totalVotes?Math.round(o.votes/totalVotes*100):0; return `<div class="poll-opt" onclick="vote('${p._key}',${i})"><div class="poll-bar" style="width:${pct}%"></div><span style="position:relative"><b>${o.t}</b> - ${o.votes} votes (${pct}%)</span></div>`}).join('')+`</div>`;}
-  let isMine=p.name===myName && myName!=='';
-  let ownHtml=isMine?`<div class="own-tools"><button onclick="editPost('${p._key}')">✏️ Edit</button><button onclick="deletePost('${p._key}')" style="color:red">🗑️ Delete</button><span style="font-size:11px;color:green">• Your post</span></div>`:'';
-  h+=`<div class="card"><div style="display:flex;gap:10px;align-items:center"><div class="ava">${p.anon?'🎭':(p.ava?`<img src="${p.ava}">`:(p.name||'G')[0].toUpperCase())}</div><div><b>${p.name} ${p.mood?`<span style="background:#ffe1e7;padding:2px 8px;border-radius:10px;font-size:11px">${p.mood}</span>`:''}</b><br><small>${date}</small></div><button class="btn" style="margin-left:auto;padding:6px 10px;font-size:12px" onclick="chatTo('${p.name}')">💬</button></div><h3>${p.title||''}</h3><p>${p.text||''}</p>${p.img?`<img src="${p.img}" style="width:100%;border-radius:14px" onerror="this.style.display='none'">`:''}${pollHtml}${ownHtml}<div class="actions"><button onclick="react('${p._key}','likes')">❤️ ${p.likes||0}</button><button onclick="react('${p._key}','love')">😍 ${p.love||0}</button><button onclick="react('${p._key}','hug')">🤗 ${p.hug||0}</button><button onclick="react('${p._key}','wow')">😮 ${p.wow||0}</button></div><div>${(p.comments||[]).map(c=>`<div class="comment"><b>${c.name}:</b> ${c.text}</div>`).join('')}</div><div style="display:flex;gap:6px;margin-top:8px"><input id="c-${p._key}" placeholder="Write a comment..."><button class="btn" onclick="addComment('${p._key}')">Send</button></div></div>`;
- });
- document.getElementById('feed').innerHTML=h||'<div class="card"><center>Be the FIRST to post! 🌍</center></div>';
-}
+function renderPeople(){var seen={}; for(var i=0;i<posts.length;i++){var p=posts[i]; if(p.name && !p.anon) seen[p.name]=p.ava||'';} var h=''; for(var n in seen){h+='<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #eee"><div class="ava" style="width:32px;height:32px;font-size:14px">'+(seen[n]?'<img src="'+seen[n]+'">':n.charAt(0).toUpperCase())+'</div><b>'+n+'</b><button class="btn" style="padding:4px 10px;font-size:12px;margin-left:auto" onclick="chatTo(\''+n+'\')">💬 Chat</button></div>';} document.getElementById('peopleList').innerHTML=h||'No people yet';}
+async function makePost(){var btn=document.getElementById('postBtn'); btn.textContent='⏳ Posting...'; try{var anon=document.getElementById('anonCheck').checked; var name=anon?'Anonymous 🎭':(document.getElementById('nameInput').value.trim()||'Guest'); var ava=anon?'':document.getElementById('avaInput').value.trim(); var title=document.getElementById('titleInput').value.trim(); var text=document.getElementById('textInput').value.trim(); var img=document.getElementById('imgInput').value.trim(); var pollRaw=document.getElementById('pollInput').value.trim(); var poll=null; if(pollRaw.indexOf('|')>-1){var parts=pollRaw.split('|').map(function(s){return s.trim()}); poll={q:parts[0],opts:parts.slice(1).map(function(t){return {t:t,votes:0}})};} if(!title && !text && !poll && !img){alert('Write something first!'); btn.textContent='🚀 POST TO THE WORLD'; return;} if(!anon){localStorage.setItem('human_name',name); localStorage.setItem('human_ava',ava); myName=name; document.getElementById('myName').textContent=name;} var res=await fetch(DB+'.json',{method:'POST',body:JSON.stringify({name:name,ava:ava,title:title,text:text,img:img,mood:selMood,anon:anon,poll:poll,likes:0,love:0,hug:0,wow:0,comments:[],time:Date.now()})}); if(!res.ok) throw new Error('Firebase '+res.status); alert('✅ POSTED! Scroll down to see it'); document.getElementById('titleInput').value=''; document.getElementById('textInput').value=''; document.getElementById('imgInput').value=''; document.getElementById('pollInput').value=''; document.getElementById('imgPreview').style.display='none'; await load();}catch(e){alert('❌ FAILED: '+e.message);} btn.textContent='🚀 POST TO THE WORLD';}
+async function deletePost(k){if(!confirm('Delete this post?')) return; await fetch(DB+'/'+k+'.json',{method:'DELETE'}); load();}
+async function editPost(k){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; var nt=prompt('Edit text:',p.text||''); if(nt===null) return; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({text:nt})}); load();}
+async function react(k,type){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p[type]=(p[type]||0)+1; var o={}; o[type]=p[type]; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify(o)}); load();}
+async function vote(k,idx){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p.poll.opts[idx].votes++; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({poll:p.poll})}); load();}
+async function addComment(k){var inp=document.getElementById('c-'+k); var txt=inp.value.trim(); if(!txt) return; var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p.comments=p.comments||[]; p.comments.push({name:myName||'Guest',text:txt}); await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load();}
+function render(){var list=[]; for(var i=0;i<posts.length;i++) list.push(posts[i]); if(filter==='top') list.sort(function(a,b){return ((b.likes||0)+(b.love||0))-((a.likes||0)+(a.love||0))}); if(filter==='anon') list=list.filter(function(p){return p.anon}); if(filter==='poll') list=list.filter(function(p){return p.poll}); if(filter==='mine') list=list.filter(function(p){return p.name===myName}); var h=''; for(var j=0;j<list.length;j++){var p=list[j]; var date=new Date(p.time).toLocaleString(); var total=p.poll?p.poll.opts.reduce(function(s,o){return s+o.votes},0):0; var pollHtml=''; if(p.poll){pollHtml='<div style="background:#f9f9ff;padding:10px;border-radius:12px"><b>📊 '+p.poll.q+'</b>'; for(var q=0;q<p.poll.opts.length;q++){var o=p.poll.opts[q]; var pct=total?Math.round(o.votes/total*100):0; pollHtml+='<div class="poll-opt" onclick="vote(\''+p._key+'\','+q+')"><div class="poll-bar" style="width:'+pct+'%"></div><span style="position:relative"><b>'+o.t+'</b> - '+o.votes+' votes ('+pct+'%)</span></div>';} pollHtml+='</div>';} var isMine=(p.name===myName && myName!==''); var ownHtml=isMine?'<div style="display:flex;gap:6px;margin-top:8px"><button onclick="editPost(\''+p._key+'\')">✏️ Edit</button><button onclick="deletePost(\''+p._key+'\')" style="color:red">🗑️ Delete</button><span>• Your post</span></div>':''; var comments=''; for(var c=0;c<(p.comments||[]).length;c++){comments+='<div class="comment"><b>'+p.comments[c].name+':</b> '+p.comments[c].text+'</div>';} h+='<div class="card"><div style="display:flex;gap:10px;align-items:center"><div class="ava">'+(p.anon?'🎭':(p.ava?'<img src="'+p.ava+'">':(p.name||'G').charAt(0).toUpperCase()))+'</div><div><b>'+p.name+'</b><br><small>'+date+'</small></div><button class="btn" style="margin-left:auto;padding:6px 10px;font-size:12px" onclick="chatTo(\''+p.name+'\')">💬</button></div><h3>'+(p.title||'')+'</h3><p>'+(p.text||'')+'</p>'+(p.img?'<img src="'+p.img+'" style="width:100%;border-radius:14px">':'')+pollHtml+ownHtml+'<div class="actions"><button onclick="react(\''+p._key+'\',\'likes\')">❤️ '+(p.likes||0)+'</button><button onclick="react(\''+p._key+'\',\'love\')">😍 '+(p.love||0)+'</button><button onclick="react(\''+p._key+'\',\'hug\')">🤗 '+(p.hug||0)+'</button><button onclick="react(\''+p._key+'\',\'wow\')">😮 '+(p.wow||0)+'</button></div>'+comments+'<div style="display:flex;gap:6px;margin-top:8px"><input id="c-'+p._key+'" placeholder="Comment..."><button class="btn" onclick="addComment(\''+p._key+'\')">Send</button></div></div>';} document.getElementById('feed').innerHTML=h||'<div class="card"><center>No posts for this filter. Try All.<br>Be first to post!</center></div>';}
 load(); loadChat(); setInterval(load,5000); setInterval(loadChat,3000);
-document.getElementById('chatInput')?.addEventListener('keypress',e=>{if(e.key==='Enter') sendChat();});
 </script>
 </body>
 </html>
