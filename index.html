@@ -1,102 +1,874 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HUMAN</title>
-<style>*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f0f2f5}header{background:#fff;padding:10px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}.logo{font-size:26px;font-weight:900}.logo span{color:#ff3b5c}.btn{background:#111;color:#fff;border:0;padding:10px 14px;border-radius:20px;font-weight:700;cursor:pointer}.btn-pink{background:#ff3b5c!important}.btn-green{background:#00c853!important}.btn-red{background:#ff4444!important}.wrap{max-width:520px;margin:0 auto;padding:12px}.card{background:#fff;border-radius:18px;padding:14px;margin-bottom:12px}.ava{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#ff3b5c,#ff9a00);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:900;overflow:hidden;flex-shrink:0;cursor:pointer}.ava img{width:100%;height:100%;object-fit:cover}.ava-big{width:90px;height:90px;font-size:34px;margin:0 auto}input,textarea{width:100%;padding:12px;border:1px solid #ddd;border-radius:12px;margin:5px 0}.tabs{display:flex;gap:6px;margin-bottom:10px}.tabs button{flex:1;padding:11px;border-radius:12px;border:0;font-weight:800;background:#ddd;cursor:pointer}.tabs button.on{background:#111;color:#fff}.chat-box{height:280px;overflow-y:auto;background:#f9f9f9;padding:10px;border-radius:12px}.msg{background:#fff;padding:8px 12px;border-radius:12px;margin:5px 0;max-width:85%}.msg.me{background:#111;color:#fff;margin-left:auto}.comment{background:#f5f5f5;padding:8px;border-radius:10px;margin-top:6px;white-space:pre-wrap}.hashtag{color:#ff3b5c;font-weight:700;cursor:pointer}#toast{position:fixed;top:60px;left:10px;right:10px;z-index:9999;background:#111;color:#fff;padding:14px;border-radius:16px;display:none}#callBox{position:fixed;inset:0;background:#000;z-index:10000;display:none;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding:12px}#callBox video{width:100%;max-width:420px;border-radius:14px;background:#222}.live-dot{width:10px;height:10px;background:#00e676;border-radius:50%;display:inline-block}</style></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10101b">
+<title>HUMAN | Be Human. Be Real.</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+--bg:#f3f4f8;
+--card:#fff;
+--dark:#171725;
+--pink:#ff3b65;
+--muted:#77798b;
+--line:#e9e9ef;
+}
+body{
+margin:0;
+font-family:system-ui,Arial,sans-serif;
+background:var(--bg);
+color:var(--dark);
+}
+header{
+position:sticky;
+top:0;
+z-index:20;
+background:#fff;
+padding:12px 16px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+box-shadow:0 2px 12px #0000000c;
+}
+.logo{font-size:27px;font-weight:950;letter-spacing:-1.5px}
+.logo span{color:var(--pink)}
+.wrap{max-width:650px;margin:auto;padding:14px}
+.card{
+background:var(--card);
+border-radius:18px;
+padding:16px;
+margin-bottom:13px;
+box-shadow:0 3px 15px #00000008;
+}
+input,textarea{
+width:100%;
+padding:13px;
+border:1px solid var(--line);
+border-radius:12px;
+margin:6px 0;
+font:inherit;
+outline:none;
+}
+input:focus,textarea:focus{border-color:var(--pink)}
+button{
+border:0;
+border-radius:12px;
+padding:10px 14px;
+font-weight:750;
+cursor:pointer;
+}
+.primary{background:var(--pink);color:#fff}
+.dark{background:var(--dark);color:#fff}
+.light{background:#f0f0f5;color:var(--dark)}
+.danger{background:#ffe5e9;color:#d60032}
+.full{width:100%;margin-top:8px}
+.tabs{display:flex;gap:7px;margin-bottom:12px}
+.tabs button{flex:1;background:#e8e8ef}
+.tabs button.active{background:var(--dark);color:#fff}
+.hidden{display:none!important}
+.avatar{
+width:45px;height:45px;border-radius:50%;
+background:linear-gradient(135deg,#ff3b65,#ff9b49);
+color:white;display:flex;align-items:center;
+justify-content:center;font-weight:900;
+overflow:hidden;flex-shrink:0;
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.row{display:flex;align-items:center;gap:10px}
+.muted{color:var(--muted);font-size:12px}
+.post-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.actions button{flex:1;background:#f5f5f8}
+.comment{
+background:#f5f5f8;padding:10px;
+border-radius:10px;margin-top:7px;
+}
+#toast{
+position:fixed;top:70px;left:12px;right:12px;
+background:#171725;color:#fff;padding:13px;
+border-radius:13px;z-index:100;display:none;
+}
+.status{font-size:12px;color:var(--muted)}
+@media(max-width:420px){
+.wrap{padding:9px}
+.card{padding:13px}
+.tabs button{font-size:11px;padding:10px 4px}
+}
+</style>
+</head>
+
 <body>
+
 <div id="toast"></div>
-<div id="callBox"><h3 id="callTitle">Calling...</h3><video id="remoteVideo" autoplay playsinline></video><video id="localVideo" autoplay muted playsinline style="width:130px;position:absolute;bottom:90px;right:10px;border:2px solid #fff"></video><div style="display:flex;gap:8px"><button class="btn btn-green" id="acceptCallBtn" onclick="acceptCall()" style="display:none">✅ Accept</button><button class="btn btn-red" onclick="endCall()">❌ End</button><button class="btn" onclick="toggleMute()">🎤 Mute</button></div><p id="callStatus"></p></div>
-<header><div class="logo">HUMAN<span>.</span></div><div style="display:flex;gap:6px;align-items:center"><span id="connDot">🟢</span><span style="font-size:11px"><span class="live-dot"></span> LIVE</span><span id="notifBadge"></span><button class="btn" onclick="manualRefresh()">🔄</button><div class="ava" id="headerDP" onclick="openProfile()">?</div></div></header>
+
+<header>
+<div class="logo">HUMAN<span>.</span></div>
+<div class="row">
+<span id="connection" class="status">Connecting...</span>
+<button class="light" onclick="refreshApp()">↻</button>
+<div class="avatar" id="headerAvatar">?</div>
+</div>
+</header>
+
 <div class="wrap">
-<div id="authCard"><div style="text-align:center"><h1>HUMAN<span style="color:#ff3b5c">.</span></h1><p>Be Human. Be Real ❤️<br>PART 1 LOADED - Login must work!</p></div>
-<div class="card"><b>🔐 LOGIN - PART 1</b><br><small>If TEST works, Part 1 is OK</small>
-<input id="loginUser" placeholder="Username - e.g. Job"><input id="loginPass" type="password" placeholder="Password"><input id="loginBio" placeholder="Bio (optional)">
-<label>📸 DP:</label><input type="file" accept="image/*" onchange="uploadAva(this)"><img id="loginDPPreview" style="width:100%;border-radius:12px;display:none"><input id="avaInput" placeholder="Or DP link">
-<button class="btn btn-pink" id="loginBtn" onclick="doLogin()" style="width:100%;font-size:17px;padding:14px">🔐 LOGIN / SIGN UP</button>
-<button class="btn" onclick="testLogin()" style="width:100%;margin-top:6px;background:#888!important">🧪 TEST - Does Button Work?</button>
-<div id="loginDebug" style="text-align:center;padding:8px;color:red;min-height:20px"></div></div></div>
-<div id="profileView" style="display:none"><div class="card"><div style="text-align:center"><div class="ava ava-big" id="profileDP" onclick="document.getElementById('profileFile').click()">?</div><input type="file" id="profileFile" accept="image/*" onchange="changeDP(this)" style="display:none"><br><small>Tap DP to change</small><h2 id="profileName"></h2><p id="profileBio"></p><p>👥 <span id="profileFriends">0</span> Friends • 📝 <span id="profilePosts">0</span> Posts</p></div>
-<b>✏️ Edit</b><input id="editBio" placeholder="Edit Bio"><input id="editAva" placeholder="DP Link"><button class="btn btn-pink" onclick="saveProfile()" style="width:100%">💾 SAVE</button><hr><b>🔑 Change Password</b><input id="oldPass" type="password" placeholder="Old"><input id="newPass" type="password" placeholder="New"><button class="btn" onclick="changePass()" style="width:100%">🔑 CHANGE</button><hr><button class="btn" onclick="switchAccount()" style="width:100%">🔄 ANOTHER ACCOUNT</button><button class="btn btn-red" onclick="doLogout()" style="width:100%;margin-top:6px">🚪 LOGOUT</button><button class="btn" onclick="closeProfile()" style="width:100%;margin-top:6px">⬅️ Back</button></div></div>
-<div id="mainApp" style="display:none">
-<div style="display:flex;justify-content:space-between;background:#e8f5e9;padding:8px 12px;border-radius:12px;font-size:12px;margin-bottom:10px"><span><span class="live-dot"></span> <b>LIVE</b></span><button class="btn btn-green" onclick="manualRefresh()" style="padding:6px 12px">🔄 REFRESH</button></div>
-<div class="tabs"><button id="tabFeed" class="on" onclick="showTab('feed')">🌍 FEED</button><button id="tabChat" onclick="showTab('chat')">💬 DM</button><button id="tabSaved" onclick="showTab('saved')">🔖 SAVED</button><button id="tabNotif" onclick="showTab('notif')">🔔 NOTIF <span id="notifBadge2"></span></button></div>
-<div id="feedView"><div class="card"><b>🌍 Post</b><div id="status">Part 1 - Feed coming in Part 2</div><input id="searchInput" placeholder="🔍 Search..."><input id="titleInput" placeholder="Title"><textarea id="textInput" rows="3" placeholder="Write story..."></textarea><input type="file" accept="image/*" onchange="uploadImg(this)"><img id="imgPreview" style="width:100%;border-radius:12px;display:none"><input id="imgInput" placeholder="Or image link"><input id="pollInput" placeholder="Poll? Q? | Opt1 | Opt2"><label><input type="checkbox" id="anonCheck" style="width:auto"> 🎭 Anonymous</label><button class="btn btn-pink" id="postBtn" onclick="makePost()" style="width:100%">🚀 POST</button></div><div id="feed"></div></div>
-<div id="chatView" style="display:none"><div class="card"><b>🔒 DM - Part 2 will add chat</b><div id="dmStatus"></div><input id="dmTo" placeholder="Friend"><button class="btn" onclick="openDM()">Open DM</button><div>Chatting: <span id="currentDM">Nobody</span> • <span id="friendCheck"></span></div><div style="display:flex;gap:6px;margin:8px 0"><button class="btn btn-green" onclick="startCall(false)" style="flex:1">📞 Voice Call</button><button class="btn btn-pink" onclick="startCall(true)" style="flex:1">📹 Video Call</button></div><div class="chat-box" id="chatBox"></div><div style="display:flex;gap:6px"><input id="chatInput" placeholder="Message..." style="flex:1"><button class="btn" onclick="sendDMImage()">📸</button><button class="btn" onclick="sendDMVideo()">🎥</button><button class="btn" id="voiceBtn" onclick="toggleVoice()">🎤</button><button class="btn btn-pink" onclick="sendChat()">Send</button></div><input type="file" id="dmImage" accept="image/*" onchange="sendDMImageFile(this)" style="display:none"><input type="file" id="dmVideo" accept="video/*" onchange="sendDMVideoFile(this)" style="display:none"><div id="voiceStatus" style="color:red;text-align:center;font-size:12px"></div></div><div class="card"><b>👥 People</b><div id="peopleList"></div></div><div class="card"><b>✅ My Friends</b><div id="friendList"></div></div></div>
-<div id="savedView" style="display:none"><div class="card"><b>🔖 Saved</b><div id="savedList"></div></div></div>
-<div id="notifView" style="display:none"><div class="card"><b>🔔 Notifications</b><button class="btn" onclick="clearNotifs()">Clear</button><div id="notifList"></div></div></div>
-</div></div>
+
+<!-- AUTHENTICATION -->
+<section id="authSection">
+
+<div class="card" style="text-align:center">
+<h1>Welcome to HUMAN<span style="color:#ff3b65">.</span></h1>
+<p>Be Human. Be Real. ❤️</p>
+<p class="muted">Your people. Your stories. Your space.</p>
+</div>
+
+<div class="card">
+<div class="tabs">
+<button id="loginTab" class="active" onclick="authMode('login')">LOGIN</button>
+<button id="registerTab" onclick="authMode('register')">CREATE ACCOUNT</button>
+</div>
+
+<div id="registerFields" class="hidden">
+<input id="regEmail" type="email" placeholder="Your real email address">
+<input id="regUsername" placeholder="Choose a username">
+<input id="regBio" placeholder="Tell people about yourself">
+</div>
+
+<div id="loginFields">
+<input id="loginEmail" type="email" placeholder="Email address">
+</div>
+
+<input id="authPassword" type="password" placeholder="Password">
+
+<button class="primary full" id="authButton" onclick="authenticate()">
+LOGIN
+</button>
+
+<button class="light full" onclick="resetPassword()">
+Forgot password?
+</button>
+
+<p id="authMessage" class="status"></p>
+</div>
+</section>
+
+<!-- MAIN APPLICATION -->
+<section id="appSection" class="hidden">
+
+<div class="card">
+<div class="row">
+<div class="avatar" id="profileAvatar">?</div>
+<div style="flex:1">
+<b id="displayName">HUMAN Member</b>
+<div class="muted" id="displayEmail"></div>
+</div>
+<button class="light" onclick="openProfile()">Profile</button>
+</div>
+</div>
+
+<div class="tabs">
+<button id="feedTab" class="active" onclick="showView('feed')">🌍 FEED</button>
+<button id="savedTab" onclick="showView('saved')">🔖 SAVED</button>
+<button id="profileTab" onclick="showView('profile')">👤 PROFILE</button>
+</div>
+
+<!-- FEED -->
+<div id="feedView">
+
+<div class="card">
+<h3>Share your story 🌍</h3>
+<input id="postTitle" placeholder="Give your post a title">
+<textarea id="postText" rows="4" placeholder="What's happening?"></textarea>
+<button class="primary full" onclick="createPost()">🚀 Publish post</button>
+</div>
+
+<div id="feed"></div>
+</div>
+
+<!-- SAVED -->
+<div id="savedView" class="hidden">
+<div class="card">
+<h3>🔖 Your saved posts</h3>
+<div id="savedPosts"></div>
+</div>
+</div>
+
+<!-- PROFILE -->
+<div id="profileView" class="hidden">
+<div class="card">
+<div style="text-align:center">
+<div class="avatar" id="bigAvatar" style="width:85px;height:85px;margin:auto;font-size:28px">?</div>
+<h2 id="profileUsername"></h2>
+<p id="profileBio"></p>
+</div>
+
+<hr>
+
+<b>Edit your profile</b>
+<input id="editBio" placeholder="Your bio">
+<input id="editAvatar" placeholder="Profile picture URL">
+
+<button class="primary full" onclick="saveProfile()">Save changes</button>
+
+<hr>
+
+<button class="light full" onclick="resetPassword()">Change password through email</button>
+<button class="danger full" onclick="logout()">Logout</button>
+</div>
+</div>
+
+</section>
+</div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database-compat.js"></script>
+
 <script>
-var BASE="https://human-app-cea91-default-rtdb.firebaseio.com"; var DB=BASE+"/posts"; var CHATDB=BASE+"/dms"; var NOTIFDB=BASE+"/notifications"; var USERDB=BASE+"/users"; var FRIENDDB=BASE+"/friends"; var CALLDB=BASE+"/calls";
-var posts=[],notifs=[],filter='all',searchQ='',saved=[]; try{saved=JSON.parse(localStorage.getItem('human_saved')||'[]')}catch(e){saved=[]}
-var friends=[],currentDM='',mediaRecorder=null,audioChunks=[],isRecording=false,seenNotifKeys={},pc=null,localStream=null,currentCallId='',isMuted=false;
-var myName=''; try{myName=localStorage.getItem('human_name')||''}catch(e){} var myAva=''; try{myAva=localStorage.getItem('human_ava')||''}catch(e){} var myBio=''; try{myBio=localStorage.getItem('human_bio')||''}catch(e){}
-function testLogin(){alert('✅ BUTTON WORKS! Part 1 is OK! Now type username + password and tap LOGIN.'); document.getElementById('loginDebug').textContent='✅ Button works!';}
-function doLogin(){var dbg=document.getElementById('loginDebug'); var btn=document.getElementById('loginBtn'); try{var u=document.getElementById('loginUser').value.trim(); var p=document.getElementById('loginPass').value.trim(); var bio=document.getElementById('loginBio').value.trim(); var ava=document.getElementById('avaInput').value.trim(); if(!u){dbg.textContent='❌ Type username!'; alert('Type username!'); return;} if(!p){dbg.textContent='❌ Type password!'; alert('Type password!'); return;} dbg.textContent='⏳ Logging in...'; btn.textContent='⏳ LOGGING IN...'; myName=u; if(bio) myBio=bio; if(ava) myAva=ava; localStorage.setItem('human_name',u); localStorage.setItem('human_bio',myBio); localStorage.setItem('human_ava',myAva); fetch(USERDB+'/'+encodeURIComponent(u)+'.json').then(function(r){return r.json()}).then(function(ex){if(ex && ex.pass && ex.pass!==p){dbg.textContent='❌ Wrong password for '+u; btn.textContent='🔐 LOGIN / SIGN UP'; myName=''; localStorage.removeItem('human_name'); alert('❌ Wrong password for '+u); return;} var fa=ava||(ex?ex.ava:'')||myAva; var fb=bio||(ex?ex.bio:'')||myBio; myAva=fa; myBio=fb; localStorage.setItem('human_ava',myAva); localStorage.setItem('human_bio',myBio); fetch(USERDB+'/'+encodeURIComponent(u)+'.json',{method:'PUT',body:JSON.stringify({name:u,pass:p,bio:fb,ava:fa,time:Date.now()})}).catch(function(){}); finishLogin(u);}).catch(function(){finishLogin(u);});}catch(err){alert('Login error: '+err.message); btn.textContent='🔐 LOGIN / SIGN UP';}}
-function finishLogin(u){document.getElementById('loginBtn').textContent='🔐 LOGIN / SIGN UP'; document.getElementById('loginDebug').textContent=''; updateHeaderDP(); showApp(); alert('✅ Welcome '+u+'! You are IN! Part 2 coming next.'); load(true); loadFriends(); loadNotifs();}
-function showApp(){document.getElementById('authCard').style.display='none'; document.getElementById('mainApp').style.display='block'; document.getElementById('profileView').style.display='none';}
-function showLogin(){document.getElementById('authCard').style.display='block'; document.getElementById('mainApp').style.display='none'; document.getElementById('profileView').style.display='none';}
-function updateHeaderDP(){var dp=document.getElementById('headerDP'); if(myName && myAva && myAva.length>10) dp.innerHTML='<img src="'+myAva+'">'; else if(myName) dp.textContent=myName.charAt(0).toUpperCase(); else dp.textContent='?';}
-function doLogout(){myName=''; myAva=''; friends=[]; try{localStorage.removeItem('human_name')}catch(e){} updateHeaderDP(); showLogin(); alert('🚪 Logged out');}
-if(myName){updateHeaderDP(); showApp();}else{showLogin(); updateHeaderDP();}
-function openProfile(){if(!myName){showLogin(); return;} document.getElementById('mainApp').style.display='none'; document.getElementById('profileView').style.display='block'; var pd=document.getElementById('profileDP'); pd.innerHTML=(myAva&&myAva.length>10)?'<img src="'+myAva+'">':myName.charAt(0); document.getElementById('profileName').textContent=myName; document.getElementById('profileBio').textContent=myBio||'No bio'; document.getElementById('editBio').value=myBio; document.getElementById('editAva').value=myAva; document.getElementById('profileFriends').textContent=friends.length; document.getElementById('profilePosts').textContent=posts.filter(function(p){return p.name===myName}).length;}
-function closeProfile(){document.getElementById('profileView').style.display='none'; document.getElementById('mainApp').style.display='block';}
-function changeDP(inp){var f=inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(e){myAva=e.target.result; document.getElementById('editAva').value=myAva; document.getElementById('profileDP').innerHTML='<img src="'+myAva+'">'; saveProfile();}; r.readAsDataURL(f);}
-async function saveProfile(){myBio=document.getElementById('editBio').value.trim(); var na=document.getElementById('editAva').value.trim(); if(na) myAva=na; try{localStorage.setItem('human_bio',myBio); localStorage.setItem('human_ava',myAva);}catch(e){} try{await fetch(USERDB+'/'+encodeURIComponent(myName)+'.json',{method:'PATCH',body:JSON.stringify({bio:myBio,ava:myAva})})}catch(e){} updateHeaderDP(); openProfile(); alert('✅ Saved!');}
-async function changePass(){var o=document.getElementById('oldPass').value; var n=document.getElementById('newPass').value; if(!o||!n){alert('Type old + new'); return;} try{var r=await fetch(USERDB+'/'+encodeURIComponent(myName)+'.json'); var u=await r.json(); if(!u||u.pass!==o){alert('❌ Old wrong!'); return;} await fetch(USERDB+'/'+encodeURIComponent(myName)+'.json',{method:'PATCH',body:JSON.stringify({pass:n})});}catch(e){alert('Check network'); return;} alert('✅ Password Changed!');}
-function switchAccount(){if(confirm('Switch from '+myName+'?')) doLogout();}
-function showToast(t,m,b){var el=document.getElementById('toast'); el.innerHTML='<b>'+t+'</b><br>'+m+'<br>'+(b||'<button class="btn" onclick="hideToast()">OK</button>'); el.style.display='block'; setTimeout(function(){if(!b) hideToast();},8000);} function hideToast(){document.getElementById('toast').style.display='none';}
-async function manualRefresh(){if(!myName) return; await load(true); await loadFriends(); await loadNotifs(); if(currentDM) await loadDMs();}
-function showTab(t){document.getElementById('feedView').style.display=(t==='feed'?'block':'none'); document.getElementById('chatView').style.display=(t==='chat'?'block':'none'); document.getElementById('savedView').style.display=(t==='saved'?'block':'none'); document.getElementById('notifView').style.display=(t==='notif'?'block':'none'); document.getElementById('tabFeed').className=(t==='feed'?'on':''); document.getElementById('tabChat').className=(t==='chat'?'on':''); document.getElementById('tabSaved').className=(t==='saved'?'on':''); document.getElementById('tabNotif').className=(t==='notif'?'on':''); if(t==='feed') load(true); if(t==='chat'){loadFriends(); loadDMs();} if(t==='saved') renderSaved(); if(t==='notif') loadNotifs();}
-function doSearch(){searchQ=document.getElementById('searchInput').value.trim().toLowerCase(); filter='all'; render();}
-function clearSearch(){searchQ=''; document.getElementById('searchInput').value=''; filter='all'; render();}
-function setFilter(f){filter=f; searchQ=''; render();}
-function uploadAva(inp){var f=inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(e){document.getElementById('avaInput').value=e.target.result; var pv=document.getElementById('loginDPPreview'); pv.src=e.target.result; pv.style.display='block'; document.getElementById('loginDebug').textContent='✅ DP SELECTED!';}; r.readAsDataURL(f);}
-function uploadImg(inp){var f=inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=function(e){document.getElementById('imgInput').value=e.target.result; var p=document.getElementById('imgPreview'); p.src=e.target.result; p.style.display='block';}; r.readAsDataURL(f);}
-function formatText(t){if(!t) return ''; return t.replace(/#(\w+)/g,'<span class="hashtag" onclick="filterHashtag(\'#$1\')">#$1</span>');}
-function filterHashtag(tag){searchQ=tag.toLowerCase(); document.getElementById('searchInput').value=tag; render();}
-  async function loadFriends(){if(!myName) return; try{var r=await fetch(FRIENDDB+'.json?x='+Date.now()); var d=await r.json()||{}; friends=[]; for(var k in d){var f=d[k]; if(f.a===myName) friends.push(f.b); if(f.b===myName) friends.push(f.a);} friends=[...new Set(friends)];}catch(e){} renderPeople();}
-async function sendFriendReq(to){if(!myName){alert('Login!'); return;} if(to===myName){alert('That is you!'); return;} await loadFriends(); if(friends.indexOf(to)>-1){alert('Already friends!'); return;} await fetch(NOTIFDB+'.json',{method:'POST',body:JSON.stringify({to:to,from:myName,fromAva:myAva,text:myName+' sent FRIEND REQUEST!',time:Date.now(),type:'friend_req'})}); alert('🤝 Sent to '+to+'!');}
-async function acceptFriend(name){await loadFriends(); if(friends.indexOf(name)===-1) await fetch(FRIENDDB+'.json',{method:'POST',body:JSON.stringify({a:myName,b:name,time:Date.now()})}); await fetch(NOTIFDB+'.json',{method:'POST',body:JSON.stringify({to:name,from:myName,fromAva:myAva,text:myName+' ✅ ACCEPTED you!',time:Date.now(),type:'accepted'})}); await loadFriends(); hideToast(); showToast('✅ Friends!','You + '+name+' are friends!','<button class="btn btn-green" onclick="chatTo(\''+name+'\');hideToast()">💬 Chat Now</button>');}
-async function denyFriend(name){await fetch(NOTIFDB+'.json',{method:'POST',body:JSON.stringify({to:name,from:myName,fromAva:myAva,text:myName+' ❌ DECLINED you.',time:Date.now(),type:'denied'})}); hideToast(); showToast('❌ Declined','You declined '+name,'<button class="btn" onclick="hideToast()">OK</button>'); loadNotifs();}
-async function openDM(){var to=document.getElementById('dmTo').value.trim(); if(!to){alert('Type friend name'); return;} await loadFriends(); var ok=friends.indexOf(to)>-1||to===myName; document.getElementById('friendCheck').textContent=ok?'✅ FRIEND':'❌ NOT FRIEND'; if(!ok){alert('❌ NOT friends yet! 1. Add Friend 2. They Accept 3. Then DM opens'); return;} currentDM=to; document.getElementById('currentDM').textContent=to+' (Private 🔒)'; loadDMs();}
-function chatTo(name){showTab('chat'); document.getElementById('dmTo').value=name; openDM();}
-var dms=[];
-async function loadDMs(){try{var r=await fetch(CHATDB+'.json?x='+Date.now()); var d=await r.json()||{}; dms=Object.keys(d).map(function(k){var o=d[k]; o._key=k; return o;}).sort(function(a,b){return a.time-b.time}); var box=document.getElementById('chatBox'); if(!currentDM){box.innerHTML='Pick a friend.'; return;} var mine=dms.filter(function(m){return (m.from===myName&&m.to===currentDM)||(m.from===currentDM&&m.to===myName)}); box.innerHTML=''; for(var i=0;i<mine.length;i++){var c=mine[i]; var div=document.createElement('div'); div.className='msg'+(c.from===myName?' me':''); var body=''; if(c.type==='image') body='<img src="'+c.text+'" style="width:100%;border-radius:10px">'; else if(c.type==='video') body='<video controls src="'+c.text+'" style="width:100%"></video>'; else if(c.type==='voice') body='<audio controls src="'+c.text+'" style="width:100%"></audio>'; else body=c.text; div.innerHTML='<b>'+c.from+':</b><br>'+body+'<br><small>'+new Date(c.time).toLocaleTimeString()+'</small>'; box.appendChild(div);} if(mine.length===0) box.innerHTML='No messages yet.'; box.scrollTop=box.scrollHeight;}catch(e){}}
-async function sendChat(){var txt=document.getElementById('chatInput').value.trim(); if(!txt) return; if(!currentDM){alert('Pick friend!'); return;} await fetch(CHATDB+'.json',{method:'POST',body:JSON.stringify({from:myName,to:currentDM,text:txt,type:'text',time:Date.now()})}); await fetch(NOTIFDB+'.json',{method:'POST',body:JSON.stringify({to:currentDM,from:myName,fromAva:myAva,text:myName+' sent DM: "'+txt.slice(0,40)+'"',time:Date.now(),type:'dm'})}); document.getElementById('chatInput').value=''; loadDMs();}
-function sendDMImage(){if(!currentDM){alert('Pick friend!'); return;} document.getElementById('dmImage').click();}
-async function sendDMImageFile(inp){var f=inp.files[0]; if(!f) return; var r=new FileReader(); r.onload=async function(e){await fetch(CHATDB+'.json',{method:'POST',body:JSON.stringify({from:myName,to:currentDM,text:e.target.result,type:'image',time:Date.now()})}); loadDMs();}; r.readAsDataURL(f);}
-function sendDMVideo(){if(!currentDM){alert('Pick friend!'); return;} document.getElementById('dmVideo').click();}
-async function sendDMVideoFile(inp){var f=inp.files[0]; if(!f) return; if(f.size>8000000){alert('Video too big! <8MB'); return;} var r=new FileReader(); r.onload=async function(e){await fetch(CHATDB+'.json',{method:'POST',body:JSON.stringify({from:myName,to:currentDM,text:e.target.result,type:'video',time:Date.now()})}); loadDMs();}; r.readAsDataURL(f);}
-async function toggleVoice(){if(!currentDM){alert('Pick friend!'); return;} if(!isRecording){try{var s=await navigator.mediaDevices.getUserMedia({audio:true}); mediaRecorder=new MediaRecorder(s); audioChunks=[]; mediaRecorder.ondataavailable=function(e){audioChunks.push(e.data)}; mediaRecorder.onstop=async function(){var b=new Blob(audioChunks,{type:'audio/webm'}); var rd=new FileReader(); rd.onload=async function(e){await fetch(CHATDB+'.json',{method:'POST',body:JSON.stringify({from:myName,to:currentDM,text:e.target.result,type:'voice',time:Date.now()})}); loadDMs();}; rd.readAsDataURL(b);}; mediaRecorder.start(); isRecording=true; document.getElementById('voiceBtn').textContent='⏹️ Stop'; document.getElementById('voiceStatus').textContent='🔴 Recording...';}catch(e){alert('Allow mic!');}}else{mediaRecorder.stop(); isRecording=false; document.getElementById('voiceBtn').textContent='🎤'; document.getElementById('voiceStatus').textContent='Sending...';}}
-async function startCall(withVideo){if(!currentDM){alert('Pick friend to call! Open DM first.'); return;} await loadFriends(); if(friends.indexOf(currentDM)===-1){alert('Must be friends to call!'); return;} currentCallId='call_'+myName+'_'+currentDM+'_'+Date.now(); await fetch(CALLDB+'/'+currentCallId+'.json',{method:'PUT',body:JSON.stringify({from:myName,to:currentDM,video:withVideo,status:'ringing',time:Date.now()})}); await fetch(NOTIFDB+'.json',{method:'POST',body:JSON.stringify({to:currentDM,from:myName,fromAva:myAva,text:myName+' is calling you! '+(withVideo?'📹 Video':'📞 Voice'),time:Date.now(),type:'call',callId:currentCallId})}); document.getElementById('callBox').style.display='flex'; document.getElementById('callTitle').textContent=(withVideo?'📹 Video':'📞 Voice')+' Calling '+currentDM; document.getElementById('callStatus').textContent='Ringing...'; document.getElementById('acceptCallBtn').style.display='none'; startLocalMedia(withVideo); }
-async function acceptCall(){document.getElementById('acceptCallBtn').style.display='none'; document.getElementById('callStatus').textContent='Connecting...'; try{await fetch(CALLDB+'/'+currentCallId+'.json',{method:'PATCH',body:JSON.stringify({status:'accepted'})})}catch(e){} }
-async function pollCall(){if(!currentCallId) return; try{var r=await fetch(CALLDB+'/'+currentCallId+'.json?x='+Date.now()); var c=await r.json(); if(!c) return; if(c.status==='ended'){endCallUI(); return;} if(c.status==='accepted'){document.getElementById('callStatus').textContent='✅ Connected! LIVE!'; setupPeer();}}catch(e){}}
-function toggleMute(){if(!localStream) return; isMuted=!isMuted; localStream.getAudioTracks().forEach(function(t){t.enabled=!isMuted}); alert(isMuted?'🔇 Muted':'🎤 Unmuted');}
-async function startLocalMedia(v){try{localStream=await navigator.mediaDevices.getUserMedia({audio:true,video:v}); document.getElementById('localVideo').srcObject=localStream; document.getElementById('localVideo').style.display=v?'block':'none';}catch(e){alert('Allow Mic/Camera!');}}
-function setupPeer(){if(pc) return; pc=new RTCPeerConnection({iceServers:[{urls:'stun:stun.l.google.com:19302'}]}); if(localStream) localStream.getTracks().forEach(function(t){pc.addTrack(t,localStream)}); pc.ontrack=function(e){document.getElementById('remoteVideo').srcObject=e.streams[0];};}
-async function endCall(){if(currentCallId){try{await fetch(CALLDB+'/'+currentCallId+'.json',{method:'PATCH',body:JSON.stringify({status:'ended'})})}catch(e){}} endCallUI();}
-function endCallUI(){document.getElementById('callBox').style.display='none'; if(localStream) localStream.getTracks().forEach(function(t){t.stop()}); if(pc){pc.close(); pc=null;} currentCallId='';}
-async function loadNotifs(){if(!myName) return; try{var r=await fetch(NOTIFDB+'.json?x='+Date.now()); var d=await r.json()||{}; var all=Object.keys(d).map(function(k){var o=d[k]; o._key=k; return o;}).filter(function(n){return n.to===myName}).sort(function(a,b){return b.time-a.time}).slice(-30); notifs=all; document.getElementById('notifBadge').innerHTML=notifs.length?'<span style="background:red;color:#fff;border-radius:50%;padding:2px 7px;font-size:11px">'+notifs.length+'</span>':''; document.getElementById('notifBadge2').innerHTML=document.getElementById('notifBadge').innerHTML; renderNotifs(); for(var i=0;i<all.length;i++){var n=all[i]; if(!seenNotifKeys[n._key]){seenNotifKeys[n._key]=true; if(Date.now()-n.time<15000){if(n.type==='friend_req') showToast('🤝 Friend Request!',n.from+' wants to be friend!','<button class="btn btn-green" onclick="acceptFriend(\''+n.from+'\')">✅ Accept</button><button class="btn btn-red" onclick="denyFriend(\''+n.from+'\')">❌ Deny</button>'); else if(n.type==='accepted') showToast('✅ Accepted!',n.from+' accepted you!','<button class="btn btn-green" onclick="chatTo(\''+n.from+'\');hideToast()">💬 Chat Now</button>'); else if(n.type==='denied') showToast('❌ Declined',n.from+' declined.','<button class="btn" onclick="hideToast()">OK</button>'); else if(n.type==='call'){currentCallId=n.callId; document.getElementById('callBox').style.display='flex'; document.getElementById('callTitle').textContent='📞 Call from '+n.from; document.getElementById('callStatus').textContent=n.text; document.getElementById('acceptCallBtn').style.display='block'; startLocalMedia(n.text.indexOf('Video')>-1); showToast('📞 Incoming Call!',n.from+' is calling!','<button class="btn btn-green" onclick="acceptCall();hideToast()">✅ Accept</button><button class="btn btn-red" onclick="endCall();hideToast()">❌ Decline</button>');} else if(n.type==='dm') showToast('💬 New Message',n.text,'<button class="btn btn-green" onclick="chatTo(\''+n.from+'\');hideToast()">💬 Open</button>');}}}}catch(e){}}
-function renderNotifs(){var h=''; for(var i=0;i<notifs.length;i++){var n=notifs[i]; h+='<div class="card"><b>'+n.from+'</b><br>'+n.text+'<br><small>'+new Date(n.time).toLocaleString()+'</small><br>'+(n.type==='friend_req'?'<button class="btn btn-green" onclick="acceptFriend(\''+n.from+'\')">✅ Accept</button> <button class="btn btn-red" onclick="denyFriend(\''+n.from+'\')">❌ Deny</button>':'')+'</div>';} document.getElementById('notifList').innerHTML=h||'No notifications.';}
-async function clearNotifs(){if(!confirm('Clear?')) return; for(var i=0;i<notifs.length;i++) await fetch(NOTIFDB+'/'+notifs[i]._key+'.json',{method:'DELETE'}); notifs=[]; renderNotifs();}
-async function load(force){if(!myName) return; try{var r=await fetch(DB+'.json?x='+Date.now()); var d=await r.json()||{}; posts=Object.keys(d).map(function(k){var o=d[k]; o._key=k; return o;}).sort(function(a,b){return b.time-a.time}); document.getElementById('status').textContent='✅ '+posts.length+' posts • LIVE'; render(); renderPeople();}catch(e){document.getElementById('status').textContent='⚠️ Offline - Tap 🔄';}}
-function renderPeople(){if(!myName) return; var seen={}; posts.forEach(function(p){if(p.name&&!p.anon) seen[p.name]=p.ava||'';}); var h=''; for(var n in seen){var isF=friends.indexOf(n)>-1; h+='<div style="display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #eee"><div class="ava" style="width:32px;height:32px">'+(seen[n]?'<img src="'+seen[n]+'">':n.charAt(0))+'</div><b>'+n+'</b>'+(isF?' ✅':'')+'<button class="btn" style="padding:4px 8px;font-size:11px;margin-left:auto" onclick="sendFriendReq(\''+n+'\')">'+(isF?'⭐ Following':'🤝 Add')+'</button><button class="btn" style="padding:4px 8px;font-size:11px" onclick="chatTo(\''+n+'\')">💬 DM</button></div>';} document.getElementById('peopleList').innerHTML=h||'No people yet'; document.getElementById('friendList').innerHTML=friends.length?friends.map(function(f){return '<div style="padding:8px;border-bottom:1px solid #eee">✅ <b>'+f+'</b> <button class="btn" onclick="chatTo(\''+f+'\')">💬 Chat</button> <button class="btn btn-green" onclick="chatTo(\''+f+'\');setTimeout(function(){startCall(false)},600)">📞 Call</button></div>'}).join(''):'No friends yet';}
-async function makePost(){if(!myName&&!document.getElementById('anonCheck').checked){alert('LOGIN FIRST!'); return;} var btn=document.getElementById('postBtn'); btn.textContent='⏳ Posting...'; try{var anon=document.getElementById('anonCheck').checked; var name=anon?'Anonymous 🎭':myName; var ava=anon?'':myAva; var title=document.getElementById('titleInput').value.trim(); var text=document.getElementById('textInput').value.trim(); var img=document.getElementById('imgInput').value.trim(); var pollRaw=document.getElementById('pollInput').value.trim(); var poll=null; if(pollRaw.indexOf('|')>-1){var parts=pollRaw.split('|').map(function(s){return s.trim()}); poll={q:parts[0],opts:parts.slice(1).map(function(t){return {t:t,votes:0}})};} if(!title&&!text&&!poll&&!img){alert('Write something!'); btn.textContent='🚀 POST'; return;} await fetch(DB+'.json',{method:'POST',body:JSON.stringify({name:name,ava:ava,title:title,text:text,img:img,anon:anon,poll:poll,likes:0,love:0,hug:0,wow:0,reactions:{},comments:[],time:Date.now()})}); alert('✅ POSTED!'); document.getElementById('titleInput').value=''; document.getElementById('textInput').value=''; document.getElementById('imgInput').value=''; document.getElementById('pollInput').value=''; document.getElementById('imgPreview').style.display='none'; await load(true);}catch(e){alert('❌ '+e.message);} btn.textContent='🚀 POST';}
-async function deletePost(k){if(!confirm('Delete?')) return; await fetch(DB+'/'+k+'.json',{method:'DELETE'}); load(true);}
-async function editPost(k){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; var nt=prompt('Edit:',p.text||''); if(nt===null) return; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({text:nt})}); load(true);}
-async function react(k,type){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p[type]=(p[type]||0)+1; var o={}; o[type]=p[type]; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify(o)}); load(true);}
-async function vote(k,idx){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p.poll.opts[idx].votes++; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({poll:p.poll})}); load(true);}
-async function reactEmoji(k,emoji){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p.reactions=p.reactions||{}; p.reactions[emoji]=(p.reactions[emoji]||0)+1; await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({reactions:p.reactions})}); load(true);}
-async function addComment(k){var inp=document.getElementById('c-'+k); var txt=inp.value.trim(); if(!txt) return; var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===k) p=posts[i]; p.comments=p.comments||[]; p.comments.push({name:myName,text:txt,time:Date.now()}); await fetch(DB+'/'+k+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load(true);}
-async function editComment(pk,idx){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===pk) p=posts[i]; if(p.comments[idx].name!==myName){alert('Only YOUR comment!'); return;} var nt=prompt('Edit comment:',p.comments[idx].text); if(nt===null) return; p.comments[idx].text=nt; p.comments[idx].edited=true; await fetch(DB+'/'+pk+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load(true);}
-async function deleteComment(pk,idx){var p=null; for(var i=0;i<posts.length;i++) if(posts[i]._key===pk) p=posts[i]; if(p.comments[idx].name!==myName){alert('Only YOUR comment!'); return;} if(!confirm('Delete comment?')) return; p.comments.splice(idx,1); await fetch(DB+'/'+pk+'.json',{method:'PATCH',body:JSON.stringify({comments:p.comments})}); load(true);}
-function toggleSave(k){var i=saved.indexOf(k); if(i>-1) saved.splice(i,1); else{saved.push(k); alert('🔖 Saved!');} try{localStorage.setItem('human_saved',JSON.stringify(saved))}catch(e){} render();}
-function sharePost(k){var url=location.href.split('#')[0]+'#'+k; if(navigator.clipboard){navigator.clipboard.writeText(url); alert('🔗 Copied!');}else{prompt('Copy:',url);}}
-function renderSaved(){var list=posts.filter(function(p){return saved.indexOf(p._key)>-1}); document.getElementById('savedList').innerHTML=list.length?list.map(function(p){return '<div style="padding:8px;border-bottom:1px solid #eee"><b>'+p.name+'</b><br>'+formatText(p.title||'')+'</div>'}).join(''):'No saved';}
-function render(){if(!myName) return; var list=posts.slice(); if(searchQ) list=list.filter(function(p){return ((p.title||'')+' '+(p.text||'')+' '+(p.name||'')).toLowerCase().indexOf(searchQ)>-1}); else{if(filter==='top') list.sort(function(a,b){return ((b.likes||0)+(b.love||0))-((a.likes||0)+(a.love||0))}); if(filter==='mine') list=list.filter(function(p){return p.name===myName}); if(filter==='saved') list=list.filter(function(p){return saved.indexOf(p._key)>-1});} var h=''; for(var j=0;j<list.length;j++){var p=list[j]; var total=p.poll?p.poll.opts.reduce(function(s,o){return s+o.votes},0):0; var pollHtml=''; if(p.poll){pollHtml='<div style="background:#f9f9ff;padding:8px;border-radius:10px"><b>📊 '+p.poll.q+'</b>'; for(var q=0;q<p.poll.opts.length;q++){var o=p.poll.opts[q]; var pct=total?Math.round(o.votes/total*100):0; pollHtml+='<div style="background:#f0f0f0;padding:8px;border-radius:10px;margin:4px 0;cursor:pointer" onclick="vote(\''+p._key+'\','+q+')"><b>'+o.t+'</b> - '+o.votes+' ('+pct+'%)</div>';} pollHtml+='</div>';} var isMine=(p.name===myName); var isSaved=saved.indexOf(p._key)>-1; var ownHtml=isMine?'<button onclick="editPost(\''+p._key+'\')">✏️ Edit Post</button> <button onclick="deletePost(\''+p._key+'\')" style="color:red">🗑️ Delete Post</button>':''; var comments=''; for(var c=0;c<(p.comments||[]).length;c++){var cm=p.comments[c]; var btns=(cm.name===myName)?'<br><button onclick="editComment(\''+p._key+'\','+c+')" style="font-size:11px">✏️ Edit</button> <button onclick="deleteComment(\''+p._key+'\','+c+')" style="font-size:11px;color:red">🗑️ Delete</button>':''; comments+='<div class="comment"><b>'+cm.name+':</b> '+cm.text+(cm.edited?' <small>(edited)</small>':'')+btns+'</div>';} var reactHtml=''; if(p.reactions) for(var em in p.reactions) reactHtml+='<span style="background:#ffe1e7;padding:3px 8px;border-radius:12px">'+em+' '+(p.reactions[em]||0)+'</span> '; h+='<div class="card"><div style="display:flex;gap:10px;align-items:center"><div class="ava">'+(p.anon?'🎭':(p.ava?'<img src="'+p.ava+'">':(p.name||'G').charAt(0)))+'</div><div><b>'+p.name+'</b><br><small>'+new Date(p.time).toLocaleString()+'</small></div><button class="btn" style="margin-left:auto;padding:6px 10px;font-size:12px" onclick="chatTo(\''+p.name+'\')">💬 DM</button></div><h3>'+formatText(p.title||'')+'</h3><p style="white-space:pre-wrap">'+formatText(p.text||'')+'</p>'+(p.img?'<img src="'+p.img+'" style="width:100%;border-radius:12px">':'')+pollHtml+ownHtml+'<div>'+reactHtml+'</div><div class="actions" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button onclick="react(\''+p._key+'\',\'likes\')" style="flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer">❤️ '+(p.likes||0)+'</button><button onclick="react(\''+p._key+'\',\'love\')" style="flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer">😍 '+(p.love||0)+'</button><button onclick="react(\''+p._key+'\',\'hug\')" style="flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer">🤗 '+(p.hug||0)+'</button><button onclick="react(\''+p._key+'\',\'wow\')" style="flex:1;border:1px solid #eee;background:#f8f8f8;padding:9px;border-radius:20px;cursor:pointer">😮 '+(p.wow||0)+'</button></div><div class="actions" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button onclick="reactEmoji(\''+p._key+'\',\'🔥\')" style="flex:1">🔥</button><button onclick="reactEmoji(\''+p._key+'\',\'😂\')" style="flex:1">😂</button><button onclick="reactEmoji(\''+p._key+'\',\'😭\')" style="flex:1">😭</button><button onclick="reactEmoji(\''+p._key+'\',\'💯\')" style="flex:1">💯</button></div><div class="actions" style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button onclick="toggleSave(\''+p._key+'\')" style="flex:1">'+(isSaved?'✅ Saved':'🔖 Save')+'</button><button onclick="sharePost(\''+p._key+'\')" style="flex:1">🔗 Share</button></div>'+comments+'<div style="display:flex;gap:6px;margin-top:8px"><textarea id="c-'+p._key+'" placeholder="Comment - NO LIMIT!" rows="2"></textarea><button class="btn" onclick="addComment(\''+p._key+'\')">Send</button></div></div>';} document.getElementById('feed').innerHTML=h||'<div class="card">No posts. Be first!</div>';}
-if(myName){load(true); loadFriends(); loadNotifs();}
-setInterval(function(){if(myName&&!document.hidden) loadNotifs();},1500);
-setInterval(function(){if(myName&&!document.hidden) load();},3000);
-setInterval(function(){if(myName&&!document.hidden&&currentDM) loadDMs();},1500);
-setInterval(function(){if(currentCallId) pollCall();},2000);
-window.addEventListener('focus',function(){if(myName) manualRefresh();});
-  // PART 2 WILL BE INSERTED HERE - DO NOT DELETE THIS LINE
-</script></body></html>
+
+// ========================================
+// HUMAN FIREBASE CONFIGURATION
+// ========================================
+
+const firebaseConfig = {
+apiKey: "AIzaSyCFAciNfH_-OboP14XOMpeO7WRCAJecpHU",
+authDomain: "human-app-cea91.firebaseapp.com",
+databaseURL: "https://human-app-cea91-default-rtdb.firebaseio.com",
+projectId: "human-app-cea91",
+storageBucket: "human-app-cea91.firebasestorage.app",
+messagingSenderId: "599977540407",
+appId: "1:599977540407:web:0fecc148a25bce44a1f8b2",
+measurementId: "G-K7FY30KW7Y"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const database = firebase.database();
+
+let currentUser = null;
+let currentProfile = null;
+let posts = [];
+let savedPosts = [];
+
+let currentMode = "login";
+let activeView = "feed";
+
+// ========================================
+// HELPERS
+// ========================================
+
+function toast(message){
+const el=document.getElementById("toast");
+el.textContent=message;
+el.style.display="block";
+setTimeout(()=>el.style.display="none",3500);
+}
+
+function safe(value){
+return String(value ?? "").replace(/[&<>"']/g,char=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+})[char]);
+}
+
+function usernameValid(name){
+return /^[a-zA-Z0-9_]{3,20}$/.test(name);
+}
+
+function profilePath(uid){
+return database.ref("users/"+uid);
+}
+
+// ========================================
+// AUTHENTICATION MODES
+// ========================================
+
+function authMode(mode){
+currentMode=mode;
+
+document.getElementById("loginTab").classList.toggle("active",mode==="login");
+document.getElementById("registerTab").classList.toggle("active",mode==="register");
+
+document.getElementById("registerFields").classList.toggle("hidden",mode!=="register");
+document.getElementById("loginFields").classList.toggle("hidden",mode!=="login");
+
+document.getElementById("authButton").textContent=
+mode==="register"?"CREATE HUMAN ACCOUNT":"LOGIN";
+
+document.getElementById("authMessage").textContent="";
+}
+
+// ========================================
+// REGISTRATION AND LOGIN
+// ========================================
+
+async function authenticate(){
+
+const button=document.getElementById("authButton");
+const message=document.getElementById("authMessage");
+
+const password=document.getElementById("authPassword").value.trim();
+
+if(password.length<6){
+message.textContent="Password must contain at least 6 characters.";
+return;
+}
+
+button.disabled=true;
+message.textContent="Please wait...";
+
+try{
+
+if(currentMode==="register"){
+
+const email=document.getElementById("regEmail").value.trim();
+const username=document.getElementById("regUsername").value.trim().toLowerCase();
+const bio=document.getElementById("regBio").value.trim();
+
+if(!email || !email.includes("@")){
+throw new Error("Enter a valid email address.");
+}
+
+if(!usernameValid(username)){
+throw new Error("Username must be 3-20 letters, numbers or underscores.");
+}
+
+const usernameRef=database.ref("usernameIndex/"+username);
+
+const reservation=await usernameRef.transaction(current=>{
+if(current===null)return auth.currentUser ? current : "__RESERVED__";
+return;
+});
+
+if(!reservation.committed){
+throw new Error("That username is already taken.");
+}
+
+let credential;
+
+try{
+credential=await auth.createUserWithEmailAndPassword(email,password);
+await credential.user.sendEmailVerification();
+
+const uid=credential.user.uid;
+
+await profilePath(uid).set({
+uid:uid,
+username:username,
+bio:bio,
+avatar:"",
+createdAt:firebase.database.ServerValue.TIMESTAMP,
+verified:false
+});
+
+await usernameRef.set(uid);
+
+toast("Account created! Please verify your email.");
+
+}catch(error){
+await usernameRef.remove().catch(()=>{});
+if(auth.currentUser)await auth.currentUser.delete().catch(()=>{});
+throw error;
+}
+
+}else{
+
+const email=document.getElementById("loginEmail").value.trim();
+
+if(!email)throw new Error("Enter your email.");
+
+const credential=await auth.signInWithEmailAndPassword(email,password);
+
+if(!credential.user.emailVerified){
+await auth.signOut();
+throw new Error("Verify your email first. Check your inbox.");
+}
+
+}
+
+}catch(error){
+message.textContent=error.message;
+}finally{
+button.disabled=false;
+}
+
+}
+
+// ========================================
+// PASSWORD RECOVERY
+// ========================================
+
+async function resetPassword(){
+
+const email=currentUser
+?currentUser.email
+:document.getElementById("loginEmail").value.trim();
+
+if(!email){
+toast("Enter your email address first.");
+return;
+}
+
+try{
+await auth.sendPasswordResetEmail(email);
+toast("Password reset email sent.");
+}catch(error){
+toast(error.message);
+}
+
+}
+
+// ========================================
+// AUTH STATE
+// ========================================
+
+auth.onAuthStateChanged(async user=>{
+
+currentUser=user;
+
+if(!user){
+document.getElementById("authSection").classList.remove("hidden");
+document.getElementById("appSection").classList.add("hidden");
+document.getElementById("connection").textContent="Offline";
+return;
+}
+
+if(!user.emailVerified){
+await auth.signOut();
+return;
+}
+
+try{
+
+const snapshot=await profilePath(user.uid).once("value");
+
+if(!snapshot.exists()){
+toast("Account profile not found. Contact support.");
+await auth.signOut();
+return;
+}
+
+currentProfile=snapshot.val();
+
+document.getElementById("authSection").classList.add("hidden");
+document.getElementById("appSection").classList.remove("hidden");
+
+document.getElementById("displayName").textContent="@"+currentProfile.username;
+document.getElementById("displayEmail").textContent=user.email;
+document.getElementById("profileUsername").textContent="@"+currentProfile.username;
+document.getElementById("profileBio").textContent=currentProfile.bio||"No bio yet.";
+
+updateAvatar();
+
+loadSaved();
+loadFeed();
+
+}catch(error){
+toast("Unable to load your profile: "+error.message);
+}
+
+});
+
+// ========================================
+// PROFILE
+// ========================================
+
+function updateAvatar(){
+
+const avatar=currentProfile?.avatar||"";
+const username=currentProfile?.username||"?";
+
+const html=avatar
+?'<img src="'+safe(avatar)+'" alt="Profile">'
+:safe(username.charAt(0).toUpperCase());
+
+["headerAvatar","profileAvatar","bigAvatar"].forEach(id=>{
+document.getElementById(id).innerHTML=html;
+});
+
+document.getElementById("editBio").value=currentProfile.bio||"";
+document.getElementById("editAvatar").value=avatar;
+
+}
+
+function openProfile(){
+showView("profile");
+}
+
+async function saveProfile(){
+
+if(!currentUser)return;
+
+const bio=document.getElementById("editBio").value.trim();
+const avatar=document.getElementById("editAvatar").value.trim();
+
+try{
+
+await profilePath(currentUser.uid).update({
+bio:bio,
+avatar:avatar
+});
+
+currentProfile.bio=bio;
+currentProfile.avatar=avatar;
+
+document.getElementById("profileBio").textContent=bio||"No bio yet.";
+
+updateAvatar();
+toast("Profile updated.");
+
+}catch(error){
+toast(error.message);
+}
+
+}
+
+// ========================================
+// NAVIGATION
+// ========================================
+
+function showView(view){
+
+activeView=view;
+
+["feedView","savedView","profileView"].forEach(id=>{
+document.getElementById(id).classList.add("hidden");
+});
+
+document.getElementById(view+"View").classList.remove("hidden");
+
+["feedTab","savedTab","profileTab"].forEach(id=>{
+document.getElementById(id).classList.remove("active");
+});
+
+document.getElementById(view+"Tab").classList.add("active");
+
+if(view==="saved")renderSaved();
+
+if(view==="feed")loadFeed();
+
+}
+
+// ========================================
+// CREATE POSTS
+// ========================================
+
+async function createPost(){
+
+if(!currentUser)return;
+
+const title=document.getElementById("postTitle").value.trim();
+const text=document.getElementById("postText").value.trim();
+
+if(!title&&!text){
+toast("Write something first.");
+return;
+}
+
+try{
+
+const ref=database.ref("posts").push();
+
+await ref.set({
+id:ref.key,
+uid:currentUser.uid,
+name:currentProfile.username,
+title:title,
+text:text,
+createdAt:firebase.database.ServerValue.TIMESTAMP,
+likes:0,
+love:0,
+comments:{}
+});
+
+document.getElementById("postTitle").value="";
+document.getElementById("postText").value="";
+
+toast("Your story is live!");
+loadFeed();
+
+}catch(error){
+toast("Post failed: "+error.message);
+}
+
+}
+
+// ========================================
+// LOAD FEED
+// ========================================
+
+async function loadFeed(){
+
+if(!currentUser)return;
+
+try{
+
+const snapshot=await database.ref("posts")
+.orderByChild("createdAt")
+.limitToLast(100)
+.once("value");
+
+posts=[];
+
+snapshot.forEach(child=>{
+posts.unshift({...child.val(),id:child.key});
+});
+
+renderFeed();
+
+}catch(error){
+document.getElementById("feed").textContent="Unable to load feed: "+error.message;
+}
+
+}
+
+// ========================================
+// RENDER FEED
+// ========================================
+
+function renderFeed(){
+
+const container=document.getElementById("feed");
+
+if(!posts.length){
+container.innerHTML='<div class="card">No posts yet. Start the conversation!</div>';
+return;
+}
+
+container.innerHTML=posts.map(post=>{
+
+const mine=post.uid===currentUser.uid;
+const comments=Object.entries(post.comments||{});
+
+return `
+<div class="card">
+
+<div class="row">
+<div class="avatar">${safe((post.name||"H").charAt(0).toUpperCase())}</div>
+<div>
+<b>@${safe(post.name||"HUMAN")}</b>
+<div class="muted">${post.createdAt?new Date(post.createdAt).toLocaleString():"Just now"}</div>
+</div>
+</div>
+
+${post.title?`<h3>${safe(post.title)}</h3>`:""}
+<p class="post-text">${safe(post.text||"")}</p>
+
+<div class="actions">
+<button onclick="reactPost('${post.id}','likes')">❤️ ${post.likes||0}</button>
+<button onclick="reactPost('${post.id}','love')">😍 ${post.love||0}</button>
+<button onclick="toggleSave('${post.id}')">🔖 Save</button>
+${mine?`<button onclick="deletePost('${post.id}')">🗑️ Delete</button>`:""}
+</div>
+
+<hr>
+
+<b>Comments (${comments.length})</b>
+
+${comments.map(([id,comment])=>`
+<div class="comment">
+<b>@${safe(comment.name||"HUMAN")}</b>
+<p>${safe(comment.text)}</p>
+${comment.uid===currentUser.uid?
+`<button class="danger" onclick="deleteComment('${post.id}','${id}')">Delete</button>`:""}
+</div>
+`).join("")}
+
+<div class="row" style="margin-top:10px">
+<input id="comment-${post.id}" placeholder="Write a comment...">
+<button class="primary" onclick="addComment('${post.id}')">Send</button>
+</div>
+
+</div>
+`;
+
+}).join("");
+
+}
+
+// ========================================
+// REACTIONS
+// ========================================
+
+async function reactPost(postId,type){
+
+try{
+
+const ref=database.ref("posts/"+postId+"/"+type);
+
+await ref.transaction(value=>(value||0)+1);
+
+loadFeed();
+
+}catch(error){
+toast(error.message);
+}
+
+}
+
+// ========================================
+// COMMENTS
+// ========================================
+
+async function addComment(postId){
+
+const input=document.getElementById("comment-"+postId);
+const text=input.value.trim();
+
+if(!text)return;
+
+try{
+
+await database.ref("posts/"+postId+"/comments").push().set({
+uid:currentUser.uid,
+name:currentProfile.username,
+text:text,
+createdAt:firebase.database.ServerValue.TIMESTAMP
+});
+
+input.value="";
+loadFeed();
+
+}catch(error){
+toast(error.message);
+}
+
+}
+
+async function deleteComment(postId,commentId){
+
+try{
+
+const ref=database.ref("posts/"+postId+"/comments/"+commentId);
+const snapshot=await ref.once("value");
+
+if(snapshot.val()?.uid!==currentUser.uid){
+throw new Error("You cannot delete another person's comment.");
+}
+
+await ref.remove();
+loadFeed();
+
+}catch(error){
+toast(error.message);
+}
+
+}
+
+// ========================================
+// DELETE POSTS
+// ========================================
+
+async function deletePost(postId){
+
+const post=posts.find(p=>p.id===postId);
+
+if(!post||post.uid!==currentUser.uid){
+toast("You can only delete your own posts.");
+return;
+}
+
+if(!confirm("Delete this post?"))return;
+
+try{
+await database.ref("posts/"+postId).remove();
+toast("Post deleted.");
+loadFeed();
+}catch(error){
+toast(error.message);
+}
+
+}
+
+// ========================================
+// SAVED POSTS
+// ========================================
+
+function loadSaved(){
+
+database.ref("saved/"+currentUser.uid).on("value",snapshot=>{
+savedPosts=snapshot.val()||{};
+if(activeView==="saved")renderSaved();
+});
+
+}
+
+async function toggleSave(postId){
+
+const ref=database.ref("saved/"+currentUser.uid+"/"+postId);
+const snapshot=await ref.once("value");
+
+if(snapshot.exists()){
+await ref.remove();
+toast("Removed from saved posts.");
+}else{
+await ref.set(true);
+toast("Post saved.");
+}
+
+}
+
+function renderSaved(){
+
+const container=document.getElementById("savedPosts");
+
+const list=posts.filter(post=>savedPosts[post.id]);
+
+container.innerHTML=list.length
+?list.map(post=>`
+<div class="comment">
+<b>@${safe(post.name)}</b>
+<p>${safe(post.title||post.text||"")}</p>
+<button class="light" onclick="toggleSave('${post.id}')">Remove saved</button>
+</div>
+`).join("")
+:"No saved posts yet.";
+
+}
+
+// ========================================
+// REFRESH AND LOGOUT
+// ========================================
+
+async function refreshApp(){
+
+if(!currentUser)return;
+
+await loadFeed();
+toast("HUMAN refreshed.");
+
+}
+
+async function logout(){
+
+if(!confirm("Log out of HUMAN?"))return;
+
+await auth.signOut();
+currentProfile=null;
+posts=[];
+toast("Logged out successfully.");
+
+}
+
+// ========================================
+// CONNECTION STATUS
+// ========================================
+
+database.ref(".info/connected").on("value",snapshot=>{
+
+document.getElementById("connection").textContent=
+snapshot.val()?"🟢 Connected":"🔴 Offline";
+
+});
+
+</script>
+</body>
+</html>
