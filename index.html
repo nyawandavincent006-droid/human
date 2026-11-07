@@ -61,6 +61,7 @@ padding:10px 14px;
 font-weight:750;
 cursor:pointer;
 }
+button:disabled{opacity:.55;cursor:not-allowed}
 .primary{background:var(--pink);color:#fff}
 .dark{background:var(--dark);color:#fff}
 .light{background:#f0f0f5;color:var(--dark)}
@@ -93,6 +94,16 @@ background:#171725;color:#fff;padding:13px;
 border-radius:13px;z-index:100;display:none;
 }
 .status{font-size:12px;color:var(--muted)}
+.demo-label{
+display:inline-block;
+background:#fff0d5;
+color:#8a5700;
+padding:5px 9px;
+border-radius:20px;
+font-size:11px;
+font-weight:800;
+margin-top:5px;
+}
 @media(max-width:420px){
 .wrap{padding:9px}
 .card{padding:13px}
@@ -152,6 +163,20 @@ Forgot password?
 </button>
 
 <p id="authMessage" class="status"></p>
+
+<hr>
+
+<div style="text-align:center">
+<p><b>Just exploring HUMAN?</b></p>
+<p class="muted">Enter a separate testing environment without creating a real account.</p>
+
+<button class="dark full" onclick="enterDemoMode()">
+🧪 ENTER DEVELOPMENT MODE
+</button>
+
+<div class="demo-label">LOCAL DEMO ACCOUNT</div>
+</div>
+
 </div>
 </section>
 
@@ -164,6 +189,7 @@ Forgot password?
 <div style="flex:1">
 <b id="displayName">HUMAN Member</b>
 <div class="muted" id="displayEmail"></div>
+<div id="demoBadge" class="demo-label hidden">DEVELOPMENT MODE</div>
 </div>
 <button class="light" onclick="openProfile()">Profile</button>
 </div>
@@ -259,6 +285,95 @@ let currentMode = "login";
 let activeView = "feed";
 
 // ========================================
+// DEVELOPMENT MODE
+// ========================================
+
+let demoMode = false;
+
+function readDemoStorage(key,fallback){
+try{
+const value=localStorage.getItem(key);
+return value ? JSON.parse(value) : fallback;
+}catch(error){
+return fallback;
+}
+}
+
+let demoPosts = readDemoStorage("human_demo_posts",null);
+
+if(!Array.isArray(demoPosts)){
+demoPosts=[
+{
+id:"demo1",
+uid:"human-demo",
+name:"human_demo",
+title:"Welcome to HUMAN!",
+text:"This is our development environment. Test your ideas here.",
+createdAt:Date.now(),
+likes:3,
+love:2,
+comments:{}
+},
+{
+id:"demo2",
+uid:"another-demo",
+name:"explorer",
+title:"A new beginning",
+text:"A place for people to connect, share stories and be real.",
+createdAt:Date.now()-60000,
+likes:5,
+love:1,
+comments:{}
+}
+];
+
+localStorage.setItem("human_demo_posts",JSON.stringify(demoPosts));
+}
+
+function saveDemoPosts(){
+localStorage.setItem("human_demo_posts",JSON.stringify(demoPosts));
+}
+
+function enterDemoMode(){
+
+demoMode=true;
+
+currentUser={
+uid:"human-demo",
+email:"demo@human.local",
+emailVerified:true
+};
+
+currentProfile={
+uid:"human-demo",
+username:"human_demo",
+bio:"HUMAN development test account.",
+avatar:""
+};
+
+posts=[];
+savedPosts=readDemoStorage("human_demo_saved",{});
+
+document.getElementById("authSection").classList.add("hidden");
+document.getElementById("appSection").classList.remove("hidden");
+
+document.getElementById("displayName").textContent="@human_demo";
+document.getElementById("displayEmail").textContent="LOCAL TEST ACCOUNT";
+document.getElementById("profileUsername").textContent="@human_demo";
+document.getElementById("profileBio").textContent=currentProfile.bio;
+document.getElementById("demoBadge").classList.remove("hidden");
+
+document.getElementById("connection").textContent="🧪 Demo Mode";
+
+updateAvatar();
+showView("feed");
+loadSaved();
+loadFeed();
+
+toast("Welcome to HUMAN Development Mode!");
+}
+
+// ========================================
 // HELPERS
 // ========================================
 
@@ -292,6 +407,7 @@ return database.ref("users/"+uid);
 // ========================================
 
 function authMode(mode){
+
 currentMode=mode;
 
 document.getElementById("loginTab").classList.toggle("active",mode==="login");
@@ -344,7 +460,7 @@ throw new Error("Username must be 3-20 letters, numbers or underscores.");
 const usernameRef=database.ref("usernameIndex/"+username);
 
 const reservation=await usernameRef.transaction(current=>{
-if(current===null)return auth.currentUser ? current : "__RESERVED__";
+if(current===null)return "__RESERVED__";
 return;
 });
 
@@ -352,11 +468,9 @@ if(!reservation.committed){
 throw new Error("That username is already taken.");
 }
 
-let credential;
-
 try{
-credential=await auth.createUserWithEmailAndPassword(email,password);
-await credential.user.sendEmailVerification();
+
+const credential=await auth.createUserWithEmailAndPassword(email,password);
 
 const uid=credential.user.uid;
 
@@ -371,11 +485,18 @@ verified:false
 
 await usernameRef.set(uid);
 
+await credential.user.sendEmailVerification();
+
 toast("Account created! Please verify your email.");
 
 }catch(error){
+
 await usernameRef.remove().catch(()=>{});
-if(auth.currentUser)await auth.currentUser.delete().catch(()=>{});
+
+if(auth.currentUser){
+await auth.currentUser.delete().catch(()=>{});
+}
+
 throw error;
 }
 
@@ -395,9 +516,13 @@ throw new Error("Verify your email first. Check your inbox.");
 }
 
 }catch(error){
+
 message.textContent=error.message;
+
 }finally{
+
 button.disabled=false;
+
 }
 
 }
@@ -407,6 +532,11 @@ button.disabled=false;
 // ========================================
 
 async function resetPassword(){
+
+if(demoMode){
+toast("Password recovery is disabled in Development Mode.");
+return;
+}
 
 const email=currentUser
 ?currentUser.email
@@ -418,10 +548,14 @@ return;
 }
 
 try{
+
 await auth.sendPasswordResetEmail(email);
 toast("Password reset email sent.");
+
 }catch(error){
+
 toast(error.message);
+
 }
 
 }
@@ -432,18 +566,28 @@ toast(error.message);
 
 auth.onAuthStateChanged(async user=>{
 
+if(demoMode)return;
+
 currentUser=user;
 
 if(!user){
+
+currentProfile=null;
+
 document.getElementById("authSection").classList.remove("hidden");
 document.getElementById("appSection").classList.add("hidden");
+document.getElementById("demoBadge").classList.add("hidden");
 document.getElementById("connection").textContent="Offline";
+
 return;
 }
 
 if(!user.emailVerified){
+
 await auth.signOut();
+toast("Please verify your email before logging in.");
 return;
+
 }
 
 try{
@@ -451,15 +595,18 @@ try{
 const snapshot=await profilePath(user.uid).once("value");
 
 if(!snapshot.exists()){
+
 toast("Account profile not found. Contact support.");
 await auth.signOut();
 return;
+
 }
 
 currentProfile=snapshot.val();
 
 document.getElementById("authSection").classList.add("hidden");
 document.getElementById("appSection").classList.remove("hidden");
+document.getElementById("demoBadge").classList.add("hidden");
 
 document.getElementById("displayName").textContent="@"+currentProfile.username;
 document.getElementById("displayEmail").textContent=user.email;
@@ -472,7 +619,9 @@ loadSaved();
 loadFeed();
 
 }catch(error){
+
 toast("Unable to load your profile: "+error.message);
+
 }
 
 });
@@ -510,7 +659,27 @@ if(!currentUser)return;
 const bio=document.getElementById("editBio").value.trim();
 const avatar=document.getElementById("editAvatar").value.trim();
 
+if(avatar && !/^https?:\/\//i.test(avatar)){
+toast("Profile picture must use an HTTP or HTTPS URL.");
+return;
+}
+
 try{
+
+if(demoMode){
+
+currentProfile.bio=bio;
+currentProfile.avatar=avatar;
+
+localStorage.setItem("human_demo_profile",JSON.stringify(currentProfile));
+
+document.getElementById("profileBio").textContent=bio||"No bio yet.";
+
+updateAvatar();
+toast("Demo profile updated.");
+return;
+
+}
 
 await profilePath(currentUser.uid).update({
 bio:bio,
@@ -526,7 +695,9 @@ updateAvatar();
 toast("Profile updated.");
 
 }catch(error){
+
 toast(error.message);
+
 }
 
 }
@@ -575,6 +746,31 @@ return;
 
 try{
 
+if(demoMode){
+
+demoPosts.unshift({
+id:"demo_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),
+uid:currentUser.uid,
+name:currentProfile.username,
+title:title,
+text:text,
+createdAt:Date.now(),
+likes:0,
+love:0,
+comments:{}
+});
+
+saveDemoPosts();
+
+document.getElementById("postTitle").value="";
+document.getElementById("postText").value="";
+
+toast("Demo post published!");
+loadFeed();
+return;
+
+}
+
 const ref=database.ref("posts").push();
 
 await ref.set({
@@ -596,7 +792,9 @@ toast("Your story is live!");
 loadFeed();
 
 }catch(error){
+
 toast("Post failed: "+error.message);
+
 }
 
 }
@@ -608,6 +806,14 @@ toast("Post failed: "+error.message);
 async function loadFeed(){
 
 if(!currentUser)return;
+
+if(demoMode){
+
+posts=[...demoPosts].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+renderFeed();
+return;
+
+}
 
 try{
 
@@ -625,7 +831,9 @@ posts.unshift({...child.val(),id:child.key});
 renderFeed();
 
 }catch(error){
+
 document.getElementById("feed").textContent="Unable to load feed: "+error.message;
+
 }
 
 }
@@ -639,8 +847,10 @@ function renderFeed(){
 const container=document.getElementById("feed");
 
 if(!posts.length){
+
 container.innerHTML='<div class="card">No posts yet. Start the conversation!</div>';
 return;
+
 }
 
 container.innerHTML=posts.map(post=>{
@@ -656,6 +866,7 @@ return `
 <div>
 <b>@${safe(post.name||"HUMAN")}</b>
 <div class="muted">${post.createdAt?new Date(post.createdAt).toLocaleString():"Just now"}</div>
+${post.uid==="another-demo"?'<div class="muted">Sample account</div>':""}
 </div>
 </div>
 
@@ -702,6 +913,20 @@ async function reactPost(postId,type){
 
 try{
 
+if(demoMode){
+
+const post=demoPosts.find(p=>p.id===postId);
+
+if(!post)return;
+
+post[type]=(post[type]||0)+1;
+
+saveDemoPosts();
+loadFeed();
+return;
+
+}
+
 const ref=database.ref("posts/"+postId+"/"+type);
 
 await ref.transaction(value=>(value||0)+1);
@@ -709,7 +934,9 @@ await ref.transaction(value=>(value||0)+1);
 loadFeed();
 
 }catch(error){
+
 toast(error.message);
+
 }
 
 }
@@ -727,6 +954,30 @@ if(!text)return;
 
 try{
 
+if(demoMode){
+
+const post=demoPosts.find(p=>p.id===postId);
+
+if(!post)return;
+
+post.comments=post.comments||{};
+
+const id="comment_"+Date.now()+"_"+Math.random().toString(36).slice(2,6);
+
+post.comments[id]={
+uid:currentUser.uid,
+name:currentProfile.username,
+text:text,
+createdAt:Date.now()
+};
+
+saveDemoPosts();
+input.value="";
+loadFeed();
+return;
+
+}
+
 await database.ref("posts/"+postId+"/comments").push().set({
 uid:currentUser.uid,
 name:currentProfile.username,
@@ -738,7 +989,9 @@ input.value="";
 loadFeed();
 
 }catch(error){
+
 toast(error.message);
+
 }
 
 }
@@ -746,6 +999,23 @@ toast(error.message);
 async function deleteComment(postId,commentId){
 
 try{
+
+if(demoMode){
+
+const post=demoPosts.find(p=>p.id===postId);
+const comment=post?.comments?.[commentId];
+
+if(!comment||comment.uid!==currentUser.uid){
+throw new Error("You cannot delete another person's comment.");
+}
+
+delete post.comments[commentId];
+
+saveDemoPosts();
+loadFeed();
+return;
+
+}
 
 const ref=database.ref("posts/"+postId+"/comments/"+commentId);
 const snapshot=await ref.once("value");
@@ -758,7 +1028,9 @@ await ref.remove();
 loadFeed();
 
 }catch(error){
+
 toast(error.message);
+
 }
 
 }
@@ -779,11 +1051,27 @@ return;
 if(!confirm("Delete this post?"))return;
 
 try{
+
+if(demoMode){
+
+demoPosts=demoPosts.filter(p=>p.id!==postId);
+
+saveDemoPosts();
+toast("Demo post deleted.");
+loadFeed();
+return;
+
+}
+
 await database.ref("posts/"+postId).remove();
+
 toast("Post deleted.");
 loadFeed();
+
 }catch(error){
+
 toast(error.message);
+
 }
 
 }
@@ -794,24 +1082,71 @@ toast(error.message);
 
 function loadSaved(){
 
-database.ref("saved/"+currentUser.uid).on("value",snapshot=>{
-savedPosts=snapshot.val()||{};
+if(demoMode){
+
+savedPosts=readDemoStorage("human_demo_saved",{});
+
 if(activeView==="saved")renderSaved();
+return;
+
+}
+
+database.ref("saved/"+currentUser.uid).on("value",snapshot=>{
+
+savedPosts=snapshot.val()||{};
+
+if(activeView==="saved")renderSaved();
+
 });
 
 }
 
 async function toggleSave(postId){
 
+try{
+
+if(demoMode){
+
+savedPosts=readDemoStorage("human_demo_saved",{});
+
+if(savedPosts[postId]){
+
+delete savedPosts[postId];
+toast("Removed from saved posts.");
+
+}else{
+
+savedPosts[postId]=true;
+toast("Post saved!");
+
+}
+
+localStorage.setItem("human_demo_saved",JSON.stringify(savedPosts));
+
+renderSaved();
+return;
+
+}
+
 const ref=database.ref("saved/"+currentUser.uid+"/"+postId);
 const snapshot=await ref.once("value");
 
 if(snapshot.exists()){
+
 await ref.remove();
 toast("Removed from saved posts.");
+
 }else{
+
 await ref.set(true);
 toast("Post saved.");
+
+}
+
+}catch(error){
+
+toast(error.message);
+
 }
 
 }
@@ -835,7 +1170,7 @@ container.innerHTML=list.length
 }
 
 // ========================================
-// REFRESH AND LOGOUT
+// REFRESH
 // ========================================
 
 async function refreshApp(){
@@ -843,17 +1178,50 @@ async function refreshApp(){
 if(!currentUser)return;
 
 await loadFeed();
+
+if(demoMode){
+loadSaved();
+toast("Development environment refreshed.");
+return;
+}
+
 toast("HUMAN refreshed.");
 
 }
+
+// ========================================
+// LOGOUT
+// ========================================
 
 async function logout(){
 
 if(!confirm("Log out of HUMAN?"))return;
 
-await auth.signOut();
+if(demoMode){
+
+demoMode=false;
+currentUser=null;
 currentProfile=null;
 posts=[];
+savedPosts=[];
+
+document.getElementById("appSection").classList.add("hidden");
+document.getElementById("authSection").classList.remove("hidden");
+document.getElementById("demoBadge").classList.add("hidden");
+document.getElementById("connection").textContent="Offline";
+
+document.getElementById("headerAvatar").textContent="?";
+
+toast("Development session ended.");
+return;
+
+}
+
+await auth.signOut();
+
+currentProfile=null;
+posts=[];
+
 toast("Logged out successfully.");
 
 }
@@ -863,6 +1231,13 @@ toast("Logged out successfully.");
 // ========================================
 
 database.ref(".info/connected").on("value",snapshot=>{
+
+if(demoMode){
+
+document.getElementById("connection").textContent="🧪 Demo Mode";
+return;
+
+}
 
 document.getElementById("connection").textContent=
 snapshot.val()?"🟢 Connected":"🔴 Offline";
