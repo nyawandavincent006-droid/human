@@ -1404,7 +1404,7 @@ function renderChatPeople(){
 }
 
 function openChat(id){
-  if(isBlocked(currentUser,id)){
+  if(!getUser(id) || isBlocked(currentUser,id)){
     toast("Conversation unavailable.");
     return;
   }
@@ -1441,7 +1441,10 @@ function renderMessages(){
 }
 
 function sendMessage(){
-  if(!currentChat)return;
+  if(!currentChat){
+    toast("Open a conversation first.");
+    return;
+  }
 
   const input=document.getElementById("messageInput");
   const text=input.value.trim();
@@ -1460,10 +1463,17 @@ function sendMessage(){
     time:Date.now()
   });
 
-  addNotification(currentChat,currentUser,"sent you a message.");
+  addNotification(
+    currentChat,
+    currentUser,
+    "sent you a message.",
+    "message"
+  );
+
   input.value="";
   saveDatabase();
   renderMessages();
+  toast("Message sent in Demo Mode.");
 }
 
 function callPreview(){
@@ -1537,7 +1547,7 @@ function joinCommunity(id){
    NOTIFICATIONS
 ========================================== */
 
-function addNotification(recipientId,actorId,text){
+function addNotification(recipientId,actorId,text,type="general"){
   if(!recipientId || recipientId===actorId)return;
 
   db.notifications.unshift({
@@ -1545,6 +1555,7 @@ function addNotification(recipientId,actorId,text){
     recipientId,
     actorId,
     text,
+    type,
     time:Date.now(),
     read:false
   });
@@ -1554,20 +1565,79 @@ function renderNotifications(){
   const notes=db.notifications.filter(n=>n.recipientId===currentUser);
 
   document.getElementById("notificationList").innerHTML=
-    notes.length?notes.map(note=>`
-      <div class="card">
-        <b>@${escapeHTML(username(note.actorId))}</b>
-        ${escapeHTML(note.text)}
-        <p class="small">${timeAgo(note.time)}</p>
-        ${note.read?"<span class='small'>Read</span>":
-          `<button class="secondary" onclick="markNotification('${note.id}')">Mark as read</button>`}
-      </div>
-    `).join(""):'<div class="empty">No notifications.</div>';
+    notes.length?notes.map(note=>{
+      const isMessage=note.type==="message" || note.text==="sent you a message.";
+
+      return `
+        <div class="card">
+          <div class="row">
+            ${avatar(note.actorId)}
+            <div>
+              <b>@${escapeHTML(username(note.actorId))}</b>
+              <div>${escapeHTML(note.text)}</div>
+              <p class="small">${timeAgo(note.time)}</p>
+            </div>
+          </div>
+
+          ${isMessage?`
+            <button class="success full"
+              onclick="replyFromNotification('${note.id}')">
+              Reply to message
+            </button>
+          `:""}
+
+          ${note.read
+            ?"<span class='small'>Read</span>"
+            :`<button class="secondary full" onclick="markNotification('${note.id}')">Mark as read</button>`
+          }
+        </div>
+      `;
+    }).join(""):'<div class="empty">No notifications.</div>';
+}
+
+function replyFromNotification(id){
+  const note=db.notifications.find(n=>
+    n.id===id && n.recipientId===currentUser
+  );
+
+  if(!note){
+    toast("Notification not found.");
+    return;
+  }
+
+  const isMessage=note.type==="message" || note.text==="sent you a message.";
+
+  if(!isMessage){
+    toast("This notification is not a message.");
+    return;
+  }
+
+  if(!getUser(note.actorId) || isBlocked(currentUser,note.actorId)){
+    toast("This conversation is unavailable.");
+    return;
+  }
+
+  note.read=true;
+  saveDatabase();
+
+  showView("connect");
+  openChat(note.actorId);
+
+  setTimeout(()=>{
+    const input=document.getElementById("messageInput");
+    if(input)input.focus();
+  },100);
+
+  renderNotifications();
 }
 
 function markNotification(id){
-  const note=db.notifications.find(n=>n.id===id);
+  const note=db.notifications.find(n=>
+    n.id===id && n.recipientId===currentUser
+  );
+
   if(note)note.read=true;
+
   saveDatabase();
   renderNotifications();
 }
@@ -1793,5 +1863,3 @@ document.getElementById("postInput").addEventListener("keydown",event=>{
 </script>
 </body>
 </html>
-
-
