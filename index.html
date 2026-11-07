@@ -7,1617 +7,1732 @@
 <meta name="theme-color" content="#10101b">
 <title>HUMAN | Be Human. Be Real.</title>
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database-compat.js"></script>
+
 <style>
-*{box-sizing:border-box}
 :root{
---bg:#f3f4f8;
---card:#fff;
---dark:#171725;
---pink:#ff3b65;
---muted:#77798b;
---line:#e9e9ef;
+  --bg:#10101b;
+  --panel:#191927;
+  --panel2:#222235;
+  --line:#34344a;
+  --text:#f5f5fb;
+  --muted:#a5a5bb;
+  --blue:#6c7cff;
+  --purple:#a16cff;
+  --green:#43c99a;
+  --red:#ff6577;
 }
+*{box-sizing:border-box}
 body{
-margin:0;
-font-family:system-ui,Arial,sans-serif;
-background:var(--bg);
-color:var(--dark);
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
 }
-header{
-position:sticky;
-top:0;
-z-index:20;
-background:#fff;
-padding:12px 16px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-box-shadow:0 2px 12px #0000000c;
-}
-.logo{font-size:27px;font-weight:950;letter-spacing:-1.5px}
-.logo span{color:var(--pink)}
-.wrap{max-width:650px;margin:auto;padding:14px}
-.card{
-background:var(--card);
-border-radius:18px;
-padding:16px;
-margin-bottom:13px;
-box-shadow:0 3px 15px #00000008;
-}
-input,textarea{
-width:100%;
-padding:13px;
-border:1px solid var(--line);
-border-radius:12px;
-margin:6px 0;
-font:inherit;
-outline:none;
-}
-input:focus,textarea:focus{border-color:var(--pink)}
+button,input,textarea,select{font:inherit}
 button{
-border:0;
-border-radius:12px;
-padding:10px 14px;
-font-weight:750;
-cursor:pointer;
+  border:0;
+  cursor:pointer;
+  border-radius:9px;
+  padding:10px 14px;
+  background:var(--blue);
+  color:white;
 }
-button:disabled{opacity:.55;cursor:not-allowed}
-.primary{background:var(--pink);color:#fff}
-.dark{background:var(--dark);color:#fff}
-.light{background:#f0f0f5;color:var(--dark)}
-.danger{background:#ffe5e9;color:#d60032}
-.full{width:100%;margin-top:8px}
-.tabs{display:flex;gap:7px;margin-bottom:12px}
-.tabs button{flex:1;background:#e8e8ef}
-.tabs button.active{background:var(--dark);color:#fff}
+button:hover{filter:brightness(1.12)}
+button:disabled{opacity:.5;cursor:not-allowed}
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid var(--line);
+  background:#11111d;
+  color:white;
+  outline:none;
+}
+textarea{resize:vertical;min-height:85px}
+input:focus,textarea:focus,select:focus{border-color:var(--blue)}
+a{color:#9caaff}
+header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  background:#151522;
+  border-bottom:1px solid var(--line);
+  padding:13px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.logo{
+  font-size:23px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+.logo span{color:var(--blue)}
+.header-right{display:flex;align-items:center;gap:10px}
+.status{font-size:12px;color:var(--green)}
+.container{max-width:1150px;margin:auto;padding:20px}
+.auth-wrap{
+  max-width:430px;
+  margin:45px auto;
+  padding:25px;
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:16px;
+}
+.auth-wrap h2{text-align:center}
+.auth-wrap input{margin:7px 0}
+.small{font-size:12px;color:var(--muted)}
+.muted{color:var(--muted)}
 .hidden{display:none!important}
-.avatar{
-width:45px;height:45px;border-radius:50%;
-background:linear-gradient(135deg,#ff3b65,#ff9b49);
-color:white;display:flex;align-items:center;
-justify-content:center;font-weight:900;
-overflow:hidden;flex-shrink:0;
+.full{width:100%;margin-top:10px}
+.secondary{background:var(--panel2);border:1px solid var(--line)}
+.danger{background:#8d3042}
+.success{background:#187c60}
+.nav{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding:10px 0 16px;
+  border-bottom:1px solid var(--line);
 }
-.avatar img{width:100%;height:100%;object-fit:cover}
+.nav button{
+  flex-shrink:0;
+  background:var(--panel2);
+  color:var(--muted);
+}
+.nav button.active{background:var(--blue);color:white}
+.layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 280px;
+  gap:18px;
+  margin-top:18px;
+}
+.panel,.card{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:16px;
+  margin-bottom:14px;
+}
+.panel h3,.card h3{margin-top:0}
+.section-title{margin:8px 0 15px}
 .row{display:flex;align-items:center;gap:10px}
-.muted{color:var(--muted);font-size:12px}
-.post-text{white-space:pre-wrap;overflow-wrap:anywhere}
-.actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.actions button{flex:1;background:#f5f5f8}
+.between{justify-content:space-between}
+.avatar{
+  width:42px;height:42px;
+  border-radius:50%;
+  object-fit:cover;
+  background:var(--panel2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0;
+  font-weight:bold;
+}
+.avatar.large{width:75px;height:75px;font-size:25px}
+.user-name{font-weight:bold}
+.post-text{white-space:pre-wrap;line-height:1.5;margin:15px 0}
+.post-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  border-top:1px solid var(--line);
+  padding-top:12px;
+}
+.post-actions button{font-size:12px;padding:8px 10px}
 .comment{
-background:#f5f5f8;padding:10px;
-border-radius:10px;margin-top:7px;
+  padding:9px;
+  background:#12121e;
+  border-radius:8px;
+  margin-top:8px;
+  font-size:13px;
 }
-#toast{
-position:fixed;top:70px;left:12px;right:12px;
-background:#171725;color:#fff;padding:13px;
-border-radius:13px;z-index:100;display:none;
+.comment-form{display:flex;gap:7px;margin-top:10px}
+.comment-form input{min-width:0}
+.story-list{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding:7px 0;
 }
-.status{font-size:12px;color:var(--muted)}
-.demo-label{
-display:inline-block;
-background:#fff0d5;
-color:#8a5700;
-padding:5px 9px;
-border-radius:20px;
-font-size:11px;
-font-weight:800;
-margin-top:5px;
+.story{
+  min-width:70px;
+  text-align:center;
+  font-size:12px;
 }
-.section-title{
-font-size:16px;
-font-weight:850;
-margin:15px 0 7px;
+.story .avatar{
+  margin:auto auto 6px;
+  border:2px solid var(--purple);
 }
-.setting-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:12px;
-padding:12px 0;
-border-bottom:1px solid var(--line);
+.story button{padding:7px;font-size:11px}
+.profile-top{display:flex;align-items:center;gap:15px}
+.profile-details{flex:1;min-width:0}
+.profile-details h2{margin:0 0 5px}
+.field{margin:12px 0}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.person,.community{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 0;border-bottom:1px solid var(--line);
 }
-.setting-row:last-child{border-bottom:0}
-.setting-row small{
-display:block;
-color:var(--muted);
-font-size:11px;
-margin-top:3px;
+.person:last-child,.community:last-child{border:0}
+.person-info{flex:1;min-width:0}
+.person-info small{display:block;color:var(--muted);margin-top:4px}
+.message-list{
+  display:flex;flex-direction:column;gap:9px;
+  max-height:360px;overflow:auto;
 }
-.setting-row input[type=checkbox]{
-width:20px;
-height:20px;
-accent-color:var(--pink);
-flex-shrink:0;
+.message{
+  max-width:85%;
+  padding:10px 13px;
+  border-radius:12px;
+  background:var(--panel2);
+  align-self:flex-start;
+  overflow-wrap:anywhere;
 }
-.info-box{
-background:#f5f5f8;
-padding:12px;
-border-radius:12px;
-margin:8px 0;
-overflow-wrap:anywhere;
+.message.mine{align-self:flex-end;background:#424e9b}
+.message small{display:block;font-size:10px;opacity:.7;margin-top:5px}
+.chat-compose{display:flex;gap:8px;margin-top:12px}
+.chat-compose input{min-width:0}
+.stat-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:9px;
 }
-.avatar-preview{
-width:90px;
-height:90px;
-border-radius:50%;
-margin:10px auto;
-overflow:hidden;
-background:linear-gradient(135deg,#ff3b65,#ff9b49);
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:900;
+.stat{
+  background:var(--panel2);
+  border-radius:10px;
+  padding:13px;
+  text-align:center;
 }
-.avatar-preview img{
-width:100%;
-height:100%;
-object-fit:cover;
+.stat strong{display:block;font-size:23px;color:#aab4ff}
+.stat small{color:var(--muted)}
+.notice{
+  padding:12px;
+  border-radius:9px;
+  background:#29243b;
+  border:1px solid #55416e;
+  color:#e0d5ff;
+  font-size:13px;
+  margin:10px 0;
 }
-@media(max-width:420px){
-.wrap{padding:9px}
-.card{padding:13px}
-.tabs button{font-size:11px;padding:10px 4px}
+.toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#292941;
+  border:1px solid var(--line);
+  padding:12px 18px;
+  border-radius:10px;
+  z-index:100;
+  box-shadow:0 5px 25px #0008;
+  max-width:90%;
+  text-align:center;
+}
+.tag{
+  display:inline-block;
+  background:#30304a;
+  color:#bfc6ff;
+  border-radius:20px;
+  padding:5px 9px;
+  font-size:11px;
+  margin:3px;
+}
+.empty{text-align:center;padding:25px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+@media(max-width:800px){
+  .layout{grid-template-columns:1fr}
+  .container{padding:12px}
+  header{padding:12px}
+  .header-right .status{display:none}
+}
+@media(max-width:450px){
+  .grid2{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:repeat(3,1fr)}
+  .logo{font-size:19px}
 }
 </style>
 </head>
 
 <body>
 
-<div id="toast"></div>
-
 <header>
-<div class="logo">HUMAN<span>.</span></div>
-<div class="row">
-<span id="connection" class="status">Connecting...</span>
-<button class="light" onclick="refreshApp()">↻</button>
-<div class="avatar" id="headerAvatar">?</div>
-</div>
+  <div class="logo">HUMAN<span>.</span></div>
+  <div class="header-right">
+    <span class="status" id="connectionStatus">Not connected</span>
+    <button class="secondary" onclick="refreshApp()">↻</button>
+    <button class="secondary" onclick="logout()" id="logoutButton" hidden>Logout</button>
+  </div>
 </header>
 
-<div class="wrap">
-
 <!-- AUTHENTICATION -->
-<section id="authSection">
+<section id="authSection" class="auth-wrap">
+  <h2 id="authTitle">Welcome to HUMAN</h2>
+  <p class="muted" style="text-align:center">Be Human. Be Real.</p>
 
-<div class="card" style="text-align:center">
-<h1>Welcome to HUMAN<span style="color:#ff3b65">.</span></h1>
-<p>Be Human. Be Real. ❤️</p>
-<p class="muted">Your people. Your stories. Your space.</p>
-</div>
+  <div id="registerFields" class="hidden">
+    <input id="registerUsername" placeholder="Choose a username">
+    <input id="registerBio" placeholder="Short bio (optional)">
+  </div>
 
-<div class="card">
-<div class="tabs">
-<button id="loginTab" class="active" onclick="authMode('login')">LOGIN</button>
-<button id="registerTab" onclick="authMode('register')">CREATE ACCOUNT</button>
-</div>
+  <input id="authEmail" type="email" placeholder="Email address">
+  <input id="authPassword" type="password" placeholder="Password">
 
-<div id="registerFields" class="hidden">
-<input id="regEmail" type="email" placeholder="Your email address">
-<input id="regUsername" placeholder="Choose a username">
-<input id="regBio" placeholder="Tell people about yourself">
-</div>
+  <button class="full" onclick="submitAuth()" id="authButton">Login</button>
+  <button class="secondary full" onclick="toggleAuth()" id="switchAuthButton">Create an account</button>
+  <button class="secondary full" onclick="resetPassword()">Forgot password?</button>
 
-<div id="loginFields">
-<input id="loginEmail" type="email" placeholder="Email address">
-</div>
+  <div style="margin:18px 0;border-top:1px solid var(--line)"></div>
 
-<input id="authPassword" type="password" placeholder="Password">
-
-<button class="primary full" id="authButton" onclick="authenticate()">
-LOGIN
-</button>
-
-<button class="light full" onclick="resetPassword()">
-Forgot password?
-</button>
-
-<p id="authMessage" class="status"></p>
-
-<hr>
-
-<div style="text-align:center">
-<p><b>Just exploring HUMAN?</b></p>
-<p class="muted">Enter a separate testing environment without creating a real account.</p>
-
-<button class="dark full" onclick="enterDemoMode()">
-🧪 ENTER DEVELOPMENT MODE
-</button>
-
-<div class="demo-label">LOCAL DEMO ACCOUNT</div>
-</div>
-</div>
+  <button class="success full" onclick="enterDemoMode()">🧪 ENTER DEMO MODE</button>
+  <p class="small" style="text-align:center">
+    Demo Mode works locally in this browser. It does not create a real account.
+  </p>
 </section>
 
 <!-- MAIN APPLICATION -->
-<section id="appSection" class="hidden">
+<main id="appSection" class="container hidden">
 
-<div class="card">
-<div class="row">
-<div class="avatar" id="profileAvatar">?</div>
-<div style="flex:1">
-<b id="displayName">HUMAN Member</b>
-<div class="muted" id="displayEmail"></div>
-<div id="demoBadge" class="demo-label hidden">DEVELOPMENT MODE</div>
-</div>
-<button class="light" onclick="openProfile()">Profile</button>
-</div>
-</div>
+  <div class="row between">
+    <div>
+      <h2 style="margin-bottom:4px">Your HUMAN space</h2>
+      <span class="small" id="modeLabel">Demo Mode</span>
+    </div>
+    <button class="secondary" onclick="showView('identity')">My profile</button>
+  </div>
 
-<div class="tabs">
-<button id="feedTab" class="active" onclick="showView('feed')">🌍 FEED</button>
-<button id="savedTab" onclick="showView('saved')">🔖 SAVED</button>
-<button id="profileTab" onclick="showView('profile')">👤 IDENTITY</button>
-</div>
+  <nav class="nav">
+    <button id="nav-feed" class="active" onclick="showView('feed')">Feed</button>
+    <button id="nav-discover" onclick="showView('discover')">Discover</button>
+    <button id="nav-connect" onclick="showView('connect')">Connect</button>
+    <button id="nav-communities" onclick="showView('communities')">Communities</button>
+    <button id="nav-identity" onclick="showView('identity')">Identity</button>
+    <button id="nav-saved" onclick="showView('saved')">Saved</button>
+    <button id="nav-intelligence" onclick="showView('intelligence')">Intelligence</button>
+    <button id="nav-notifications" onclick="showView('notifications')">Notifications</button>
+  </nav>
 
-<!-- FEED -->
-<div id="feedView">
+  <div class="layout">
+    <div id="mainContent">
 
-<div class="card">
-<h3>Share your story 🌍</h3>
-<input id="postTitle" placeholder="Give your post a title">
-<textarea id="postText" rows="4" placeholder="What's happening?"></textarea>
-<button class="primary full" onclick="createPost()">🚀 Publish post</button>
-</div>
+      <!-- FEED -->
+      <section id="view-feed" class="view">
+        <div class="panel">
+          <h3>Stories</h3>
+          <div class="story-list" id="storyList"></div>
+          <div class="row">
+            <input id="storyInput" placeholder="Share a short story...">
+            <button onclick="addStory()">Post</button>
+          </div>
+        </div>
 
-<div id="feed"></div>
-</div>
+        <div class="panel">
+          <h3>What's happening?</h3>
+          <textarea id="postInput" maxlength="1500" placeholder="Share something with HUMAN..."></textarea>
+          <div class="row between" style="margin-top:10px">
+            <span class="small">Be respectful. Keep it real.</span>
+            <button onclick="createPost()">Publish</button>
+          </div>
+        </div>
 
-<!-- SAVED -->
-<div id="savedView" class="hidden">
-<div class="card">
-<h3>🔖 Your saved posts</h3>
-<div id="savedPosts"></div>
-</div>
-</div>
+        <div id="feedPosts"></div>
+      </section>
 
-<!-- HUMAN IDENTITY -->
-<div id="profileView" class="hidden">
+      <!-- DISCOVER -->
+      <section id="view-discover" class="view hidden">
+        <div class="panel">
+          <h3>Discover HUMAN</h3>
+          <input id="discoverInput" placeholder="Search usernames, posts or #hashtags..." oninput="renderDiscover()">
+          <div style="margin-top:12px" id="discoverResults"></div>
+        </div>
+        <div class="panel">
+          <h3>Trending topics</h3>
+          <div id="trendingTopics"></div>
+        </div>
+        <div class="panel">
+          <h3>People you may know</h3>
+          <div id="suggestedPeople"></div>
+        </div>
+      </section>
 
-<div class="card">
-<div style="text-align:center">
-<div class="avatar-preview" id="bigAvatar">?</div>
-<h2 id="profileUsername">@human</h2>
-<p id="profileBio">No bio yet.</p>
-<div class="demo-label" id="identityModeLabel">IDENTITY</div>
-</div>
-</div>
+      <!-- CONNECT -->
+      <section id="view-connect" class="view hidden">
+        <div class="panel">
+          <h3>HUMAN Connect</h3>
+          <div class="notice">
+            Demo messaging is stored only in this browser. It is not a private live messaging service.
+          </div>
+          <div id="chatPeople"></div>
+        </div>
+        <div class="panel hidden" id="chatPanel">
+          <div class="row between">
+            <h3 id="chatTitle">Conversation</h3>
+            <button class="secondary" onclick="closeChat()">Close</button>
+          </div>
+          <div class="message-list" id="messageList"></div>
+          <div class="chat-compose">
+            <input id="messageInput" placeholder="Write a message..." maxlength="500">
+            <button onclick="sendMessage()">Send</button>
+          </div>
+          <p class="small">Voice and video calls are not active in this prototype.</p>
+          <button class="secondary" onclick="callPreview()">Call feature information</button>
+        </div>
+      </section>
 
-<!-- PROFILE EDITOR -->
-<div class="card">
-<h3>👤 Profile settings</h3>
-<p class="muted">Manage how other people see your HUMAN profile.</p>
+      <!-- COMMUNITIES -->
+      <section id="view-communities" class="view hidden">
+        <div class="panel">
+          <h3>Communities</h3>
+          <p class="small">Find people with shared interests.</p>
+          <div class="field">
+            <input id="communityName" placeholder="Create a community name">
+          </div>
+          <div class="field">
+            <input id="communityDescription" placeholder="What is this community about?">
+          </div>
+          <button onclick="createCommunity()">Create community</button>
+        </div>
+        <div class="panel">
+          <h3>Explore communities</h3>
+          <div id="communityList"></div>
+        </div>
+      </section>
 
-<label class="section-title">Username</label>
-<input id="editUsername" maxlength="20" placeholder="Your username">
-<p class="muted">3-20 characters. Letters, numbers and underscores only.</p>
+      <!-- IDENTITY -->
+      <section id="view-identity" class="view hidden">
+        <div class="panel">
+          <div class="profile-top">
+            <div class="avatar large" id="profileAvatar">H</div>
+            <div class="profile-details">
+              <h2 id="profileName">HUMAN User</h2>
+              <div class="muted" id="profileUsername">@human</div>
+              <p class="small" id="profileBio">Your HUMAN profile</p>
+            </div>
+          </div>
+        </div>
 
-<label class="section-title">About you</label>
-<textarea id="editBio" rows="3" maxlength="160" placeholder="Write something about yourself"></textarea>
-<p class="muted">Maximum 160 characters.</p>
+        <div class="panel">
+          <h3>Edit your identity</h3>
+          <div class="field">
+            <label>Username</label>
+            <input id="editUsername" maxlength="24">
+          </div>
+          <div class="field">
+            <label>Bio</label>
+            <textarea id="editBio" maxlength="180"></textarea>
+          </div>
+          <div class="field">
+            <label>Avatar image URL (optional)</label>
+            <input id="editAvatar" placeholder="https://example.com/image.jpg">
+          </div>
+          <button onclick="saveProfile()">Save profile</button>
+        </div>
 
-<label class="section-title">Profile picture URL</label>
-<input id="editAvatar" type="url" placeholder="https://example.com/photo.jpg">
+        <div class="panel">
+          <h3>Privacy preferences</h3>
+          <label class="row"><input type="checkbox" id="privateProfile" style="width:auto"> Private profile preference</label>
+          <label class="row"><input type="checkbox" id="allowDiscovery" style="width:auto"> Allow profile discovery</label>
+          <label class="row"><input type="checkbox" id="showActivity" style="width:auto"> Show activity preference</label>
+          <button style="margin-top:12px" onclick="savePrivacy()">Save privacy preferences</button>
+          <div class="notice">
+            These are prototype preferences. They do not replace Firebase security rules or guarantee account privacy.
+          </div>
+        </div>
+      </section>
 
-<div class="muted">Use a publicly accessible image URL. Image uploads are not enabled yet.</div>
+      <!-- SAVED -->
+      <section id="view-saved" class="view hidden">
+        <h3 class="section-title">Saved posts</h3>
+        <div id="savedPosts"></div>
+      </section>
 
-<button class="primary full" onclick="saveProfile()">💾 Save profile changes</button>
-</div>
+      <!-- INTELLIGENCE -->
+      <section id="view-intelligence" class="view hidden">
+        <div class="panel">
+          <h3>HUMAN Intelligence</h3>
+          <p class="muted">Your activity overview and simple content insights.</p>
+          <div class="stat-grid" id="statsGrid"></div>
+        </div>
+        <div class="panel">
+          <h3>Your activity insights</h3>
+          <div id="activityInsights"></div>
+        </div>
+        <div class="panel">
+          <h3>Content safety preview</h3>
+          <p class="small">HUMAN checks for a few common spam patterns before a demo post is published.</p>
+          <div id="safetyInfo"></div>
+        </div>
+      </section>
 
-<!-- ACCOUNT INFORMATION -->
-<div class="card">
-<h3>📋 Account information</h3>
+      <!-- NOTIFICATIONS -->
+      <section id="view-notifications" class="view hidden">
+        <div class="row between">
+          <h3>Notifications</h3>
+          <button class="secondary" onclick="clearNotifications()">Clear all</button>
+        </div>
+        <div id="notificationList"></div>
+      </section>
 
-<div class="info-box">
-<div class="muted">Username</div>
-<b id="accountUsername">@human</b>
-</div>
+    </div>
 
-<div class="info-box">
-<div class="muted">Email address</div>
-<b id="accountEmail">Not available</b>
-</div>
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="panel">
+        <h3>HUMAN today</h3>
+        <p class="small">A space for people, ideas and communities.</p>
+        <div class="tag">Identity</div>
+        <div class="tag">Social</div>
+        <div class="tag">Connect</div>
+        <div class="tag">Discovery</div>
+        <div class="tag">Intelligence</div>
+      </div>
 
-<div class="info-box">
-<div class="muted">Account type</div>
-<b id="accountType">Development account</b>
-</div>
+      <div class="panel">
+        <h3>Quick actions</h3>
+        <button class="secondary full" onclick="showView('feed')">Open feed</button>
+        <button class="secondary full" onclick="showView('discover')">Find people</button>
+        <button class="secondary full" onclick="showView('connect')">Open messages</button>
+        <button class="secondary full" onclick="showView('identity')">Edit profile</button>
+      </div>
 
-<div class="info-box">
-<div class="muted">Email verification</div>
-<b id="accountVerification">Demo account</b>
-</div>
+      <div class="panel">
+        <h3>Demo information</h3>
+        <p class="small">Demo content is saved in your browser using local storage. Clearing browser data can remove it.</p>
+      </div>
+    </aside>
+  </div>
 
-<div class="info-box">
-<div class="muted">Account created</div>
-<b id="accountCreated">Not available</b>
-</div>
+  <footer>HUMAN © 2026 | Be Human. Be Real.</footer>
+</main>
 
-<button class="light full" onclick="refreshAccountInfo()">↻ Refresh account information</button>
-</div>
-
-<!-- PRIVACY SETTINGS -->
-<div class="card">
-<h3>🔐 Privacy settings</h3>
-<p class="muted">Choose your preferred profile visibility settings.</p>
-
-<div class="setting-row">
-<div>
-<b>Private profile</b>
-<small>Preference for limiting who can view your profile.</small>
-</div>
-<input type="checkbox" id="privacyPrivate">
-</div>
-
-<div class="setting-row">
-<div>
-<b>Show email on profile</b>
-<small>Controls your profile display preference.</small>
-</div>
-<input type="checkbox" id="privacyEmail">
-</div>
-
-<div class="setting-row">
-<div>
-<b>Show activity status</b>
-<small>Controls your activity visibility preference.</small>
-</div>
-<input type="checkbox" id="privacyActivity">
-</div>
-
-<div class="setting-row">
-<div>
-<b>Allow discovery</b>
-<small>Preference for appearing in discovery features.</small>
-</div>
-<input type="checkbox" id="privacyDiscovery">
-</div>
-
-<button class="primary full" onclick="savePrivacy()">Save privacy preferences</button>
-
-<p class="muted">
-Important: These settings currently save your preferences. Real privacy enforcement requires matching Firebase Database Security Rules and server-side access controls. They do not yet prevent other users from reading data.
-</p>
-</div>
-
-<!-- ACCOUNT ACTIONS -->
-<div class="card">
-<h3>⚙️ Account actions</h3>
-
-<button class="light full" onclick="resetPassword()">Change password through email</button>
-
-<button class="danger full" onclick="logout()">Logout</button>
-</div>
-
-</div>
-</section>
-</div>
-
-<!-- FIREBASE SDK -->
-<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database-compat.js"></script>
+<div id="toast" class="toast hidden"></div>
 
 <script>
-
-// ========================================
-// HUMAN FIREBASE CONFIGURATION
-// ========================================
+/* =========================================
+   HUMAN CONFIGURATION
+========================================= */
 
 const firebaseConfig = {
-apiKey: "AIzaSyCFAciNf_-ObpO14XOMpeO7WRCAJecpHU",
-authDomain: "human-app-cea91.firebaseapp.com",
-databaseURL: "https://human-app-cea91-default-rtdb.firebaseio.com",
-projectId: "human-app-cea91",
-storageBucket: "human-app-cea91.firebasestorage.app",
-messagingSenderId: "599977540407",
-appId: "1:599977540407:web:0fecc148a25bce44a1f8b2",
-measurementId: "G-K7FY30KW7Y"
+  apiKey: "AIzaSyCFAciNfH_-ObpO14XOMpeO7WRCAJecpHU",
+  authDomain: "human-app-cea91.firebaseapp.com",
+  databaseURL: "https://human-app-cea91-default-rtdb.firebaseio.com",
+  projectId: "human-app-cea91",
+  storageBucket: "human-app-cea91.firebasestorage.app",
+  messagingSenderId: "599977540407",
+  appId: "1:599977540407:web:0fecc148a25bce44a1f8b2",
+  measurementId: "G-K7FY30KW7Y"
 };
 
-firebase.initializeApp(firebaseConfig);
+let auth = null;
+let database = null;
+let firebaseReady = false;
 
-const auth = firebase.auth();
-const database = firebase.database();
+try {
+  if (typeof firebase !== "undefined") {
+    firebase.initializeApp(firebaseConfig);
+    auth = firebase.auth();
+    database = firebase.database();
+    firebaseReady = true;
+  }
+} catch(error) {
+  console.warn("Firebase setup:", error.message);
+}
 
 let currentUser = null;
 let currentProfile = null;
-let posts = [];
-let savedPosts = {};
-
-let currentMode = "login";
-let activeView = "feed";
-let demoMode = false;
+let currentMode = "demo";
+let currentView = "feed";
+let currentChat = null;
+let authMode = "login";
 let registrationInProgress = false;
 
-const defaultPrivacy = {
-privateProfile:false,
-showEmail:false,
-showActivity:false,
-allowDiscovery:true
+const DEMO_KEYS = {
+  profile:"human_demo_profile",
+  posts:"human_demo_posts",
+  saved:"human_demo_saved",
+  stories:"human_demo_stories",
+  polls:"human_demo_polls",
+  groups:"human_demo_groups",
+  follows:"human_demo_follows",
+  messages:"human_demo_messages",
+  notifications:"human_demo_notifications",
+  settings:"human_demo_settings"
 };
 
-// ========================================
-// DEVELOPMENT STORAGE
-// ========================================
-
-function readDemoStorage(key,fallback){
-try{
-const value=localStorage.getItem(key);
-return value ? JSON.parse(value) : fallback;
-}catch(error){
-return fallback;
-}
+function readStore(key, fallback=[]) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : fallback;
+  } catch(error) {
+    return fallback;
+  }
 }
 
-function saveDemoProfile(){
-localStorage.setItem("human_demo_profile",JSON.stringify(currentProfile));
+function writeStore(key, value) {
+  localStorage.setItem(key, JSON.stringify(value));
 }
 
-let demoPosts = readDemoStorage("human_demo_posts",null);
-
-if(!Array.isArray(demoPosts)){
-demoPosts=[
-{
-id:"demo1",
-uid:"human-demo",
-name:"human_demo",
-title:"Welcome to HUMAN!",
-text:"This is our development environment. Test your ideas here.",
-createdAt:Date.now(),
-likes:3,
-love:2,
-comments:{}
-},
-{
-id:"demo2",
-uid:"another-demo",
-name:"explorer",
-title:"A new beginning",
-text:"A place for people to connect, share stories and be real.",
-createdAt:Date.now()-60000,
-likes:5,
-love:1,
-comments:{}
-}
-];
-localStorage.setItem("human_demo_posts",JSON.stringify(demoPosts));
+function getData(name, fallback=[]) {
+  return readStore(DEMO_KEYS[name], fallback);
 }
 
-function saveDemoPosts(){
-localStorage.setItem("human_demo_posts",JSON.stringify(demoPosts));
+function saveData(name, value) {
+  writeStore(DEMO_KEYS[name], value);
 }
 
-// ========================================
-// ENTER DEVELOPMENT MODE
-// ========================================
-
-function enterDemoMode(){
-
-demoMode=true;
-
-currentUser={
-uid:"human-demo",
-email:"demo@human.local",
-emailVerified:true,
-metadata:{creationTime:new Date().toISOString()}
-};
-
-const savedProfile=readDemoStorage("human_demo_profile",null);
-
-currentProfile={
-uid:"human-demo",
-username:"human_demo",
-bio:"HUMAN development test account.",
-avatar:"",
-createdAt:Date.now(),
-privacy:{...defaultPrivacy},
-...(savedProfile||{})
-};
-
-currentProfile.privacy={
-...defaultPrivacy,
-...(currentProfile.privacy||{})
-};
-
-savedPosts=readDemoStorage("human_demo_saved",{});
-posts=[];
-
-document.getElementById("authSection").classList.add("hidden");
-document.getElementById("appSection").classList.remove("hidden");
-
-document.getElementById("displayName").textContent="@"+currentProfile.username;
-document.getElementById("displayEmail").textContent="LOCAL TEST ACCOUNT";
-document.getElementById("demoBadge").classList.remove("hidden");
-document.getElementById("connection").textContent="🧪 Demo Mode";
-
-updateAvatar();
-updateIdentityDisplay();
-loadPrivacyControls();
-refreshAccountInfo();
-showView("feed");
-loadSaved();
-loadFeed();
-
-toast("Welcome to HUMAN Development Mode!");
+function makeId() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
 }
 
-// ========================================
-// HELPERS
-// ========================================
-
-function toast(message){
-const el=document.getElementById("toast");
-el.textContent=message;
-el.style.display="block";
-setTimeout(()=>el.style.display="none",3500);
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[char]);
 }
 
-function safe(value){
-return String(value ?? "").replace(/[&<>"']/g,char=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-})[char]);
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.remove("hidden");
+  clearTimeout(window.toastTimer);
+  window.toastTimer = setTimeout(() => el.classList.add("hidden"), 2800);
 }
 
-function usernameValid(name){
-return /^[a-zA-Z0-9_]{3,20}$/.test(name);
+function avatarHTML(profile, large=false) {
+  const size = large ? "avatar large" : "avatar";
+  if (profile && profile.avatar && /^https?:\/\//i.test(profile.avatar)) {
+    return `<img class="${size}" src="${escapeHTML(profile.avatar)}" alt="Avatar" onerror="this.style.display='none'">`;
+  }
+  const letter = profile?.username?.charAt(0)?.toUpperCase() || "H";
+  return `<div class="${size}">${escapeHTML(letter)}</div>`;
 }
 
-function profilePath(uid){
-return database.ref("users/"+uid);
+function currentUsername() {
+  return currentProfile?.username || "human_user";
 }
 
-function formatDate(value){
-if(!value)return "Not available";
-const date=new Date(value);
-return isNaN(date.getTime())?"Not available":date.toLocaleString();
+function defaultProfile() {
+  return {
+    username:"human_user",
+    bio:"Welcome to HUMAN.",
+    avatar:"",
+    privacy:{
+      privateProfile:false,
+      allowDiscovery:true,
+      showActivity:true
+    }
+  };
 }
 
-// ========================================
-// AUTHENTICATION MODES
-// ========================================
+/* =========================================
+   DEMO STARTER DATA
+========================================= */
 
-function authMode(mode){
+function seedDemoData() {
+  if (!localStorage.getItem(DEMO_KEYS.profile)) {
+    saveData("profile", defaultProfile());
+  }
 
-currentMode=mode;
+  if (!localStorage.getItem(DEMO_KEYS.posts)) {
+    saveData("posts",[
+      {
+        id:makeId(),
+        username:"human_demo",
+        text:"Welcome to HUMAN! This is a place to share ideas, discover people and build communities.",
+        createdAt:Date.now()-3600000,
+        likes:[],
+        comments:[],
+        poll:null
+      },
+      {
+        id:makeId(),
+        username:"explorer",
+        text:"What new skill are you learning this week? Share it with the community!",
+        createdAt:Date.now()-1800000,
+        likes:[],
+        comments:[],
+        poll:null
+      }
+    ]);
+  }
 
-document.getElementById("loginTab").classList.toggle("active",mode==="login");
-document.getElementById("registerTab").classList.toggle("active",mode==="register");
+  if (!localStorage.getItem(DEMO_KEYS.groups)) {
+    saveData("groups",[
+      {id:makeId(),name:"Technology Hub",description:"Technology, computers and digital ideas.",members:1},
+      {id:makeId(),name:"Creative Corner",description:"Design, writing and creative projects.",members:1},
+      {id:makeId(),name:"Learning Space",description:"Share learning goals and useful resources.",members:1}
+    ]);
+  }
 
-document.getElementById("registerFields").classList.toggle("hidden",mode!=="register");
-document.getElementById("loginFields").classList.toggle("hidden",mode!=="login");
+  if (!localStorage.getItem(DEMO_KEYS.notifications)) {
+    saveData("notifications",[
+      {id:makeId(),text:"Welcome to HUMAN Demo Mode.",time:Date.now(),read:false}
+    ]);
+  }
 
-document.getElementById("authButton").textContent=
-mode==="register"?"CREATE HUMAN ACCOUNT":"LOGIN";
-
-document.getElementById("authMessage").textContent="";
+  if (!localStorage.getItem(DEMO_KEYS.messages)) saveData("messages",[]);
+  if (!localStorage.getItem(DEMO_KEYS.saved)) saveData("saved",[]);
+  if (!localStorage.getItem(DEMO_KEYS.stories)) saveData("stories",[]);
+  if (!localStorage.getItem(DEMO_KEYS.polls)) saveData("polls",[]);
+  if (!localStorage.getItem(DEMO_KEYS.follows)) saveData("follows",[]);
+  if (!localStorage.getItem(DEMO_KEYS.settings)) saveData("settings",{});
 }
 
-// ========================================
-// REGISTRATION AND LOGIN
-// ========================================
-
-async function authenticate(){
-
-const button=document.getElementById("authButton");
-const message=document.getElementById("authMessage");
-
-const password=document.getElementById("authPassword").value.trim();
-
-if(password.length<6){
-message.textContent="Password must contain at least 6 characters.";
-return;
+function enterDemoMode() {
+  currentMode = "demo";
+  currentUser = {uid:"demo-user",email:"demo@human.local"};
+  seedDemoData();
+  currentProfile = getData("profile",defaultProfile());
+  openApplication();
+  toast("Welcome to HUMAN Demo Mode!");
 }
 
-button.disabled=true;
-message.textContent="Please wait...";
+/* =========================================
+   AUTHENTICATION
+========================================= */
 
-try{
+function toggleAuth() {
+  authMode = authMode === "login" ? "register" : "login";
 
-if(currentMode==="register"){
-
-const email=document.getElementById("regEmail").value.trim();
-const username=document.getElementById("regUsername").value.trim().toLowerCase();
-const bio=document.getElementById("regBio").value.trim();
-
-if(!email || !email.includes("@")){
-throw new Error("Enter a valid email address.");
+  document.getElementById("registerFields").classList.toggle("hidden",authMode !== "register");
+  document.getElementById("authTitle").textContent = authMode === "login" ? "Welcome to HUMAN" : "Create your HUMAN account";
+  document.getElementById("authButton").textContent = authMode === "login" ? "Login" : "Register";
+  document.getElementById("switchAuthButton").textContent = authMode === "login" ? "Create an account" : "I already have an account";
 }
 
-if(!usernameValid(username)){
-throw new Error("Username must be 3-20 letters, numbers or underscores.");
+async function submitAuth() {
+  if (!firebaseReady || !auth) {
+    toast("Firebase is not available. Use Demo Mode for now.");
+    return;
+  }
+
+  const email = document.getElementById("authEmail").value.trim();
+  const password = document.getElementById("authPassword").value;
+
+  if (!email || !password) {
+    toast("Enter your email and password.");
+    return;
+  }
+
+  try {
+    if (authMode === "register") {
+      const username = document.getElementById("registerUsername").value.trim().toLowerCase();
+      const bio = document.getElementById("registerBio").value.trim();
+
+      if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+        toast("Username must be 3 to 24 characters: letters, numbers or underscores.");
+        return;
+      }
+
+      if (password.length < 6) {
+        toast("Password must contain at least 6 characters.");
+        return;
+      }
+
+      registrationInProgress = true;
+      const result = await auth.createUserWithEmailAndPassword(email,password);
+      await result.user.sendEmailVerification();
+
+      const profile = {
+        username,
+        bio,
+        createdAt:Date.now(),
+        privacy:{
+          privateProfile:false,
+          allowDiscovery:true,
+          showActivity:true
+        }
+      };
+
+      await database.ref("users/" + result.user.uid).set(profile);
+      currentUser = result.user;
+      currentProfile = profile;
+      currentMode = "live";
+      registrationInProgress = false;
+
+      toast("Account created. Check your email for verification.");
+      openApplication();
+    } else {
+      const result = await auth.signInWithEmailAndPassword(email,password);
+
+      if (!result.user.emailVerified) {
+        await auth.signOut();
+        toast("Please verify your email before logging in.");
+        return;
+      }
+
+      currentUser = result.user;
+      currentMode = "live";
+      const snapshot = await database.ref("users/" + result.user.uid).once("value");
+      currentProfile = snapshot.val() || defaultProfile();
+
+      openApplication();
+    }
+  } catch(error) {
+    registrationInProgress = false;
+    toast(error.message);
+  }
 }
 
-const usernameRef=database.ref("usernameIndex/"+username);
+async function resetPassword() {
+  const email = document.getElementById("authEmail").value.trim();
+  if (!email) {
+    toast("Enter your email address first.");
+    return;
+  }
 
-const reservation=await usernameRef.transaction(current=>{
-if(current===null)return "__RESERVED__";
-return;
+  if (!auth) {
+    toast("Firebase is not available.");
+    return;
+  }
+
+  try {
+    await auth.sendPasswordResetEmail(email);
+    toast("Password reset email sent.");
+  } catch(error) {
+    toast(error.message);
+  }
+}
+
+if (firebaseReady && auth) {
+  auth.onAuthStateChanged(async user => {
+    if (registrationInProgress || currentMode === "demo") return;
+
+    if (user && user.emailVerified) {
+      currentUser = user;
+      currentMode = "live";
+
+      try {
+        const snapshot = await database.ref("users/" + user.uid).once("value");
+        currentProfile = snapshot.val() || defaultProfile();
+        openApplication();
+      } catch(error) {
+        toast("Could not load your profile.");
+      }
+    }
+  });
+}
+
+function openApplication() {
+  document.getElementById("authSection").classList.add("hidden");
+  document.getElementById("appSection").classList.remove("hidden");
+  document.getElementById("logoutButton").hidden = false;
+
+  document.getElementById("modeLabel").textContent =
+    currentMode === "demo" ? "🧪 Demo Mode · Local browser data" : "Firebase account";
+
+  document.getElementById("connectionStatus").textContent =
+    currentMode === "demo" ? "Demo active" : "Account connected";
+
+  if (currentMode === "demo") {
+    currentProfile = getData("profile",defaultProfile());
+  }
+
+  updateIdentity();
+  refreshApp();
+  showView("feed");
+}
+
+async function logout() {
+  if (currentMode === "live" && auth) {
+    try { await auth.signOut(); } catch(error) {}
+  }
+
+  currentUser = null;
+  currentProfile = null;
+  currentMode = "demo";
+  currentChat = null;
+
+  document.getElementById("appSection").classList.add("hidden");
+  document.getElementById("authSection").classList.remove("hidden");
+  document.getElementById("logoutButton").hidden = true;
+  document.getElementById("connectionStatus").textContent = "Not connected";
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+function showView(view) {
+  currentView = view;
+
+  document.querySelectorAll(".view").forEach(el => el.classList.add("hidden"));
+  const selected = document.getElementById("view-" + view);
+  if (selected) selected.classList.remove("hidden");
+
+  document.querySelectorAll(".nav button").forEach(el => el.classList.remove("active"));
+  const nav = document.getElementById("nav-" + view);
+  if (nav) nav.classList.add("active");
+
+  if (view === "feed") renderFeed();
+  if (view === "discover") renderDiscover();
+  if (view === "connect") renderChatPeople();
+  if (view === "communities") renderCommunities();
+  if (view === "identity") updateIdentity();
+  if (view === "saved") renderSaved();
+  if (view === "intelligence") renderIntelligence();
+  if (view === "notifications") renderNotifications();
+}
+
+/* =========================================
+   PROFILE / IDENTITY
+========================================= */
+
+function updateIdentity() {
+  if (!currentProfile) return;
+
+  const username = currentUsername();
+  document.getElementById("profileName").textContent = username;
+  document.getElementById("profileUsername").textContent = "@" + username;
+  document.getElementById("profileBio").textContent = currentProfile.bio || "No bio added yet.";
+
+  const avatar = document.getElementById("profileAvatar");
+  avatar.innerHTML = "";
+
+  if (currentProfile.avatar && /^https?:\/\//i.test(currentProfile.avatar)) {
+    const img = document.createElement("img");
+    img.src = currentProfile.avatar;
+    img.alt = "Profile avatar";
+    img.className = "avatar large";
+    avatar.appendChild(img);
+  } else {
+    avatar.textContent = username.charAt(0).toUpperCase();
+  }
+
+  document.getElementById("editUsername").value = username;
+  document.getElementById("editBio").value = currentProfile.bio || "";
+  document.getElementById("editAvatar").value = currentProfile.avatar || "";
+
+  const privacy = currentProfile.privacy || {};
+  document.getElementById("privateProfile").checked = !!privacy.privateProfile;
+  document.getElementById("allowDiscovery").checked = privacy.allowDiscovery !== false;
+  document.getElementById("showActivity").checked = privacy.showActivity !== false;
+}
+
+async function saveProfile() {
+  const username = document.getElementById("editUsername").value.trim().toLowerCase();
+  const bio = document.getElementById("editBio").value.trim();
+  const avatar = document.getElementById("editAvatar").value.trim();
+
+  if (!/^[a-z0-9_]{3,24}$/.test(username)) {
+    toast("Use 3 to 24 letters, numbers or underscores for your username.");
+    return;
+  }
+
+  if (avatar && !/^https?:\/\//i.test(avatar)) {
+    toast("Avatar must be a valid HTTP or HTTPS image URL.");
+    return;
+  }
+
+  currentProfile.username = username;
+  currentProfile.bio = bio;
+  currentProfile.avatar = avatar;
+
+  if (currentMode === "demo") {
+    saveData("profile",currentProfile);
+  } else {
+    try {
+      await database.ref("users/" + currentUser.uid).update({
+        username,bio,avatar
+      });
+    } catch(error) {
+      toast("Could not update profile: " + error.message);
+      return;
+    }
+  }
+
+  updateIdentity();
+  toast("Profile updated.");
+}
+
+async function savePrivacy() {
+  currentProfile.privacy = {
+    privateProfile:document.getElementById("privateProfile").checked,
+    allowDiscovery:document.getElementById("allowDiscovery").checked,
+    showActivity:document.getElementById("showActivity").checked
+  };
+
+  if (currentMode === "demo") {
+    saveData("profile",currentProfile);
+    toast("Demo privacy preferences saved.");
+  } else {
+    try {
+      await database.ref("users/" + currentUser.uid + "/privacy").set(currentProfile.privacy);
+      toast("Preferences saved. Database rules must enforce these settings.");
+    } catch(error) {
+      toast("Could not save preferences.");
+    }
+  }
+}
+
+/* =========================================
+   POSTS AND SOCIAL FEED
+========================================= */
+
+function getPosts() {
+  return getData("posts",[]);
+}
+
+function setPosts(posts) {
+  saveData("posts",posts);
+}
+
+function createPost() {
+  const input = document.getElementById("postInput");
+  const text = input.value.trim();
+
+  if (!text) {
+    toast("Write something first.");
+    return;
+  }
+
+  if (text.length > 1500) {
+    toast("Your post is too long.");
+    return;
+  }
+
+  const warning = checkSpam(text);
+  if (warning) {
+    toast(warning);
+    return;
+  }
+
+  const post = {
+    id:makeId(),
+    username:currentUsername(),
+    text,
+    createdAt:Date.now(),
+    likes:[],
+    comments:[],
+    poll:null
+  };
+
+  if (currentMode === "demo") {
+    const posts = getPosts();
+    posts.unshift(post);
+    setPosts(posts);
+  } else {
+    toast("Live post publishing is not connected in this combined demo build. Use Demo Mode to test social features.");
+    return;
+  }
+
+  input.value = "";
+  addNotification("Your post was published.");
+  renderFeed();
+  toast("Your post is live in Demo Mode.");
+}
+
+function timeAgo(time) {
+  const minutes = Math.max(0,Math.floor((Date.now()-time)/60000));
+  if (minutes < 1) return "Just now";
+  if (minutes < 60) return minutes + "m ago";
+  const hours = Math.floor(minutes/60);
+  if (hours < 24) return hours + "h ago";
+  return Math.floor(hours/24) + "d ago";
+}
+
+function renderFeed() {
+  const posts = getPosts().sort((a,b)=>b.createdAt-a.createdAt);
+  const container = document.getElementById("feedPosts");
+
+  if (!posts.length) {
+    container.innerHTML = '<div class="empty">No posts yet. Start the conversation.</div>';
+    renderStories();
+    return;
+  }
+
+  container.innerHTML = posts.map(post => {
+    const liked = (post.likes || []).includes(currentUsername());
+    const comments = (post.comments || []).map(comment => `
+      <div class="comment">
+        <b>@${escapeHTML(comment.username)}</b>
+        ${escapeHTML(comment.text)}
+        ${comment.username === currentUsername() ? `<button class="danger" style="float:right;padding:4px 7px" onclick="deleteComment('${post.id}','${comment.id}')">×</button>` : ""}
+      </div>
+    `).join("");
+
+    const poll = post.poll ? renderPoll(post) : "";
+
+    return `
+      <article class="card">
+        <div class="row between">
+          <div class="row">
+            <div class="avatar">${escapeHTML(post.username.charAt(0).toUpperCase())}</div>
+            <div>
+              <div class="user-name">@${escapeHTML(post.username)}</div>
+              <div class="small">${timeAgo(post.createdAt)}</div>
+            </div>
+          </div>
+          ${post.username === currentUsername() ? `<button class="danger" onclick="deletePost('${post.id}')">Delete</button>` : ""}
+        </div>
+
+        <div class="post-text">${escapeHTML(post.text)}</div>
+        ${poll}
+
+        <div class="post-actions">
+          <button class="${liked ? "success" : "secondary"}" onclick="toggleLike('${post.id}')">♥ ${post.likes?.length || 0}</button>
+          <button class="secondary" onclick="focusComment('${post.id}')">Comment ${post.comments?.length || 0}</button>
+          <button class="secondary" onclick="savePost('${post.id}')">☆ Save</button>
+          <button class="secondary" onclick="reportPost('${post.id}')">Report</button>
+        </div>
+
+        <div id="comments-${post.id}">${comments}</div>
+        <div class="comment-form">
+          <input id="comment-input-${post.id}" placeholder="Write a comment..." maxlength="300">
+          <button onclick="addComment('${post.id}')">Send</button>
+        </div>
+      </article>
+    `;
+  }).join("");
+
+  renderStories();
+}
+
+function toggleLike(postId) {
+  const posts = getPosts();
+  const post = posts.find(p=>p.id===postId);
+  if (!post) return;
+
+  post.likes = post.likes || [];
+  const index = post.likes.indexOf(currentUsername());
+
+  if (index >= 0) post.likes.splice(index,1);
+  else post.likes.push(currentUsername());
+
+  setPosts(posts);
+  renderFeed();
+}
+
+function addComment(postId) {
+  const input = document.getElementById("comment-input-" + postId);
+  const text = input.value.trim();
+  if (!text) return;
+
+  const posts = getPosts();
+  const post = posts.find(p=>p.id===postId);
+  if (!post) return;
+
+  post.comments = post.comments || [];
+  post.comments.push({
+    id:makeId(),
+    username:currentUsername(),
+    text,
+    createdAt:Date.now()
+  });
+
+  setPosts(posts);
+  renderFeed();
+  toast("Comment added.");
+}
+
+function focusComment(postId) {
+  const input = document.getElementById("comment-input-" + postId);
+  if (input) input.focus();
+}
+
+function deleteComment(postId,commentId) {
+  const posts = getPosts();
+  const post = posts.find(p=>p.id===postId);
+  if (!post) return;
+
+  post.comments = (post.comments || []).filter(c =>
+    !(c.id === commentId && c.username === currentUsername())
+  );
+
+  setPosts(posts);
+  renderFeed();
+}
+
+function deletePost(postId) {
+  const posts = getPosts();
+  const post = posts.find(p=>p.id===postId);
+
+  if (!post || post.username !== currentUsername()) {
+    toast("You can only delete your own posts.");
+    return;
+  }
+
+  if (!confirm("Delete this post?")) return;
+
+  setPosts(posts.filter(p=>p.id!==postId));
+  renderFeed();
+  toast("Post deleted.");
+}
+
+function savePost(postId) {
+  const saved = getData("saved",[]);
+  if (saved.includes(postId)) {
+    toast("This post is already saved.");
+    return;
+  }
+
+  saved.push(postId);
+  saveData("saved",saved);
+  toast("Post saved.");
+}
+
+function renderSaved() {
+  const saved = getData("saved",[]);
+  const posts = getPosts().filter(p=>saved.includes(p.id));
+  const container = document.getElementById("savedPosts");
+
+  if (!posts.length) {
+    container.innerHTML = '<div class="empty">You have no saved posts yet.</div>';
+    return;
+  }
+
+  container.innerHTML = posts.map(post => `
+    <div class="card">
+      <b>@${escapeHTML(post.username)}</b>
+      <p class="post-text">${escapeHTML(post.text)}</p>
+      <button class="danger" onclick="removeSaved('${post.id}')">Remove saved post</button>
+    </div>
+  `).join("");
+}
+
+function removeSaved(id) {
+  saveData("saved",getData("saved",[]).filter(x=>x!==id));
+  renderSaved();
+}
+
+/* =========================================
+   STORIES
+========================================= */
+
+function addStory() {
+  const input = document.getElementById("storyInput");
+  const text = input.value.trim();
+
+  if (!text) {
+    toast("Write a story first.");
+    return;
+  }
+
+  const stories = getData("stories",[]);
+  stories.unshift({
+    id:makeId(),
+    username:currentUsername(),
+    text,
+    createdAt:Date.now()
+  });
+
+  saveData("stories",stories);
+  input.value = "";
+  renderStories();
+  toast("Story added.");
+}
+
+function renderStories() {
+  const stories = getData("stories",[])
+    .filter(s=>Date.now()-s.createdAt < 86400000);
+
+  const container = document.getElementById("storyList");
+
+  container.innerHTML = `
+    <div class="story">
+      <div class="avatar">+</div>
+      <span>Your story</span>
+    </div>
+    ${stories.map(story=>`
+      <div class="story" onclick="viewStory('${story.id}')">
+        <div class="avatar">${escapeHTML(story.username.charAt(0).toUpperCase())}</div>
+        <span>@${escapeHTML(story.username)}</span>
+      </div>
+    `).join("")}
+  `;
+}
+
+function viewStory(id) {
+  const story = getData("stories",[]).find(s=>s.id===id);
+  if (story) alert("@" + story.username + "\n\n" + story.text);
+}
+
+/* =========================================
+   POLLS
+========================================= */
+
+function createPoll() {
+  const question = prompt("Enter your poll question:");
+  if (!question || !question.trim()) return;
+
+  const option1 = prompt("Enter option one:");
+  const option2 = prompt("Enter option two:");
+
+  if (!option1 || !option2) {
+    toast("A poll needs at least two options.");
+    return;
+  }
+
+  const post = {
+    id:makeId(),
+    username:currentUsername(),
+    text:"📊 " + question.trim(),
+    createdAt:Date.now(),
+    likes:[],
+    comments:[],
+    poll:{
+      options:[option1.trim(),option2.trim()],
+      votes:{}
+    }
+  };
+
+  const posts = getPosts();
+  posts.unshift(post);
+  setPosts(posts);
+  renderFeed();
+  toast("Poll published.");
+}
+
+function renderPoll(post) {
+  const poll = post.poll;
+  const total = Object.values(poll.votes || {}).length;
+
+  return `
+    <div class="panel">
+      <b>Poll</b>
+      ${poll.options.map((option,index)=>{
+        const count = Object.values(poll.votes || {}).filter(v=>v===index).length;
+        return `
+          <button class="secondary full" onclick="votePoll('${post.id}',${index})">
+            ${escapeHTML(option)} · ${count} vote(s)
+          </button>
+        `;
+      }).join("")}
+      <p class="small">${total} total votes</p>
+    </div>
+  `;
+}
+
+function votePoll(postId,index) {
+  const posts = getPosts();
+  const post = posts.find(p=>p.id===postId);
+  if (!post || !post.poll) return;
+
+  post.poll.votes = post.poll.votes || {};
+  post.poll.votes[currentUsername()] = index;
+
+  setPosts(posts);
+  renderFeed();
+  toast("Your vote has been recorded.");
+}
+
+/* =========================================
+   DISCOVERY
+========================================= */
+
+function demoPeople() {
+  return [
+    {username:"human_demo",bio:"Welcome to the HUMAN community."},
+    {username:"explorer",bio:"Learning new things every day."},
+    {username:"tech_mind",bio:"Technology and digital creativity."},
+    {username:"creative_soul",bio:"Design, art and ideas."},
+    {username:"learn_daily",bio:"Sharing useful learning tips."}
+  ];
+}
+
+function renderDiscover() {
+  const query = (document.getElementById("discoverInput")?.value || "").trim().toLowerCase();
+  const posts = getPosts();
+  const people = demoPeople().filter(p=>p.username !== currentUsername());
+
+  const matchingPeople = people.filter(p =>
+    p.username.includes(query) || p.bio.toLowerCase().includes(query)
+  );
+
+  const matchingPosts = posts.filter(p =>
+    p.text.toLowerCase().includes(query) ||
+    p.username.toLowerCase().includes(query)
+  );
+
+  const results = document.getElementById("discoverResults");
+
+  if (!query) {
+    results.innerHTML = '<p class="small">Start typing to search HUMAN.</p>';
+  } else {
+    results.innerHTML = `
+      <h4>People</h4>
+      ${matchingPeople.length ? matchingPeople.map(person=>`
+        <div class="person">
+          <div class="avatar">${escapeHTML(person.username.charAt(0).toUpperCase())}</div>
+          <div class="person-info">
+            <b>@${escapeHTML(person.username)}</b>
+            <small>${escapeHTML(person.bio)}</small>
+          </div>
+          <button onclick="followUser('${person.username}')">Follow</button>
+        </div>
+      `).join("") : '<p class="small">No matching people.</p>'}
+
+      <h4>Posts</h4>
+      ${matchingPosts.length ? matchingPosts.map(post=>`
+        <div class="comment">
+          <b>@${escapeHTML(post.username)}</b><br>
+          ${escapeHTML(post.text)}
+        </div>
+      `).join("") : '<p class="small">No matching posts.</p>'}
+    `;
+  }
+
+  document.getElementById("suggestedPeople").innerHTML = people.slice(0,4).map(person=>`
+    <div class="person">
+      <div class="avatar">${escapeHTML(person.username.charAt(0).toUpperCase())}</div>
+      <div class="person-info">
+        <b>@${escapeHTML(person.username)}</b>
+        <small>${escapeHTML(person.bio)}</small>
+      </div>
+      <button onclick="followUser('${person.username}')">Follow</button>
+    </div>
+  `).join("");
+
+  const hashtags = {};
+  posts.forEach(post=>{
+    (post.text.match(/#[a-z0-9_]+/gi) || []).forEach(tag=>{
+      hashtags[tag] = (hashtags[tag] || 0) + 1;
+    });
+  });
+
+  const trending = Object.entries(hashtags).sort((a,b)=>b[1]-a[1]).slice(0,8);
+
+  document.getElementById("trendingTopics").innerHTML =
+    trending.length
+      ? trending.map(([tag,count])=>`<span class="tag">${escapeHTML(tag)} · ${count}</span>`).join("")
+      : '<p class="small">Hashtags will appear here when people use them.</p>';
+}
+
+function followUser(username) {
+  const follows = getData("follows",[]);
+  if (follows.includes(username)) {
+    toast("You already follow @" + username);
+    return;
+  }
+
+  follows.push(username);
+  saveData("follows",follows);
+  addNotification("You followed @" + username + ".");
+  toast("Following @" + username);
+  renderDiscover();
+}
+
+/* =========================================
+   CONNECT / DEMO MESSAGING
+========================================= */
+
+function renderChatPeople() {
+  const people = demoPeople().filter(p=>p.username !== currentUsername());
+
+  document.getElementById("chatPeople").innerHTML = people.map(person=>`
+    <div class="person">
+      <div class="avatar">${escapeHTML(person.username.charAt(0).toUpperCase())}</div>
+      <div class="person-info">
+        <b>@${escapeHTML(person.username)}</b>
+        <small>${escapeHTML(person.bio)}</small>
+      </div>
+      <button onclick="openChat('${person.username}')">Message</button>
+    </div>
+  `).join("");
+}
+
+function openChat(username) {
+  if (currentMode !== "demo") {
+    toast("Messaging is currently a Demo Mode feature.");
+    return;
+  }
+
+  currentChat = username;
+  document.getElementById("chatPanel").classList.remove("hidden");
+  document.getElementById("chatTitle").textContent = "Chat with @" + username;
+  renderMessages();
+}
+
+function closeChat() {
+  currentChat = null;
+  document.getElementById("chatPanel").classList.add("hidden");
+}
+
+function renderMessages() {
+  if (!currentChat) return;
+
+  const messages = getData("messages",[]).filter(m=>
+    (m.from===currentUsername() && m.to===currentChat) ||
+    (m.from===currentChat && m.to===currentUsername())
+  );
+
+  const container = document.getElementById("messageList");
+
+  container.innerHTML = messages.length ? messages.map(message=>`
+    <div class="message ${message.from===currentUsername() ? "mine" : ""}">
+      ${escapeHTML(message.text)}
+      <small>${message.from===currentUsername() ? "You" : "@" + escapeHTML(message.from)} · ${timeAgo(message.time)}</small>
+    </div>
+  `).join("") : '<div class="empty">Start the conversation.</div>';
+
+  container.scrollTop = container.scrollHeight;
+}
+
+function sendMessage() {
+  if (!currentChat) return;
+
+  const input = document.getElementById("messageInput");
+  const text = input.value.trim();
+
+  if (!text) return;
+
+  if (currentMode !== "demo") {
+    toast("Messaging is currently Demo Mode only.");
+    return;
+  }
+
+  const messages = getData("messages",[]);
+  messages.push({
+    id:makeId(),
+    from:currentUsername(),
+    to:currentChat,
+    text,
+    time:Date.now()
+  });
+
+  saveData("messages",messages);
+  input.value = "";
+  renderMessages();
+  addNotification("Message sent to @" + currentChat + " in Demo Mode.");
+}
+
+function callPreview() {
+  toast("Live voice and video calling require a secure calling service. This is only a preview.");
+}
+
+/* =========================================
+   COMMUNITIES
+========================================= */
+
+function renderCommunities() {
+  const groups = getData("groups",[]);
+  const container = document.getElementById("communityList");
+
+  container.innerHTML = groups.length ? groups.map(group=>`
+    <div class="community">
+      <div class="avatar">#</div>
+      <div class="person-info">
+        <b>${escapeHTML(group.name)}</b>
+        <small>${escapeHTML(group.description)}</small>
+        <small>${group.members || 0} demo member(s)</small>
+      </div>
+      <button class="secondary" onclick="joinCommunity('${group.id}')">Join</button>
+    </div>
+  `).join("") : '<div class="empty">No communities yet.</div>';
+}
+
+function createCommunity() {
+  const name = document.getElementById("communityName").value.trim();
+  const description = document.getElementById("communityDescription").value.trim();
+
+  if (!name || !description) {
+    toast("Enter a name and description.");
+    return;
+  }
+
+  const groups = getData("groups",[]);
+  groups.unshift({
+    id:makeId(),
+    name,
+    description,
+    members:1,
+    creator:currentUsername()
+  });
+
+  saveData("groups",groups);
+  document.getElementById("communityName").value = "";
+  document.getElementById("communityDescription").value = "";
+  renderCommunities();
+  addNotification("You created the community " + name + ".");
+  toast("Community created.");
+}
+
+function joinCommunity(id) {
+  const groups = getData("groups",[]);
+  const group = groups.find(g=>g.id===id);
+  if (!group) return;
+
+  group.members = (group.members || 0) + 1;
+  saveData("groups",groups);
+  renderCommunities();
+  toast("Joined " + group.name + " in Demo Mode.");
+}
+
+/* =========================================
+   NOTIFICATIONS
+========================================= */
+
+function addNotification(text) {
+  const notifications = getData("notifications",[]);
+  notifications.unshift({
+    id:makeId(),
+    text,
+    time:Date.now(),
+    read:false
+  });
+
+  saveData("notifications",notifications.slice(0,100));
+}
+
+function renderNotifications() {
+  const notifications = getData("notifications",[]);
+  const container = document.getElementById("notificationList");
+
+  container.innerHTML = notifications.length ? notifications.map(note=>`
+    <div class="card">
+      <div class="row between">
+        <span>${escapeHTML(note.text)}</span>
+        ${note.read ? '<span class="small">Read</span>' : '<span class="tag">New</span>'}
+      </div>
+      <p class="small">${timeAgo(note.time)}</p>
+      ${!note.read ? `<button class="secondary" onclick="markNotification('${note.id}')">Mark as read</button>` : ""}
+    </div>
+  `).join("") : '<div class="empty">No notifications.</div>';
+}
+
+function markNotification(id) {
+  const notifications = getData("notifications",[]);
+  const note = notifications.find(n=>n.id===id);
+  if (note) note.read = true;
+  saveData("notifications",notifications);
+  renderNotifications();
+}
+
+function clearNotifications() {
+  saveData("notifications",[]);
+  renderNotifications();
+  toast("Notifications cleared.");
+}
+
+/* =========================================
+   REPORTING AND CONTENT SAFETY
+========================================= */
+
+function reportPost(postId) {
+  if (!confirm("Report this post for review in the demo?")) return;
+
+  const reports = getData("reports",[]);
+  reports.push({
+    postId,
+    reporter:currentUsername(),
+    time:Date.now()
+  });
+
+  saveData("reports",reports);
+  addNotification("Your report was recorded locally for this demo.");
+  toast("Report recorded in Demo Mode.");
+}
+
+function checkSpam(text) {
+  const repeatedLinks = (text.match(/https?:\/\//gi) || []).length;
+
+  if (repeatedLinks > 3) {
+    return "This post contains too many links. Please review it.";
+  }
+
+  if (/(.)\1{12,}/i.test(text)) {
+    return "This post looks like repeated characters. Please edit it.";
+  }
+
+  return "";
+}
+
+/* =========================================
+   HUMAN INTELLIGENCE
+========================================= */
+
+function renderIntelligence() {
+  const posts = getPosts();
+  const follows = getData("follows",[]);
+  const messages = getData("messages",[]);
+  const saved = getData("saved",[]);
+  const notifications = getData("notifications",[]);
+
+  const likes = posts.reduce((total,p)=>total+(p.likes?.length || 0),0);
+  const comments = posts.reduce((total,p)=>total+(p.comments?.length || 0),0);
+  const myPosts = posts.filter(p=>p.username===currentUsername()).length;
+
+  document.getElementById("statsGrid").innerHTML = `
+    <div class="stat"><strong>${myPosts}</strong><small>Your posts</small></div>
+    <div class="stat"><strong>${follows.length}</strong><small>Following</small></div>
+    <div class="stat"><strong>${messages.length}</strong><small>Messages</small></div>
+  `;
+
+  document.getElementById("activityInsights").innerHTML = `
+    <div class="comment">♥ Total demo post reactions: <b>${likes}</b></div>
+    <div class="comment">Comments across posts: <b>${comments}</b></div>
+    <div class="comment">Saved posts: <b>${saved.length}</b></div>
+    <div class="comment">Notifications: <b>${notifications.length}</b></div>
+    <div class="comment">People followed: <b>${follows.length}</b></div>
+  `;
+
+  const spamChecks = posts.filter(p=>checkSpam(p.text)).length;
+
+  document.getElementById("safetyInfo").innerHTML = `
+    <div class="comment">Posts checked in this demo: <b>${posts.length}</b></div>
+    <div class="comment">Posts with basic spam-pattern warnings: <b>${spamChecks}</b></div>
+    <p class="small">This is a simple browser-based check, not an AI moderation system. It cannot reliably detect harmful or misleading content.</p>
+  `;
+}
+
+/* =========================================
+   REFRESH
+========================================= */
+
+function refreshApp() {
+  if (currentMode === "demo") {
+    currentProfile = getData("profile",defaultProfile());
+  }
+
+  updateIdentity();
+  renderFeed();
+  renderDiscover();
+  renderCommunities();
+  renderChatPeople();
+  renderSaved();
+  renderIntelligence();
+  renderNotifications();
+
+  if (currentChat) renderMessages();
+}
+
+document.getElementById("messageInput").addEventListener("keydown",event=>{
+  if (event.key==="Enter") sendMessage();
 });
 
-if(!reservation.committed){
-throw new Error("That username is already taken.");
-}
-
-registrationInProgress=true;
-
-try{
-
-const credential=await auth.createUserWithEmailAndPassword(email,password);
-const uid=credential.user.uid;
-
-await profilePath(uid).set({
-uid:uid,
-username:username,
-bio:bio,
-avatar:"",
-privacy:{...defaultPrivacy},
-createdAt:firebase.database.ServerValue.TIMESTAMP,
-verified:false
+document.getElementById("postInput").addEventListener("keydown",event=>{
+  if (event.ctrlKey && event.key==="Enter") createPost();
 });
 
-await usernameRef.set(uid);
-await credential.user.sendEmailVerification();
-
-toast("Account created! Please verify your email.");
-
-}catch(error){
-
-await usernameRef.remove().catch(()=>{});
-
-if(auth.currentUser){
-await auth.currentUser.delete().catch(()=>{});
-}
-
-throw error;
-
-}finally{
-
-registrationInProgress=false;
-
-}
-
-}else{
-
-const email=document.getElementById("loginEmail").value.trim();
-
-if(!email)throw new Error("Enter your email.");
-
-const credential=await auth.signInWithEmailAndPassword(email,password);
-
-if(!credential.user.emailVerified){
-await auth.signOut();
-throw new Error("Verify your email first. Check your inbox.");
-}
-
-}
-
-}catch(error){
-
-message.textContent=error.message;
-
-}finally{
-
-button.disabled=false;
-
-}
-
-}
-
-// ========================================
-// PASSWORD RECOVERY
-// ========================================
-
-async function resetPassword(){
-
-if(demoMode){
-toast("Password recovery is disabled in Development Mode.");
-return;
-}
-
-const email=currentUser
-?currentUser.email
-:document.getElementById("loginEmail").value.trim();
-
-if(!email){
-toast("Enter your email address first.");
-return;
-}
-
-try{
-await auth.sendPasswordResetEmail(email);
-toast("Password reset email sent.");
-}catch(error){
-toast(error.message);
-}
-
-}
-
-// ========================================
-// AUTH STATE
-// ========================================
-
-auth.onAuthStateChanged(async user=>{
-
-if(demoMode || registrationInProgress)return;
-
-currentUser=user;
-
-if(!user){
-
-currentProfile=null;
-
-document.getElementById("authSection").classList.remove("hidden");
-document.getElementById("appSection").classList.add("hidden");
-document.getElementById("demoBadge").classList.add("hidden");
-document.getElementById("connection").textContent="Offline";
-
-return;
-}
-
-if(!user.emailVerified){
-
-await auth.signOut();
-toast("Please verify your email before logging in.");
-return;
-
-}
-
-try{
-
-const snapshot=await profilePath(user.uid).once("value");
-
-if(!snapshot.exists()){
-
-toast("Account profile not found. Contact support.");
-await auth.signOut();
-return;
-
-}
-
-currentProfile=snapshot.val();
-
-currentProfile.privacy={
-...defaultPrivacy,
-...(currentProfile.privacy||{})
-};
-
-document.getElementById("authSection").classList.add("hidden");
-document.getElementById("appSection").classList.remove("hidden");
-document.getElementById("demoBadge").classList.add("hidden");
-
-document.getElementById("displayName").textContent="@"+currentProfile.username;
-document.getElementById("displayEmail").textContent=user.email;
-
-updateAvatar();
-updateIdentityDisplay();
-loadPrivacyControls();
-refreshAccountInfo();
-
-loadSaved();
-loadFeed();
-
-}catch(error){
-
-toast("Unable to load your profile: "+error.message);
-
-}
-
-});
-
-// ========================================
-// AVATAR AND PROFILE DISPLAY
-// ========================================
-
-function updateAvatar(){
-
-const avatar=currentProfile?.avatar||"";
-const username=currentProfile?.username||"?";
-
-const html=avatar
-?'<img src="'+safe(avatar)+'" alt="Profile">'
-:safe(username.charAt(0).toUpperCase());
-
-["headerAvatar","profileAvatar","bigAvatar"].forEach(id=>{
-document.getElementById(id).innerHTML=html;
-});
-
-if(document.getElementById("editBio")){
-document.getElementById("editBio").value=currentProfile.bio||"";
-document.getElementById("editAvatar").value=avatar;
-document.getElementById("editUsername").value=currentProfile.username||"";
-}
-
-}
-
-function updateIdentityDisplay(){
-
-if(!currentProfile)return;
-
-const username="@"+currentProfile.username;
-
-document.getElementById("profileUsername").textContent=username;
-document.getElementById("profileBio").textContent=currentProfile.bio||"No bio yet.";
-document.getElementById("displayName").textContent=username;
-document.getElementById("accountUsername").textContent=username;
-
-}
-
-// ========================================
-// ACCOUNT INFORMATION
-// ========================================
-
-function refreshAccountInfo(){
-
-if(!currentUser || !currentProfile)return;
-
-document.getElementById("accountUsername").textContent="@"+currentProfile.username;
-
-document.getElementById("accountEmail").textContent=
-demoMode?"demo@human.local":currentUser.email||"Not available";
-
-document.getElementById("accountType").textContent=
-demoMode?"Local Development Account":"Firebase Account";
-
-document.getElementById("accountVerification").textContent=
-demoMode?"Demo account":currentUser.emailVerified?"Verified":"Not verified";
-
-document.getElementById("accountCreated").textContent=
-formatDate(currentProfile.createdAt||currentUser.metadata?.creationTime);
-
-}
-
-// ========================================
-// PROFILE EDITING
-// ========================================
-
-function openProfile(){
-showView("profile");
-}
-
-async function saveProfile(){
-
-if(!currentUser)return;
-
-const username=document.getElementById("editUsername").value.trim().toLowerCase();
-const bio=document.getElementById("editBio").value.trim();
-const avatar=document.getElementById("editAvatar").value.trim();
-
-if(!usernameValid(username)){
-toast("Username must be 3-20 letters, numbers or underscores.");
-return;
-}
-
-if(bio.length>160){
-toast("Your bio must be 160 characters or less.");
-return;
-}
-
-if(avatar && !/^https?:\/\//i.test(avatar)){
-toast("Profile picture must use an HTTP or HTTPS URL.");
-return;
-}
-
-const oldUsername=currentProfile.username;
-
-try{
-
-if(demoMode){
-
-if(username!==oldUsername){
-
-const taken=demoPosts.some(post=>
-post.uid!=="human-demo" &&
-String(post.name||"").toLowerCase()===username
-);
-
-if(taken){
-toast("That username is already in use in this demo.");
-return;
-}
-
-}
-
-currentProfile.username=username;
-currentProfile.bio=bio;
-currentProfile.avatar=avatar;
-
-saveDemoProfile();
-
-document.getElementById("displayEmail").textContent="LOCAL TEST ACCOUNT";
-
-updateAvatar();
-updateIdentityDisplay();
-refreshAccountInfo();
-
-toast("Your demo identity has been updated.");
-return;
-
-}
-
-// LIVE FIREBASE PROFILE UPDATE
-
-if(username!==oldUsername){
-
-const newUsernameRef=database.ref("usernameIndex/"+username);
-const oldUsernameRef=database.ref("usernameIndex/"+oldUsername);
-
-const oldSnapshot=await oldUsernameRef.once("value");
-
-if(oldSnapshot.val()!==currentUser.uid){
-throw new Error("Your current username reservation could not be verified.");
-}
-
-const reservation=await newUsernameRef.transaction(current=>{
-if(current===null)return "__RESERVED__";
-return;
-});
-
-if(!reservation.committed){
-throw new Error("That username is already taken.");
-}
-
-try{
-
-await profilePath(currentUser.uid).update({
-username:username,
-bio:bio,
-avatar:avatar
-});
-
-await newUsernameRef.set(currentUser.uid);
-await oldUsernameRef.remove();
-
-}catch(error){
-
-const check=await newUsernameRef.once("value");
-
-if(check.val()==="__RESERVED__"){
-await newUsernameRef.remove().catch(()=>{});
-}
-
-throw error;
-
-}
-
-}else{
-
-await profilePath(currentUser.uid).update({
-bio:bio,
-avatar:avatar
-});
-
-}
-
-currentProfile.username=username;
-currentProfile.bio=bio;
-currentProfile.avatar=avatar;
-
-updateAvatar();
-updateIdentityDisplay();
-refreshAccountInfo();
-
-toast("Your HUMAN identity has been updated.");
-
-}catch(error){
-
-toast("Profile update failed: "+error.message);
-
-}
-
-}
-
-// ========================================
-// PRIVACY SETTINGS
-// ========================================
-
-function loadPrivacyControls(){
-
-if(!currentProfile)return;
-
-const privacy={
-...defaultPrivacy,
-...(currentProfile.privacy||{})
-};
-
-document.getElementById("privacyPrivate").checked=!!privacy.privateProfile;
-document.getElementById("privacyEmail").checked=!!privacy.showEmail;
-document.getElementById("privacyActivity").checked=!!privacy.showActivity;
-document.getElementById("privacyDiscovery").checked=!!privacy.allowDiscovery;
-
-}
-
-async function savePrivacy(){
-
-if(!currentUser || !currentProfile)return;
-
-const privacy={
-privateProfile:document.getElementById("privacyPrivate").checked,
-showEmail:document.getElementById("privacyEmail").checked,
-showActivity:document.getElementById("privacyActivity").checked,
-allowDiscovery:document.getElementById("privacyDiscovery").checked
-};
-
-try{
-
-if(demoMode){
-
-currentProfile.privacy=privacy;
-saveDemoProfile();
-
-toast("Demo privacy preferences saved.");
-return;
-
-}
-
-await profilePath(currentUser.uid).child("privacy").set(privacy);
-
-currentProfile.privacy=privacy;
-
-toast("Privacy preferences saved.");
-
-}catch(error){
-
-toast("Unable to save privacy settings: "+error.message);
-
-}
-
-}
-
-// ========================================
-// NAVIGATION
-// ========================================
-
-function showView(view){
-
-activeView=view;
-
-["feedView","savedView","profileView"].forEach(id=>{
-document.getElementById(id).classList.add("hidden");
-});
-
-document.getElementById(view+"View").classList.remove("hidden");
-
-["feedTab","savedTab","profileTab"].forEach(id=>{
-document.getElementById(id).classList.remove("active");
-});
-
-document.getElementById(view+"Tab").classList.add("active");
-
-if(view==="saved")renderSaved();
-if(view==="feed")loadFeed();
-if(view==="profile"){
-updateAvatar();
-updateIdentityDisplay();
-loadPrivacyControls();
-refreshAccountInfo();
-}
-
-}
-
-// ========================================
-// CREATE POSTS
-// ========================================
-
-async function createPost(){
-
-if(!currentUser)return;
-
-const title=document.getElementById("postTitle").value.trim();
-const text=document.getElementById("postText").value.trim();
-
-if(!title&&!text){
-toast("Write something first.");
-return;
-}
-
-try{
-
-if(demoMode){
-
-demoPosts.unshift({
-id:"demo_"+Date.now()+"_"+Math.random().toString(36).slice(2,7),
-uid:currentUser.uid,
-name:currentProfile.username,
-title:title,
-text:text,
-createdAt:Date.now(),
-likes:0,
-love:0,
-comments:{}
-});
-
-saveDemoPosts();
-
-document.getElementById("postTitle").value="";
-document.getElementById("postText").value="";
-
-toast("Demo post published!");
-loadFeed();
-return;
-
-}
-
-const ref=database.ref("posts").push();
-
-await ref.set({
-id:ref.key,
-uid:currentUser.uid,
-name:currentProfile.username,
-title:title,
-text:text,
-createdAt:firebase.database.ServerValue.TIMESTAMP,
-likes:0,
-love:0,
-comments:{}
-});
-
-document.getElementById("postTitle").value="";
-document.getElementById("postText").value="";
-
-toast("Your story is live!");
-loadFeed();
-
-}catch(error){
-
-toast("Post failed: "+error.message);
-
-}
-
-}
-
-// ========================================
-// LOAD FEED
-// ========================================
-
-async function loadFeed(){
-
-if(!currentUser)return;
-
-if(demoMode){
-
-posts=[...demoPosts].sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
-renderFeed();
-return;
-
-}
-
-try{
-
-const snapshot=await database.ref("posts")
-.orderByChild("createdAt")
-.limitToLast(100)
-.once("value");
-
-posts=[];
-
-snapshot.forEach(child=>{
-posts.unshift({...child.val(),id:child.key});
-});
-
-renderFeed();
-
-}catch(error){
-
-document.getElementById("feed").textContent="Unable to load feed: "+error.message;
-
-}
-
-}
-
-// ========================================
-// RENDER FEED
-// ========================================
-
-function renderFeed(){
-
-const container=document.getElementById("feed");
-
-if(!posts.length){
-
-container.innerHTML='<div class="card">No posts yet. Start the conversation!</div>';
-return;
-
-}
-
-container.innerHTML=posts.map(post=>{
-
-const mine=post.uid===currentUser.uid;
-const comments=Object.entries(post.comments||{});
-
-return `
-<div class="card">
-
-<div class="row">
-<div class="avatar">${safe((post.name||"H").charAt(0).toUpperCase())}</div>
-<div>
-<b>@${safe(post.name||"HUMAN")}</b>
-<div class="muted">${post.createdAt?new Date(post.createdAt).toLocaleString():"Just now"}</div>
-${post.uid==="another-demo"?'<div class="muted">Sample account</div>':""}
-</div>
-</div>
-
-${post.title?`<h3>${safe(post.title)}</h3>`:""}
-<p class="post-text">${safe(post.text||"")}</p>
-
-<div class="actions">
-<button onclick="reactPost('${post.id}','likes')">❤️ ${post.likes||0}</button>
-<button onclick="reactPost('${post.id}','love')">😍 ${post.love||0}</button>
-<button onclick="toggleSave('${post.id}')">🔖 Save</button>
-${mine?`<button onclick="deletePost('${post.id}')">🗑️ Delete</button>`:""}
-</div>
-
-<hr>
-
-<b>Comments (${comments.length})</b>
-
-${comments.map(([id,comment])=>`
-<div class="comment">
-<b>@${safe(comment.name||"HUMAN")}</b>
-<p>${safe(comment.text)}</p>
-${comment.uid===currentUser.uid?
-`<button class="danger" onclick="deleteComment('${post.id}','${id}')">Delete</button>`:""}
-</div>
-`).join("")}
-
-<div class="row" style="margin-top:10px">
-<input id="comment-${post.id}" placeholder="Write a comment...">
-<button class="primary" onclick="addComment('${post.id}')">Send</button>
-</div>
-
-</div>
-`;
-
-}).join("");
-
-}
-
-// ========================================
-// REACTIONS
-// ========================================
-
-async function reactPost(postId,type){
-
-try{
-
-if(demoMode){
-
-const post=demoPosts.find(p=>p.id===postId);
-
-if(!post)return;
-
-post[type]=(post[type]||0)+1;
-
-saveDemoPosts();
-loadFeed();
-return;
-
-}
-
-const ref=database.ref("posts/"+postId+"/"+type);
-
-await ref.transaction(value=>(value||0)+1);
-
-loadFeed();
-
-}catch(error){
-
-toast(error.message);
-
-}
-
-}
-
-// ========================================
-// COMMENTS
-// ========================================
-
-async function addComment(postId){
-
-const input=document.getElementById("comment-"+postId);
-const text=input.value.trim();
-
-if(!text)return;
-
-try{
-
-if(demoMode){
-
-const post=demoPosts.find(p=>p.id===postId);
-
-if(!post)return;
-
-post.comments=post.comments||{};
-
-const id="comment_"+Date.now()+"_"+Math.random().toString(36).slice(2,6);
-
-post.comments[id]={
-uid:currentUser.uid,
-name:currentProfile.username,
-text:text,
-createdAt:Date.now()
-};
-
-saveDemoPosts();
-input.value="";
-loadFeed();
-return;
-
-}
-
-await database.ref("posts/"+postId+"/comments").push().set({
-uid:currentUser.uid,
-name:currentProfile.username,
-text:text,
-createdAt:firebase.database.ServerValue.TIMESTAMP
-});
-
-input.value="";
-loadFeed();
-
-}catch(error){
-
-toast(error.message);
-
-}
-
-}
-
-async function deleteComment(postId,commentId){
-
-try{
-
-if(demoMode){
-
-const post=demoPosts.find(p=>p.id===postId);
-const comment=post?.comments?.[commentId];
-
-if(!comment||comment.uid!==currentUser.uid){
-throw new Error("You cannot delete another person's comment.");
-}
-
-delete post.comments[commentId];
-
-saveDemoPosts();
-loadFeed();
-return;
-
-}
-
-const ref=database.ref("posts/"+postId+"/comments/"+commentId);
-const snapshot=await ref.once("value");
-
-if(snapshot.val()?.uid!==currentUser.uid){
-throw new Error("You cannot delete another person's comment.");
-}
-
-await ref.remove();
-loadFeed();
-
-}catch(error){
-
-toast(error.message);
-
-}
-
-}
-
-// ========================================
-// DELETE POSTS
-// ========================================
-
-async function deletePost(postId){
-
-const post=posts.find(p=>p.id===postId);
-
-if(!post||post.uid!==currentUser.uid){
-toast("You can only delete your own posts.");
-return;
-}
-
-if(!confirm("Delete this post?"))return;
-
-try{
-
-if(demoMode){
-
-demoPosts=demoPosts.filter(p=>p.id!==postId);
-
-saveDemoPosts();
-toast("Demo post deleted.");
-loadFeed();
-return;
-
-}
-
-await database.ref("posts/"+postId).remove();
-
-toast("Post deleted.");
-loadFeed();
-
-}catch(error){
-
-toast(error.message);
-
-}
-
-}
-
-// ========================================
-// SAVED POSTS
-// ========================================
-
-function loadSaved(){
-
-if(demoMode){
-
-savedPosts=readDemoStorage("human_demo_saved",{});
-
-if(activeView==="saved")renderSaved();
-return;
-
-}
-
-database.ref("saved/"+currentUser.uid).once("value").then(snapshot=>{
-
-savedPosts=snapshot.val()||{};
-
-if(activeView==="saved")renderSaved();
-
-}).catch(error=>toast(error.message));
-
-}
-
-async function toggleSave(postId){
-
-try{
-
-if(demoMode){
-
-savedPosts=readDemoStorage("human_demo_saved",{});
-
-if(savedPosts[postId]){
-
-delete savedPosts[postId];
-toast("Removed from saved posts.");
-
-}else{
-
-savedPosts[postId]=true;
-toast("Post saved!");
-
-}
-
-localStorage.setItem("human_demo_saved",JSON.stringify(savedPosts));
-
-renderSaved();
-return;
-
-}
-
-const ref=database.ref("saved/"+currentUser.uid+"/"+postId);
-const snapshot=await ref.once("value");
-
-if(snapshot.exists()){
-
-await ref.remove();
-toast("Removed from saved posts.");
-
-}else{
-
-await ref.set(true);
-toast("Post saved.");
-
-}
-
-loadSaved();
-
-}catch(error){
-
-toast(error.message);
-
-}
-
-}
-
-function renderSaved(){
-
-const container=document.getElementById("savedPosts");
-
-const list=posts.filter(post=>savedPosts[post.id]);
-
-container.innerHTML=list.length
-?list.map(post=>`
-<div class="comment">
-<b>@${safe(post.name)}</b>
-<p>${safe(post.title||post.text||"")}</p>
-<button class="light" onclick="toggleSave('${post.id}')">Remove saved</button>
-</div>
-`).join("")
-:"No saved posts yet.";
-
-}
-
-// ========================================
-// REFRESH
-// ========================================
-
-async function refreshApp(){
-
-if(!currentUser)return;
-
-await loadFeed();
-loadSaved();
-
-if(demoMode){
-toast("Development environment refreshed.");
-return;
-}
-
-toast("HUMAN refreshed.");
-
-}
-
-// ========================================
-// LOGOUT
-// ========================================
-
-async function logout(){
-
-if(!confirm("Log out of HUMAN?"))return;
-
-if(demoMode){
-
-demoMode=false;
-currentUser=null;
-currentProfile=null;
-posts=[];
-savedPosts={};
-
-document.getElementById("appSection").classList.add("hidden");
-document.getElementById("authSection").classList.remove("hidden");
-document.getElementById("demoBadge").classList.add("hidden");
-document.getElementById("connection").textContent="Offline";
-
-document.getElementById("headerAvatar").textContent="?";
-
-toast("Development session ended.");
-return;
-
-}
-
-await auth.signOut();
-
-currentProfile=null;
-posts=[];
-savedPosts={};
-
-toast("Logged out successfully.");
-
-}
-
-// ========================================
-// CONNECTION STATUS
-// ========================================
-
-database.ref(".info/connected").on("value",snapshot=>{
-
-if(demoMode){
-document.getElementById("connection").textContent="🧪 Demo Mode";
-return;
-}
-
-document.getElementById("connection").textContent=
-snapshot.val()?"🟢 Connected":"🔴 Offline";
-
-});
-
+/* =========================================
+   INITIAL STARTUP
+========================================= */
+
+if (firebaseReady) {
+  document.getElementById("connectionStatus").textContent = "Firebase ready";
+} else {
+  document.getElementById("connectionStatus").textContent = "Demo available";
+}
+
+/* Add a poll shortcut to the feed composer */
+const pollShortcut = document.createElement("button");
+pollShortcut.className = "secondary";
+pollShortcut.textContent = "＋ Create poll";
+pollShortcut.style.marginTop = "8px";
+pollShortcut.onclick = createPoll;
+
+document.getElementById("postInput").parentElement.appendChild(pollShortcut);
 </script>
+
 </body>
 </html>
