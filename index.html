@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,672 +7,292 @@
 <title>HUMAN 3.0 | Be Human. Be Real.</title>
 <style>
 :root{--bg:#10101b;--panel:#191927;--panel2:#25253a;--line:#37374d;--text:#f5f5fb;--muted:#a5a5bb;--blue:#6c7cff;--purple:#a16cff;--green:#43c99a;--red:#ff6577}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-button,input,textarea,select{font:inherit}
-button{border:0;cursor:pointer;border-radius:9px;padding:10px 13px;background:var(--blue);color:white}
-button:hover{filter:brightness(1.12)}
-input,textarea,select{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#11111d;color:white;outline:none}
-textarea{resize:vertical;min-height:85px}
-header{position:sticky;top:0;z-index:20;background:#151522;border-bottom:1px solid var(--line);padding:13px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.logo{font-size:23px;font-weight:900;letter-spacing:2px}.logo span{color:var(--blue)}
-.header-right{display:flex;align-items:center;gap:9px}
-.status{font-size:12px;color:var(--green)}
-.container{max-width:1200px;margin:auto;padding:20px}
-.hidden{display:none!important}
-.muted,.small{color:var(--muted)}.small{font-size:12px}
-.full{width:100%;margin-top:9px}
-.secondary{background:var(--panel2);border:1px solid var(--line)}
-.success{background:#187c60}.danger{background:#8d3042}
-.auth-wrap{max-width:450px;margin:45px auto;padding:25px;background:var(--panel);border:1px solid var(--line);border-radius:16px}
-.auth-wrap input{margin:7px 0}
-.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px;margin-bottom:14px}
-.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}
-.nav{display:flex;gap:8px;overflow-x:auto;padding:12px 0 16px;border-bottom:1px solid var(--line)}
-.nav button{flex-shrink:0;background:var(--panel2);color:var(--muted)}
-.nav button.active{background:var(--blue);color:white}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;margin-top:18px}
-.avatar{width:42px;height:42px;border-radius:50%;background:#343451;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:bold;overflow:hidden}
-.avatar img{width:100%;height:100%;object-fit:cover}
-.avatar.large{width:78px;height:78px;font-size:25px}
-.user-name{font-weight:bold}.post-text{white-space:pre-wrap;line-height:1.5;margin:15px 0;overflow-wrap:anywhere}
-.post-actions{display:flex;flex-wrap:wrap;gap:7px;border-top:1px solid var(--line);padding-top:12px}
-.post-actions button{font-size:12px;padding:8px 10px}
-.comment{padding:9px;background:#12121e;border-radius:8px;margin-top:8px;font-size:13px}
-.comment-form,.chat-compose{display:flex;gap:7px;margin-top:10px}
-.comment-form input,.chat-compose input{min-width:0}
-.story-list{display:flex;gap:12px;overflow-x:auto;padding:8px 0}
-.story{min-width:75px;text-align:center;font-size:12px}
-.story .avatar{margin:auto auto 6px;border:2px solid var(--purple)}
-.person{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}
-.person:last-child{border:0}.person-info{flex:1;min-width:0}
-.person-info small{display:block;color:var(--muted);margin-top:4px}
-.field{margin:12px 0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
-.notice{padding:12px;border-radius:9px;background:#29243b;border:1px solid #55416e;color:#e0d5ff;font-size:13px;margin:10px 0}
-.tag{display:inline-block;background:#30304a;color:#bfc6ff;border-radius:20px;padding:5px 9px;font-size:11px;margin:3px}
-.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.stat{background:var(--panel2);border-radius:10px;padding:13px;text-align:center}
-.stat strong{display:block;font-size:23px;color:#aab4ff}.stat small{color:var(--muted)}
-.message-list{display:flex;flex-direction:column;gap:9px;max-height:360px;overflow:auto;padding:8px 0}
-.message{max-width:85%;padding:10px 13px;border-radius:12px;background:var(--panel2);align-self:flex-start;overflow-wrap:anywhere}
-.message.mine{align-self:flex-end;background:#424e9b}
-.message small{display:block;font-size:10px;opacity:.7;margin-top:5px}
-.empty{text-align:center;padding:25px;color:var(--muted)}
-.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#292941;border:1px solid var(--line);padding:12px 18px;border-radius:10px;z-index:100;box-shadow:0 5px 25px #0008;max-width:90%;text-align:center}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
-@media(max-width:800px){.layout{grid-template-columns:1fr}.container{padding:12px}header{padding:12px}.header-right .status{display:none}}
-@media(max-width:450px){.logo{font-size:19px}.stat-grid{grid-template-columns:repeat(3,1fr)}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif}button,input,textarea,select{font:inherit}button{border:0;cursor:pointer;border-radius:9px;padding:10px 13px;background:var(--blue);color:white}button:hover{filter:brightness(1.12)}button:disabled{opacity:.5;cursor:not-allowed}input,textarea,select{width:100%;padding:12px;border-radius:9px;border:1px solid var(--line);background:#11111d;color:white;outline:none}textarea{resize:vertical;min-height:85px}input:focus,textarea:focus{border-color:var(--blue)}header{position:sticky;top:0;z-index:20;background:#151522;border-bottom:1px solid var(--line);padding:13px 5%;display:flex;justify-content:space-between;align-items:center;gap:12px}.logo{font-size:23px;font-weight:900;letter-spacing:2px}.logo span{color:var(--blue)}.header-right{display:flex;align-items:center;gap:9px}.status{font-size:12px;color:var(--green)}.container{max-width:1200px;margin:auto;padding:20px}.hidden{display:none!important}.muted{color:var(--muted)}.small{font-size:12px;color:var(--muted)}.full{width:100%;margin-top:9px}.secondary{background:var(--panel2);border:1px solid var(--line)}.success{background:#187c60}.danger{background:#8d3042}.auth-wrap{max-width:450px;margin:45px auto;padding:25px;background:var(--panel);border:1px solid var(--line);border-radius:16px}.auth-wrap input{margin:7px 0}.panel,.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:16px;margin-bottom:14px}.panel h3,.card h3{margin-top:0}.row{display:flex;align-items:center;gap:10px}.between{justify-content:space-between}.nav{display:flex;gap:8px;overflow-x:auto;padding:12px 0 16px;border-bottom:1px solid var(--line)}.nav button{flex-shrink:0;background:var(--panel2);color:var(--muted)}.nav button.active{background:var(--blue);color:white}.layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:18px;margin-top:18px}.avatar{width:42px;height:42px;border-radius:50%;background:#343451;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:bold;overflow:hidden}.avatar img{width:100%;height:100%;object-fit:cover}.avatar.large{width:78px;height:78px;font-size:25px}.user-name{font-weight:bold}.post-text{white-space:pre-wrap;line-height:1.5;margin:15px 0;overflow-wrap:anywhere}.post-actions{display:flex;flex-wrap:wrap;gap:7px;border-top:1px solid var(--line);padding-top:12px}.post-actions button{font-size:12px;padding:8px 10px}.comment{padding:9px;background:#12121e;border-radius:8px;margin-top:8px;font-size:13px}.comment-form,.chat-compose{display:flex;gap:7px;margin-top:10px}.comment-form input,.chat-compose input{min-width:0}.story-list{display:flex;gap:12px;overflow-x:auto;padding:8px 0}.story{min-width:75px;text-align:center;font-size:12px}.story .avatar{margin:auto auto 6px;border:2px solid var(--purple)}.person{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--line)}.person:last-child{border:0}.person-info{flex:1;min-width:0}.person-info small{display:block;color:var(--muted);margin-top:4px}.field{margin:12px 0}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}.notice{padding:12px;border-radius:9px;background:#29243b;border:1px solid #55416e;color:#e0d5ff;font-size:13px;margin:10px 0}.tag{display:inline-block;background:#30304a;color:#bfc6ff;border-radius:20px;padding:5px 9px;font-size:11px;margin:3px}.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stat{background:var(--panel2);border-radius:10px;padding:13px;text-align:center}.stat strong{display:block;font-size:23px;color:#aab4ff}.stat small{color:var(--muted)}.message-list{display:flex;flex-direction:column;gap:9px;max-height:360px;overflow:auto}.message{max-width:85%;padding:10px 13px;border-radius:12px;background:var(--panel2);align-self:flex-start;overflow-wrap:anywhere}.message.mine{align-self:flex-end;background:#424e9b}.message small{display:block;font-size:10px;opacity:.7;margin-top:5px}.empty{text-align:center;padding:25px;color:var(--muted)}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#292941;border:1px solid var(--line);padding:12px 18px;border-radius:10px;z-index:100;box-shadow:0 5px 25px #0008;max-width:90%;text-align:center}footer{text-align:center;color:var(--muted);font-size:12px;padding:25px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}.container{padding:12px}header{padding:12px}.header-right .status{display:none}}@media(max-width:450px){.logo{font-size:19px}}
+
+/* HUMAN 3.0 Living Welcome Experience */
+body:has(#authSection:not(.hidden))>header{display:none}
+#authSection.auth-wrap{position:relative;isolation:isolate;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;max-width:none;min-height:100vh;width:100%;margin:0;padding:30px 18px 18px;border:0;border-radius:0;background:#080b16;overflow:hidden}
+#authSection .welcome-wallpaper{position:absolute;inset:0;z-index:-3;background-size:cover;background-position:center;transition:opacity 1s ease;opacity:1}
+#authSection .welcome-wallpaper.fade{opacity:.15}
+#authSection .welcome-shade{position:absolute;inset:0;z-index:-2;background:linear-gradient(115deg,rgba(5,8,20,.78),rgba(5,8,20,.36) 52%,rgba(5,8,20,.78)),linear-gradient(0deg,rgba(5,8,20,.78),transparent 60%)}
+.welcome-top{width:min(1100px,100%);display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 auto 24px}
+.welcome-brand{font-size:clamp(22px,4vw,30px);font-weight:900;letter-spacing:3px;color:#fff;text-shadow:0 2px 16px #0008}.welcome-brand span{color:#9ba8ff}
+.welcome-weather{padding:9px 13px;border:1px solid #ffffff40;border-radius:30px;background:#10182c88;color:#fff;font-size:13px;backdrop-filter:blur(10px)}
+.welcome-main{width:min(1100px,100%);display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,410px);align-items:center;gap:clamp(25px,6vw,80px);margin:auto}
+.welcome-copy{color:white;text-shadow:0 2px 15px #0009}.welcome-greeting{font-size:clamp(28px,5vw,54px);line-height:1.05;font-weight:900;margin:0 0 12px}.welcome-subtitle{font-size:clamp(15px,2vw,19px);line-height:1.6;color:#f0f2ff;max-width:560px}.welcome-clock{font-size:clamp(34px,6vw,58px);font-weight:800;letter-spacing:1px;margin-top:24px;font-variant-numeric:tabular-nums}.welcome-date{color:#e2e7ff;font-size:14px;margin-top:3px}.welcome-quote{margin-top:30px;max-width:540px;padding:15px 18px;border-left:3px solid #aab5ff;background:#0a102c66;backdrop-filter:blur(8px);border-radius:0 12px 12px 0;color:#fff;font-size:15px;line-height:1.5}.welcome-quote small{display:block;color:#cbd2ff;margin-top:7px;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+.welcome-auth-card{background:rgba(14,17,32,.88);border:1px solid #ffffff35;border-radius:20px;padding:clamp(20px,4vw,30px);box-shadow:0 24px 80px #0008;backdrop-filter:blur(18px);width:100%;color:white}.welcome-auth-card h2{text-align:center;margin:0 0 6px;font-size:26px}.welcome-auth-card>p{text-align:center;color:#c3c9df;margin:0 0 18px}.welcome-auth-card .notice{background:#34304a99;border-color:#ffffff25;color:#e5e3ff}.welcome-auth-card input{background:#090d1b;border-color:#ffffff2b;margin:7px 0}.welcome-auth-card .small{color:#c4c9db}.welcome-auth-card .full{margin-top:9px}
+.welcome-bottom{width:min(1100px,100%);text-align:center;color:#fff;margin:25px auto 0;font-size:13px;line-height:1.5;text-shadow:0 2px 10px #000}.welcome-bottom strong{color:#dce2ff;display:block;font-size:11px;letter-spacing:1.6px;margin-bottom:5px}.welcome-bottom span{color:#d9def1}
+@media(max-width:760px){#authSection.auth-wrap{justify-content:flex-start;padding-top:20px}.welcome-top{margin-bottom:28px}.welcome-main{grid-template-columns:1fr;gap:22px;max-width:470px}.welcome-copy{text-align:center}.welcome-greeting{font-size:34px}.welcome-subtitle{margin:auto}.welcome-clock{margin-top:12px}.welcome-quote{margin:18px auto 0;text-align:left}.welcome-auth-card{padding:20px}.welcome-bottom{margin-top:20px}}
+@media(max-width:390px){.welcome-top{align-items:flex-start;flex-direction:column}.welcome-weather{font-size:12px}}
+
 </style>
 </head>
 <body>
-
-<header>
- <div class="logo">HUMAN<span>.</span></div>
- <div class="header-right">
-  <span class="status" id="connectionStatus">Demo ready</span>
-  <button class="secondary" onclick="refreshApp()">↻</button>
-  <button class="secondary hidden" id="logoutButton" onclick="logout()">Exit</button>
- </div>
-</header>
+<header><div class="logo">HUMAN<span>.</span></div><div class="header-right"><span class="status" id="connectionStatus">Demo ready</span><button class="secondary" onclick="refreshApp()">↻</button><button class="secondary" onclick="logout()" id="logoutButton" hidden>Exit</button></div></header>
 
 <section id="authSection" class="auth-wrap">
- <h2 style="text-align:center">Welcome to HUMAN</h2>
- <p class="muted" style="text-align:center">Be Human. Be Real.</p>
- <div class="notice">Enter Demo Mode to explore the five areas. Your demo activity is saved in this browser.</div>
- <button class="success full" onclick="enterDemoMode()">ENTER DEMO MODE</button>
- <p class="small" style="text-align:center">Demo accounts and conversations are simulated. They do not contact real people.</p>
+<div class="welcome-wallpaper" id="welcomeWallpaper"></div><div class="welcome-shade"></div>
+<div class="welcome-top"><div class="welcome-brand">HUMAN<span> 3.0</span></div><div class="welcome-weather" id="welcomeWeather">🌤 Checking local weather…</div></div>
+<div class="welcome-main">
+ <div class="welcome-copy">
+  <h1 class="welcome-greeting" id="welcomeGreeting">HELLO, HUMAN</h1>
+  <div class="welcome-subtitle" id="welcomeMessage">A place to discover, understand, connect and grow.</div>
+  <div class="welcome-clock" id="welcomeClock">--:--:--</div><div class="welcome-date" id="welcomeDate">Loading date…</div>
+  <div class="welcome-quote"><span id="welcomeDailyQuote">Every new day is another chance to make a positive difference.</span></div>
+ </div>
+ <div class="welcome-auth-card">
+  <h2>Welcome to HUMAN</h2><p>Be Human. Be Real.</p>
+  <div class="notice">Choose Demo Mode to explore locally, or use Live Mode to create or access your account.</div>
+  <div id="authForm">
+   <input id="authEmail" type="email" autocomplete="email" placeholder="Email address">
+   <input id="authPassword" type="password" autocomplete="current-password" placeholder="Password (at least 6 characters)">
+   <button class="full" onclick="liveSignIn()">Sign in to Live Mode</button>
+   <button class="secondary full" onclick="liveRegister()">Create a Live account</button>
+  </div>
+  <button class="success full" onclick="enterDemoMode()">🧪 ENTER DEMO MODE</button>
+  <p class="small" style="text-align:center;margin:14px 0 0">Live Mode requires Firebase Authentication and secure Realtime Database rules.</p>
+ </div>
+</div>
+<div class="welcome-bottom"><strong id="welcomeVerseLabel">A MOMENT OF REFLECTION</strong><span id="welcomeBibleVerse">“Be strong and of a good courage.”</span><br><span id="welcomeBibleReference">Joshua 1:9 · King James Version</span></div>
 </section>
 
 <main id="appSection" class="container hidden">
- <div class="row between">
-  <div><h2 style="margin-bottom:4px">Your HUMAN space</h2><span class="small" id="modeLabel">Demo Mode</span></div>
-  <button class="secondary" onclick="showView('identity')">My profile</button>
- </div>
-
- <nav class="nav">
-  <button id="nav-feed" class="active" onclick="showView('feed')">Social</button>
-  <button id="nav-discover" onclick="showView('discover')">Discovery</button>
-  <button id="nav-connect" onclick="showView('connect')">Connect</button>
-  <button id="nav-communities" onclick="showView('communities')">Communities</button>
-  <button id="nav-identity" onclick="showView('identity')">Identity</button>
-  <button id="nav-saved" onclick="showView('saved')">Saved</button>
-  <button id="nav-intelligence" onclick="showView('intelligence')">Intelligence</button>
-  <button id="nav-notifications" onclick="showView('notifications')">Alerts</button>
-  <button id="nav-admin" onclick="showView('admin')">Admin</button>
- </nav>
-
- <div class="layout">
- <div>
-
- <section id="view-feed" class="view">
-  <div class="panel">
-   <h3>Stories</h3>
-   <div class="story-list" id="storyList"></div>
-   <div class="row">
-    <input id="storyInput" maxlength="250" placeholder="Share a short story...">
-    <button onclick="addStory()">Post</button>
-   </div>
-  </div>
-
-  <div class="panel">
-   <h3>What's happening?</h3>
-   <textarea id="postInput" maxlength="1500" placeholder="Share something with HUMAN..."></textarea>
-   <div class="row between" style="margin-top:10px;flex-wrap:wrap">
-    <button class="secondary" onclick="createPoll()">Create poll</button>
-    <button onclick="createPost()">Publish</button>
-   </div>
-  </div>
-  <div id="feedPosts"></div>
- </section>
-
- <section id="view-discover" class="view hidden">
-  <div class="panel">
-   <h3>Discover HUMAN</h3>
-   <input id="discoverInput" placeholder="Search people, posts or hashtags..." oninput="renderDiscover()">
-   <div id="discoverResults" style="margin-top:12px"></div>
-  </div>
-  <div class="panel"><h3>Trending topics</h3><div id="trendingTopics"></div></div>
-  <div class="panel"><h3>Suggested people</h3><div id="suggestedPeople"></div></div>
- </section>
-
- <section id="view-connect" class="view">
-  <div class="panel">
-   <h3>HUMAN Connect</h3>
-   <div class="notice">Demo conversations are simulated and stored in this browser. No real messages are sent.</div>
-   <div id="chatPeople"></div>
-  </div>
-  <div class="panel hidden" id="chatPanel">
-   <div class="row between">
-    <h3 id="chatTitle">Conversation</h3>
-    <button class="secondary" onclick="closeChat()">Close</button>
-   </div>
-   <div class="message-list" id="messageList"></div>
-   <div class="chat-compose">
-    <input id="messageInput" maxlength="500" placeholder="Write a message...">
-    <button onclick="sendMessage()">Send</button>
-   </div>
-   <button class="secondary full" onclick="simulateReply()">Simulate recipient reply</button>
-  </div>
- </section>
-
- <section id="view-communities" class="view hidden">
-  <div class="panel">
-   <h3>Create a community</h3>
-   <input id="communityName" placeholder="Community name">
-   <input id="communityDescription" style="margin-top:8px" placeholder="Description">
-   <button class="full" onclick="createCommunity()">Create community</button>
-  </div>
-  <div class="panel"><h3>Explore communities</h3><div id="communityList"></div></div>
- </section>
-
- <section id="view-identity" class="view hidden">
-  <div class="panel">
-   <div class="row">
-    <div class="avatar large" id="profileAvatar">H</div>
-    <div><h2 id="profileName" style="margin:0">HUMAN User</h2><div class="muted" id="profileUsername">@human</div><p class="small" id="profileBio"></p></div>
-   </div>
-  </div>
-  <div class="panel">
-   <h3>Edit your identity</h3>
-   <div class="field"><label>Display name</label><input id="editName" maxlength="35"></div>
-   <div class="field"><label>Username</label><input id="editUsername" maxlength="24"></div>
-   <div class="field"><label>Bio</label><textarea id="editBio" maxlength="180"></textarea></div>
-   <div class="field"><label>Avatar image URL</label><input id="editAvatar" placeholder="https://example.com/image.jpg"></div>
-   <button onclick="saveProfile()">Save profile</button>
-  </div>
-  <div class="panel">
-   <h3>Privacy preferences</h3>
-   <label class="row"><input type="checkbox" id="privateProfile" style="width:auto"> Private profile</label>
-   <label class="row"><input type="checkbox" id="allowDiscovery" style="width:auto"> Allow discovery</label>
-   <label class="row"><input type="checkbox" id="showActivity" style="width:auto"> Show activity preference</label>
-   <button style="margin-top:12px" onclick="savePrivacy()">Save preferences</button>
-  </div>
- </section>
-
- <section id="view-saved" class="view hidden">
-  <h3>Saved posts</h3><div id="savedPosts"></div>
- </section>
-
- <section id="view-intelligence" class="view hidden">
-  <div class="panel">
-   <h3>HUMAN Intelligence</h3>
-   <p class="small">Your demo activity overview.</p>
-   <div class="stat-grid" id="statsGrid"></div>
-  </div>
-  <div class="panel"><h3>Activity insights</h3><div id="activityInsights"></div></div>
-  <div class="panel"><h3>Content safety preview</h3><div id="safetyInfo"></div></div>
- </section>
-
- <section id="view-notifications" class="view hidden">
-  <div class="row between"><h3>Notifications</h3><button class="secondary" onclick="clearNotifications()">Clear all</button></div>
-  <div id="notificationList"></div>
- </section>
-
- <section id="view-admin" class="view hidden">
-  <div class="panel">
-   <h3>HUMAN Admin Centre</h3>
-   <div class="notice">Demo administrator preview only. This is not a production security system.</div>
-   <div class="stat-grid" id="adminStats"></div>
-  </div>
-  <div class="panel"><h3>Reported content</h3><div id="adminReports"></div></div>
-  <div class="panel"><h3>Demo user management</h3><div id="adminUsers"></div></div>
- </section>
- </div>
-
- <aside>
-  <div class="panel">
-   <h3>Your account</h3>
-   <div class="row"><div class="avatar" id="sideAvatar">H</div><div><strong id="sideName">HUMAN User</strong><div class="small" id="sideUsername">@human</div></div></div>
-   <hr style="border-color:var(--line);margin:15px 0">
-   <div class="stat-grid">
-    <div class="stat"><strong id="sidePosts">0</strong><small>Posts</small></div>
-    <div class="stat"><strong id="sideLikes">0</strong><small>Likes</small></div>
-    <div class="stat"><strong id="sideFriends">0</strong><small>Following</small></div>
-   </div>
-  </div>
-  <div class="panel">
-   <h3>HUMAN principles</h3>
-   <span class="tag">Discover</span><span class="tag">Verify</span><span class="tag">Understand</span><span class="tag">Connect</span><span class="tag">Evolve</span>
-  </div>
- </aside>
- </div>
+<div class="row between"><div><h2 style="margin-bottom:4px">Your HUMAN space</h2><span class="small" id="modeLabel">Demo Mode</span></div><button class="secondary" onclick="showView('identity')">My profile</button></div>
+<nav class="nav">
+<button id="nav-feed" class="active" onclick="showView('feed')">Feed</button><button id="nav-discover" onclick="showView('discover')">Discover</button><button id="nav-connect" onclick="showView('connect')">Connect</button><button id="nav-communities" onclick="showView('communities')">Communities</button><button id="nav-identity" onclick="showView('identity')">Identity</button><button id="nav-saved" onclick="showView('saved')">Saved</button><button id="nav-intelligence" onclick="showView('intelligence')">Intelligence</button><button id="nav-notifications" onclick="showView('notifications')">Alerts</button><button id="nav-admin" onclick="showView('admin')">Admin</button>
+</nav>
+<div class="layout"><div>
+<section id="view-feed" class="view">
+<div class="panel"><h3>Stories</h3><div class="story-list" id="storyList"></div><div class="row"><input id="storyInput" maxlength="250" placeholder="Share a short story..."><button onclick="addStory()">Post</button></div></div>
+<div class="panel"><h3>What's happening?</h3><textarea id="postInput" maxlength="1500" placeholder="Share something with HUMAN..."></textarea><div class="row between" style="margin-top:10px;flex-wrap:wrap"><button class="secondary" onclick="createPoll()">＋ Create poll</button><button onclick="createPost()">Publish</button></div></div><div id="feedPosts"></div>
+</section>
+<section id="view-discover" class="view hidden"><div class="panel"><h3>Discover HUMAN</h3><input id="discoverInput" placeholder="Search people, posts or hashtags..." oninput="renderDiscover()"><div id="discoverResults" style="margin-top:12px"></div></div><div class="panel"><h3>Trending topics</h3><div id="trendingTopics"></div></div><div class="panel"><h3>Suggested people</h3><div id="suggestedPeople"></div></div></section>
+<section id="view-connect" class="view hidden"><div class="panel"><h3>HUMAN Connect</h3><div class="notice" id="connectNotice">Demo messages are stored in this browser. They are not private live messages sent across devices.</div><div id="chatPeople"></div></div><div class="panel hidden" id="chatPanel"><div class="row between"><h3 id="chatTitle">Conversation</h3><button class="secondary" onclick="closeChat()">Close</button></div><div class="message-list" id="messageList"></div><div class="chat-compose"><input id="messageInput" maxlength="500" placeholder="Write a message..."><button onclick="sendMessage()">Send</button></div><p class="small">Live calls, voice notes and media uploads are not enabled in this version.</p></div></section>
+<section id="view-communities" class="view hidden"><div class="panel"><h3>Create a community</h3><input id="communityName" placeholder="Community name"><input id="communityDescription" style="margin-top:8px" placeholder="Description"><button class="full" onclick="createCommunity()">Create community</button></div><div class="panel"><h3>Explore communities</h3><div id="communityList"></div></div></section>
+<section id="view-identity" class="view hidden"><div class="panel"><div class="row"><div class="avatar large" id="profileAvatar">H</div><div><h2 id="profileName" style="margin:0">HUMAN User</h2><div class="muted" id="profileUsername">@human</div><p class="small" id="profileBio"></p></div></div></div><div class="panel"><h3>Edit your identity</h3><div class="field"><label>Username</label><input id="editUsername" maxlength="24"></div><div class="field"><label>Bio</label><textarea id="editBio" maxlength="180"></textarea></div><div class="field"><label>Avatar image URL</label><input id="editAvatar" placeholder="https://example.com/image.jpg"></div><button onclick="saveProfile()">Save profile</button></div><div class="panel"><h3>Privacy preferences</h3><label class="row"><input type="checkbox" id="privateProfile" style="width:auto"> Private profile</label><label class="row"><input type="checkbox" id="allowDiscovery" style="width:auto"> Allow discovery</label><label class="row"><input type="checkbox" id="showActivity" style="width:auto"> Show activity preference</label><button style="margin-top:12px" onclick="savePrivacy()">Save preferences</button></div></section>
+<section id="view-saved" class="view hidden"><h3>Saved posts</h3><div id="savedPosts"></div></section>
+<section id="view-intelligence" class="view hidden"><div class="panel"><h3>HUMAN Intelligence</h3><p class="small">Your activity overview.</p><div class="stat-grid" id="statsGrid"></div></div><div class="panel"><h3>Activity insights</h3><div id="activityInsights"></div></div><div class="panel"><h3>Content safety preview</h3><div id="safetyInfo"></div></div></section>
+<section id="view-notifications" class="view hidden"><div class="row between"><h3>Notifications</h3><button class="secondary" onclick="clearNotifications()">Clear all</button></div><div id="notificationList"></div></section>
+<section id="view-admin" class="view hidden"><div class="panel"><h3>HUMAN Admin Centre</h3><div class="notice">Local demo administrator preview only. This is not a production admin security system.</div><div class="stat-grid" id="adminStats"></div></div><div class="panel"><h3>Reported content</h3><div id="adminReports"></div></div><div class="panel"><h3>Demo user management</h3><div id="adminUsers"></div></div></section>
+</div>
+<aside><div class="panel"><h3>Current user</h3><div class="row"><div class="avatar" id="sideAvatar">H</div><div><b id="sideUsername">@human</b><div class="small" id="accountType">Demo account</div></div></div><div class="field" id="demoSwitcher"><label>Switch demo user</label><select id="demoUserSelect" onchange="switchDemoUser(this.value)"></select></div><button class="secondary full" id="addDemoButton" onclick="addDemoUser()">＋ Add demo user</button></div><div class="panel"><h3>Follow requests</h3><div id="followRequestCount" class="small"></div><div id="followRequests"></div><button class="secondary full" onclick="showView('discover')">Find people</button></div><div class="panel"><h3>HUMAN areas</h3><span class="tag">Identity</span><span class="tag">Social</span><span class="tag">Connect</span><span class="tag">Discovery</span><span class="tag">Intelligence</span></div><div class="panel"><h3>Mode information</h3><p class="small" id="modeInfo">Demo users share this browser's local data. Switching users lets you test interactions.</p></div></aside>
+</div><footer>HUMAN 3.0 © 2026 | Be Human. Be Real.</footer>
 </main>
-
 <div id="toast" class="toast hidden"></div>
-<footer>HUMAN 3.0 · Be Human. Be Real.</footer>
 
+<!-- Firebase compat SDK. No Firebase Storage is used. -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 <script>
 "use strict";
 
-const STORE_KEY = "human_3_demo_v3";
-
-const demoPeople = [
- {id:"you",name:"HUMAN User",username:"human_user",bio:"Exploring the HUMAN experience.",avatar:"",following:[]},
- {id:"maya",name:"Maya",username:"maya_explores",bio:"Curious mind. Creative spirit.",avatar:"",following:[]},
- {id:"daniel",name:"Daniel",username:"daniel_builds",bio:"Building ideas into reality.",avatar:"",following:[]},
- {id:"amina",name:"Amina",username:"amina_reads",bio:"Learning, sharing and growing.",avatar:"",following:[]},
- {id:"leo",name:"Leo",username:"leo_creates",bio:"Design, technology and community.",avatar:"",following:[]}
+/* Living welcome screen: bundled wallpapers and verses, local clock, optional free weather. */
+const welcomeWallpapers=[
+ 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=85',
+ 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=2000&q=85'
 ];
-
-let db = null;
-let currentUser = null;
-let activeChat = null;
-let state = null;
-
-function freshState(){
- return {
-  profile:{name:"HUMAN User",username:"human_user",bio:"Exploring the HUMAN experience.",avatar:"",private:false,discover:true,activity:true},
-  posts:[
-   {id:"p1",user:"maya",text:"Welcome to HUMAN. A place to discover ideas, share experiences and connect.",time:Date.now()-3600000,likes:["you"],comments:[{user:"daniel",text:"Looking forward to seeing what this becomes."}],saved:false},
-   {id:"p2",user:"daniel",text:"Technology becomes meaningful when it helps people solve real problems.",time:Date.now()-7200000,likes:[],comments:[],saved:false},
-   {id:"p3",user:"amina",text:"What is one skill you would like to learn this year?",time:Date.now()-10800000,likes:[],comments:[],saved:false,poll:{options:["Technology","Communication","Creative skills"],votes:{}}}
-  ],
-  stories:[{id:"s1",user:"maya",text:"New ideas today!"},{id:"s2",user:"daniel",text:"Building something useful."}],
-  communities:[
-   {id:"c1",name:"Technology & Ideas",description:"Discuss technology and useful ideas.",members:["you","maya","daniel"]},
-   {id:"c2",name:"Learning Circle",description:"Share what you are learning.",members:["you","amina"]}
-  ],
-  chats:{maya:[{from:"maya",text:"Hi! Welcome to HUMAN.",time:Date.now()-500000},{from:"you",text:"Thanks! Exploring the app.",time:Date.now()-450000}],daniel:[{from:"daniel",text:"Have you seen the new community area?",time:Date.now()-300000}],amina:[]},
-  following:["maya","daniel"],
-  notifications:[{id:"n1",text:"Welcome to HUMAN 3.0. Your demo space is ready.",time:Date.now(),read:false}],
-  reports:[],
-  activity:{}
- };
+const welcomeVerses=[
+ ['“Be strong and of a good courage.”','Joshua 1:9'],
+ ['“The Lord is my shepherd; I shall not want.”','Psalm 23:1'],
+ ['“I can do all things through Christ which strengtheneth me.”','Philippians 4:13'],
+ ['“Trust in the Lord with all thine heart.”','Proverbs 3:5'],
+ ['“Let all that ye do be done with charity.”','1 Corinthians 16:14'],
+ ['“This is the day which the Lord hath made.”','Psalm 118:24'],
+ ['“With God all things are possible.”','Matthew 19:26'],
+ ['“The joy of the Lord is your strength.”','Nehemiah 8:10'],
+ ['“Be ye kind one to another.”','Ephesians 4:32'],
+ ['“Commit thy works unto the Lord.”','Proverbs 16:3'],
+ ['“Peace I leave with you, my peace I give unto you.”','John 14:27'],
+ ['“Let your light so shine before men.”','Matthew 5:16']
+];
+const welcomeMessages=[
+ 'A place to discover, understand, connect and grow.',
+ 'Your voice matters. Your story belongs here.',
+ 'Build meaningful connections. Share ideas. Keep growing.',
+ 'A new moment to learn something, meet someone and make a difference.',
+ 'Human progress begins when we listen, learn and work together.'
+];
+let welcomeWallpaperIndex=-1,welcomeVerseIndex=-1,welcomeMessageIndex=0;
+function updateWelcomeClock(){
+ const now=new Date(),hour=now.getHours();
+ const greeting=hour<5?'GOOD NIGHT, HUMAN':hour<12?'GOOD MORNING, HUMAN':hour<17?'GOOD AFTERNOON, HUMAN':hour<21?'GOOD EVENING, HUMAN':'GOOD NIGHT, HUMAN';
+ const greet=document.getElementById('welcomeGreeting');if(greet)greet.textContent=greeting;
+ const clock=document.getElementById('welcomeClock');if(clock)clock.textContent=now.toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ const date=document.getElementById('welcomeDate');if(date)date.textContent=now.toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+}
+function changeWelcomeWallpaper(){
+ const el=document.getElementById('welcomeWallpaper');if(!el)return;
+ welcomeWallpaperIndex=(welcomeWallpaperIndex+1)%welcomeWallpapers.length;
+ el.classList.add('fade');const url=welcomeWallpapers[welcomeWallpaperIndex];
+ const img=new Image();img.onload=()=>{el.style.backgroundImage=`url("${url}")`;requestAnimationFrame(()=>el.classList.remove('fade'))};
+ img.onerror=()=>{el.classList.remove('fade')};img.src=url;
+}
+function rotateWelcomeVerse(){
+ if(welcomeVerses.length>1){let next;do{next=Math.floor(Math.random()*welcomeVerses.length)}while(next===welcomeVerseIndex);welcomeVerseIndex=next}else welcomeVerseIndex=0;
+ const verse=welcomeVerses[welcomeVerseIndex];
+ const text=document.getElementById('welcomeBibleVerse'),ref=document.getElementById('welcomeBibleReference');
+ if(text)text.textContent=verse[0];if(ref)ref.textContent=verse[1]+' · King James Version';
+}
+function rotateWelcomeMessage(){welcomeMessageIndex=(welcomeMessageIndex+1)%welcomeMessages.length;const el=document.getElementById('welcomeDailyQuote');if(el)el.textContent=welcomeMessages[welcomeMessageIndex]}
+async function loadWelcomeWeather(){
+ const el=document.getElementById('welcomeWeather');if(!el)return;
+ if(!navigator.geolocation){el.textContent='🌤 Weather unavailable on this device';return}
+ el.textContent='🌤 Allow location for local weather';
+ navigator.geolocation.getCurrentPosition(async pos=>{
+  try{const lat=pos.coords.latitude,lon=pos.coords.longitude;const url=`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,weather_code&timezone=auto`;
+   const response=await fetch(url);if(!response.ok)throw new Error('Weather service unavailable');const data=await response.json();const c=data.current;const code=c.weather_code;
+   const descriptions={0:['☀️','Clear'],1:['🌤️','Mainly clear'],2:['⛅','Partly cloudy'],3:['☁️','Overcast'],45:['🌫️','Fog'],48:['🌫️','Fog'],51:['🌦️','Light drizzle'],53:['🌦️','Drizzle'],55:['🌧️','Heavy drizzle'],61:['🌦️','Light rain'],63:['🌧️','Rain'],65:['🌧️','Heavy rain'],71:['🌨️','Light snow'],73:['🌨️','Snow'],75:['❄️','Heavy snow'],80:['🌦️','Rain showers'],81:['🌧️','Rain showers'],82:['⛈️','Heavy showers'],95:['⛈️','Thunderstorm'],96:['⛈️','Thunderstorm'],99:['⛈️','Thunderstorm']};
+   const d=descriptions[code]||['🌡️','Current conditions'];el.textContent=`${d[0]} ${Math.round(c.temperature_2m)}°C · ${d[1]}`;
+  }catch(e){el.textContent='🌤 Weather temporarily unavailable'}
+ },()=>{el.textContent='🌤 Weather location not enabled'}, {enableHighAccuracy:false,timeout:10000,maximumAge:600000});
+}
+function startWelcomeExperience(){
+ updateWelcomeClock();changeWelcomeWallpaper();rotateWelcomeVerse();
+ setInterval(updateWelcomeClock,1000);setInterval(changeWelcomeWallpaper,10000);setInterval(rotateWelcomeVerse,30000);setInterval(rotateWelcomeMessage,12000);loadWelcomeWeather();setInterval(loadWelcomeWeather,30*60*1000);
 }
 
-function loadState(){
- try{
-  const saved=localStorage.getItem(STORE_KEY);
-  if(saved){
-   const parsed=JSON.parse(saved);
-   if(parsed && parsed.profile && Array.isArray(parsed.posts)) return parsed;
-  }
- }catch(e){console.warn("Could not load demo data",e)}
- return freshState();
+
+/* Firebase project configuration supplied for your HUMAN project. */
+const firebaseConfig={
+ apiKey:"AIzaSyCFAciN-fObpO14XOMpeO7WRCAJecpHU",
+ authDomain:"human-app-cea91.firebaseapp.com",
+ databaseURL:"https://human-app-cea91-default-rtdb.firebaseio.com",
+ projectId:"human-app-cea91",
+ storageBucket:"human-app-cea91.firebasestorage.app",
+ messagingSenderId:"599977540407",
+ appId:"1:599977540407:web:0fecc148a25bce44a1f8b2",
+ measurementId:"G-K7FY30KW7Y"
+};
+
+const KEY="human_v3_database";
+let db=null,currentUser=null,currentView="feed",currentChat=null,mode="demo";
+let firebaseApp=null,auth=null,rtdb=null,liveProfile=null,liveUsers={},liveMessagesRef=null,liveMessagesCallback=null;
+
+function makeId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function defaultDatabase(){return{
+ users:[
+ {id:"human_demo",username:"human_demo",bio:"Welcome to the HUMAN community.",avatar:"",blocked:[],following:[],followers:[],requests:[],privacy:{privateProfile:false,allowDiscovery:true,showActivity:true},isAdmin:true,joined:Date.now()},
+ {id:"explorer",username:"explorer",bio:"Learning new things every day.",avatar:"",blocked:[],following:[],followers:[],requests:[],privacy:{privateProfile:false,allowDiscovery:true,showActivity:true},isAdmin:false,joined:Date.now()},
+ {id:"tech_mind",username:"tech_mind",bio:"Technology and digital creativity.",avatar:"",blocked:[],following:[],followers:[],requests:[],privacy:{privateProfile:false,allowDiscovery:true,showActivity:true},isAdmin:false,joined:Date.now()},
+ {id:"creative_soul",username:"creative_soul",bio:"Design, art and ideas.",avatar:"",blocked:[],following:[],followers:[],requests:[],privacy:{privateProfile:false,allowDiscovery:true,showActivity:true},isAdmin:false,joined:Date.now()}],
+ posts:[],stories:[],groups:[
+ {id:"group1",name:"Technology Hub",description:"Technology and computers.",members:["human_demo"]},
+ {id:"group2",name:"Creative Corner",description:"Design and creative projects.",members:["human_demo"]},
+ {id:"group3",name:"Learning Space",description:"Share learning goals.",members:["human_demo"]}],
+ messages:[],notifications:[],reports:[],saved:{},polls:[]}}
+function loadDatabase(){
+ try{const s=localStorage.getItem(KEY);db=s?JSON.parse(s):defaultDatabase()}catch(e){db=defaultDatabase()}
+ ["users","posts","stories","groups","messages","notifications","reports","polls"].forEach(k=>{if(!Array.isArray(db[k]))db[k]=[]});
+ if(!db.saved||typeof db.saved!=="object")db.saved={};
+ db.users.forEach(u=>{u.blocked=u.blocked||[];u.following=u.following||[];u.followers=u.followers||[];u.requests=u.requests||[];u.privacy=u.privacy||{privateProfile:false,allowDiscovery:true,showActivity:true}});
+ if(!db.posts.length)db.posts=[
+ {id:makeId(),userId:"human_demo",text:"Welcome to HUMAN 3.0! Share ideas, discover people and build communities.",createdAt:Date.now()-3600000,likes:[],comments:[],poll:null},
+ {id:makeId(),userId:"explorer",text:"What new skill are you learning this week? Share it with the community!",createdAt:Date.now()-1800000,likes:[],comments:[],poll:null}];
+ saveDatabase()
 }
+function saveDatabase(){try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){toast("Browser storage is full. Some changes may not save.")}}
+function getUser(id){return db?.users.find(u=>u.id===id)}
+function me(){return mode==="live"?liveProfile:getUser(currentUser)}
+function username(id){return mode==="live"?(liveUsers[id]?.username||"member"):getUser(id)?.username||"unknown"}
+function toast(msg){const el=document.getElementById("toast");el.textContent=msg;el.classList.remove("hidden");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>el.classList.add("hidden"),3000)}
+function escapeHTML(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function timeAgo(t){const m=Math.max(0,Math.floor((Date.now()-Number(t))/60000));if(m<1)return"Just now";if(m<60)return m+"m ago";if(m<1440)return Math.floor(m/60)+"h ago";return Math.floor(m/1440)+"d ago"}
+function avatar(id){const u=mode==="live"?(id===currentUser?liveProfile:liveUsers[id]):getUser(id);if(!u)return'<div class="avatar">?</div>';return u.avatar&&/^https?:\/\//i.test(u.avatar)?`<div class="avatar"><img src="${escapeHTML(u.avatar)}" alt="Avatar"></div>`:`<div class="avatar">${escapeHTML((u.username||"H").charAt(0).toUpperCase())}</div>`}
+function initFirebase(){if(!window.firebase)throw new Error("Firebase SDK could not load. Check your internet connection.");if(!firebaseApp){firebaseApp=firebase.initializeApp(firebaseConfig);auth=firebase.auth();rtdb=firebase.database()}}
 
-function saveState(){
- try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}
- catch(e){toast("Storage is full. Some changes may not be saved.")}
-}
+/* AUTHENTICATION */
+function enterDemoMode(){mode="demo";loadDatabase();currentUser="human_demo";openApplication()}
+async function liveRegister(){try{initFirebase();const email=document.getElementById("authEmail").value.trim(),password=document.getElementById("authPassword").value;if(!email||password.length<6){toast("Enter a valid email and a password with at least 6 characters.");return}const result=await auth.createUserWithEmailAndPassword(email,password);const raw=email.split("@")[0].toLowerCase().replace(/[^a-z0-9_]/g,"_").slice(0,20)||"human_user";liveProfile={id:result.user.uid,username:raw,bio:"New HUMAN member.",avatar:"",privacy:{privateProfile:true,allowDiscovery:false,showActivity:false},following:[],followers:[],requests:[],blocked:[],isAdmin:false};await rtdb.ref("users/"+result.user.uid).set(publicProfile(liveProfile));await startLive(result.user);toast("Your Live account was created.")}catch(e){toast(firebaseError(e))}}
+async function liveSignIn(){try{initFirebase();const email=document.getElementById("authEmail").value.trim(),password=document.getElementById("authPassword").value;if(!email||!password){toast("Enter your email and password.");return}const result=await auth.signInWithEmailAndPassword(email,password);await startLive(result.user)}catch(e){toast(firebaseError(e))}}
+function firebaseError(e){const map={"auth/email-already-in-use":"That email already has an account.","auth/invalid-email":"That email address is invalid.","auth/weak-password":"Choose a stronger password.","auth/user-not-found":"No account was found for that email.","auth/wrong-password":"The password is incorrect.","auth/invalid-credential":"Email or password is incorrect.","auth/network-request-failed":"Network connection failed.","PERMISSION_DENIED":"Firebase Database rules denied access. Check the secure rules setup."};return map[e.code]||e.message||"Firebase sign-in failed."}
+function publicProfile(u){return{username:u.username,bio:u.bio||"",avatar:u.avatar||"",privacy:u.privacy||{privateProfile:true,allowDiscovery:false,showActivity:false},updatedAt:Date.now()}}
+async function startLive(user){mode="live";currentUser=user.uid;try{const snap=await rtdb.ref("users/"+currentUser).once("value");liveProfile=snap.val()?{...snap.val(),id:currentUser}:{id:currentUser,username:user.email.split("@")[0].replace(/[^a-z0-9_]/gi,"_").slice(0,24),bio:"New HUMAN member.",avatar:"",privacy:{privateProfile:true,allowDiscovery:false,showActivity:false},following:[],followers:[],requests:[],blocked:[],isAdmin:false};await rtdb.ref("users/"+currentUser).update(publicProfile(liveProfile));await loadLiveUsers();openApplication();document.getElementById("connectionStatus").textContent="Live account";document.getElementById("accountType").textContent="Firebase account";document.getElementById("demoSwitcher").classList.add("hidden");document.getElementById("addDemoButton").classList.add("hidden");document.getElementById("modeInfo").textContent="Live account connected to Firebase. Your profile and messages use your Firebase account."}catch(e){toast(firebaseError(e))}}
+async function loadLiveUsers(){const snap=await rtdb.ref("users").once("value");liveUsers=snap.val()||{}}
+function openApplication(){document.getElementById("authSection").classList.add("hidden");document.getElementById("appSection").classList.remove("hidden");document.getElementById("logoutButton").hidden=false;document.getElementById("modeLabel").textContent=mode==="demo"?"HUMAN 3.0 · Demo Mode":"HUMAN 3.0 · Live Mode";if(mode==="demo"){document.getElementById("connectionStatus").textContent="Demo active";document.getElementById("accountType").textContent="Demo account";document.getElementById("demoSwitcher").classList.remove("hidden");document.getElementById("addDemoButton").classList.remove("hidden");document.getElementById("connectNotice").textContent="Demo messages are stored only in this browser. They are not sent to other devices.";document.getElementById("modeInfo").textContent="Demo users share this browser's local data. Switching users lets you test interactions."}else{document.getElementById("connectNotice").textContent="Live messages are stored in Firebase Realtime Database and can sync across signed-in devices, subject to your database security rules."}updateCurrentUser();refreshApp();showView("feed")}
+async function logout(){if(mode==="live"){try{await auth.signOut()}catch(e){}detachLiveMessages()}currentUser=null;currentChat=null;mode="demo";liveProfile=null;document.getElementById("appSection").classList.add("hidden");document.getElementById("authSection").classList.remove("hidden");document.getElementById("logoutButton").hidden=true}
+function updateCurrentUser(){const u=me();if(!u)return;document.getElementById("sideUsername").textContent="@"+u.username;document.getElementById("sideAvatar").innerHTML=avatar(currentUser);document.getElementById("profileName").textContent=u.username;document.getElementById("profileUsername").textContent="@"+u.username;document.getElementById("profileBio").textContent=u.bio||"No bio yet.";document.getElementById("profileAvatar").innerHTML=avatar(currentUser);document.getElementById("editUsername").value=u.username;document.getElementById("editBio").value=u.bio||"";document.getElementById("editAvatar").value=u.avatar||"";document.getElementById("privateProfile").checked=!!u.privacy?.privateProfile;document.getElementById("allowDiscovery").checked=u.privacy?.allowDiscovery!==false;document.getElementById("showActivity").checked=u.privacy?.showActivity!==false;if(mode==="demo"){const s=document.getElementById("demoUserSelect");s.innerHTML=db.users.map(x=>`<option value="${escapeHTML(x.id)}">${escapeHTML(x.username)}</option>`).join("");s.value=currentUser;document.getElementById("followRequestCount").textContent=(u.requests||[]).length+" pending request(s)"}else{document.getElementById("followRequestCount").textContent="Live follow requests are not enabled in this build."}}
+function addDemoUser(){if(mode!=="demo")return;const n=prompt("Enter a username for the new demo account:");if(!n)return;const clean=n.trim().toLowerCase();if(!/^[a-z0-9_]{3,24}$/.test(clean)){toast("Use 3 to 24 letters, numbers or underscores.");return}if(db.users.some(u=>u.username===clean)){toast("That username already exists.");return}const u={id:makeId(),username:clean,bio:"New HUMAN demo member.",avatar:"",blocked:[],following:[],followers:[],requests:[],privacy:{privateProfile:false,allowDiscovery:true,showActivity:true},isAdmin:false,joined:Date.now()};db.users.push(u);saveDatabase();switchDemoUser(u.id)}
+function switchDemoUser(id){if(mode!=="demo"||!getUser(id))return;currentUser=id;currentChat=null;document.getElementById("chatPanel").classList.add("hidden");updateCurrentUser();refreshApp();showView("feed");toast("Now using @"+username(id))}
+async function saveProfile(){const name=document.getElementById("editUsername").value.trim().toLowerCase(),bio=document.getElementById("editBio").value.trim(),url=document.getElementById("editAvatar").value.trim();if(!/^[a-z0-9_]{3,24}$/.test(name)){toast("Username must be 3 to 24 characters.");return}if(url&&!/^https?:\/\//i.test(url)){toast("Use a valid HTTP or HTTPS avatar URL.");return}if(mode==="demo"){if(db.users.some(u=>u.username===name&&u.id!==currentUser)){toast("That username is already taken.");return}Object.assign(me(),{username:name,bio,avatar:url});saveDatabase()}else{try{const snap=await rtdb.ref("users").orderByChild("username").equalTo(name).once("value");let taken=false;snap.forEach(x=>{if(x.key!==currentUser)taken=true});if(taken){toast("That username is already taken.");return}Object.assign(liveProfile,{username:name,bio,avatar:url});await rtdb.ref("users/"+currentUser).update(publicProfile(liveProfile));liveUsers[currentUser]=publicProfile(liveProfile)}catch(e){toast(firebaseError(e));return}}updateCurrentUser();refreshApp();toast("Profile updated.")}
+async function savePrivacy(){const p={privateProfile:document.getElementById("privateProfile").checked,allowDiscovery:document.getElementById("allowDiscovery").checked,showActivity:document.getElementById("showActivity").checked};if(mode==="demo"){me().privacy=p;saveDatabase()}else{liveProfile.privacy=p;try{await rtdb.ref("users/"+currentUser+"/privacy").set(p)}catch(e){toast(firebaseError(e));return}}toast("Privacy preferences saved.")}
 
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-}
+/* NAVIGATION AND FOLLOW */
+function showView(v){currentView=v;document.querySelectorAll(".view").forEach(x=>x.classList.add("hidden"));document.getElementById("view-"+v)?.classList.remove("hidden");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));document.getElementById("nav-"+v)?.classList.add("active");if(v==="feed")renderFeed();if(v==="discover")renderDiscover();if(v==="connect")renderChatPeople();if(v==="communities")renderCommunities();if(v==="identity")updateCurrentUser();if(v==="saved")renderSaved();if(v==="intelligence")renderIntelligence();if(v==="notifications")renderNotifications();if(v==="admin")renderAdmin()}
+function isBlocked(a,b){if(mode==="live")return false;return !!(getUser(a)?.blocked?.includes(b)||getUser(b)?.blocked?.includes(a))}
+function isFollowing(a,b){return mode==="live"?(liveProfile?.following||[]).includes(b):(getUser(a)?.following||[]).includes(b)}
+function followUser(id){if(mode!=="demo"){toast("Live follow requests will be enabled in a later backend step.");return}if(id===currentUser||!getUser(id)||isBlocked(currentUser,id))return;const target=getUser(id),u=me();if(isFollowing(currentUser,id)){u.following=u.following.filter(x=>x!==id);target.followers=target.followers.filter(x=>x!==currentUser);toast("Unfollowed @"+target.username)}else if(target.privacy.privateProfile){if(!(target.requests||[]).includes(currentUser))target.requests.push(currentUser);addNotification(id,currentUser,"sent you a follow request.");toast("Follow request sent.")}else{u.following.push(id);target.followers.push(currentUser);addNotification(id,currentUser,"started following you.");toast("Following @"+target.username)}saveDatabase();refreshApp()}
+function acceptFollowRequest(id){if(mode!=="demo")return;const u=me(),t=getUser(id);if(!t)return;u.requests=u.requests.filter(x=>x!==id);u.followers.push(id);t.following.push(currentUser);addNotification(id,currentUser,"accepted your follow request.");saveDatabase();refreshApp()}
+function rejectFollowRequest(id){if(mode!=="demo")return;me().requests=me().requests.filter(x=>x!==id);saveDatabase();refreshApp()}
+function renderFollowRequests(){if(mode!=="demo"){document.getElementById("followRequests").innerHTML='<p class="small">Live follow requests are not enabled.</p>';return}const r=me().requests||[];document.getElementById("followRequests").innerHTML=r.map(id=>`<div class="person"><div class="person-info"><b>@${escapeHTML(username(id))}</b></div><button class="success" onclick="acceptFollowRequest('${id}')">Accept</button><button class="danger" onclick="rejectFollowRequest('${id}')">Decline</button></div>`).join("")||'<p class="small">No pending requests.</p>'}
 
-function person(id){
- if(id==="you") return {id:"you",...state.profile};
- return demoPeople.find(p=>p.id===id)||{id,name:"Unknown user",username:"unknown",bio:"",avatar:""};
-}
+/* FEED */
+function checkSpam(t){if((t.match(/https?:\/\//gi)||[]).length>3)return"Too many links.";if(/(.)\1{12,}/i.test(t))return"Repeated characters detected.";return""}
+function allPosts(){return mode==="demo"?db.posts:[]}
+function visiblePosts(){return allPosts().filter(p=>getUser(p.userId)&&!isBlocked(currentUser,p.userId)&&(!getUser(p.userId).privacy?.privateProfile||p.userId===currentUser||isFollowing(currentUser,p.userId))).sort((a,b)=>b.createdAt-a.createdAt)}
+function createPost(){if(mode!=="demo"){toast("Live feed publishing is not enabled yet. Your Live account and Connect are active.");return}const i=document.getElementById("postInput"),t=i.value.trim();if(!t)return toast("Write something first.");const w=checkSpam(t);if(w)return toast(w);db.posts.unshift({id:makeId(),userId:currentUser,text:t,createdAt:Date.now(),likes:[],comments:[],poll:null});i.value="";saveDatabase();renderFeed();toast("Post published.")}
+function renderFeed(){const c=document.getElementById("feedPosts");if(mode==="live"){c.innerHTML='<div class="notice">Live feed publishing is not connected yet. Your Firebase account and Live messaging are separate from the local Demo feed.</div>';renderStories();return}const posts=visiblePosts();c.innerHTML=posts.length?posts.map(p=>{const u=getUser(p.userId),liked=p.likes.includes(currentUser);return`<article class="card"><div class="row between"><div class="row">${avatar(p.userId)}<div><b>@${escapeHTML(u.username)}</b><div class="small">${timeAgo(p.createdAt)}</div></div></div>${p.userId===currentUser?`<button class="danger" onclick="deletePost('${p.id}')">Delete</button>`:`<button class="secondary" onclick="openUserActions('${p.userId}')">•••</button>`}</div><div class="post-text">${escapeHTML(p.text)}</div>${p.poll?renderPoll(p):""}<div class="post-actions"><button class="${liked?"success":"secondary"}" onclick="toggleLike('${p.id}')">♥ ${p.likes.length}</button><button class="secondary" onclick="focusComment('${p.id}')">Comment ${p.comments.length}</button><button class="secondary" onclick="savePost('${p.id}')">☆ Save</button>${p.userId!==currentUser?`<button class="secondary" onclick="reportPost('${p.id}')">Report</button>`:""}</div><div>${p.comments.map(x=>`<div class="comment"><b>@${escapeHTML(username(x.userId))}</b> ${escapeHTML(x.text)} ${x.userId===currentUser?`<button class="danger" onclick="deleteComment('${p.id}','${x.id}')">×</button>`:""}</div>`).join("")}</div><div class="comment-form"><input id="comment-${p.id}" maxlength="300" placeholder="Write a comment..."><button onclick="addComment('${p.id}')">Send</button></div></article>`}).join(""):'<div class="empty">No posts to show.</div>';renderStories()}
+function toggleLike(id){if(mode!=="demo")return;const p=db.posts.find(x=>x.id===id);if(!p)return;const i=p.likes.indexOf(currentUser);if(i>=0)p.likes.splice(i,1);else{p.likes.push(currentUser);if(p.userId!==currentUser)addNotification(p.userId,currentUser,"liked your post.")}saveDatabase();renderFeed()}
+function addComment(id){if(mode!=="demo")return;const i=document.getElementById("comment-"+id),t=i.value.trim(),p=db.posts.find(x=>x.id===id);if(!t||!p)return;p.comments.push({id:makeId(),userId:currentUser,text:t,createdAt:Date.now()});if(p.userId!==currentUser)addNotification(p.userId,currentUser,"commented on your post.");saveDatabase();renderFeed()}
+function focusComment(id){document.getElementById("comment-"+id)?.focus()}
+function deleteComment(pid,cid){if(mode!=="demo")return;const p=db.posts.find(x=>x.id===pid);if(!p)return;p.comments=p.comments.filter(x=>!(x.id===cid&&x.userId===currentUser));saveDatabase();renderFeed()}
+function deletePost(id){if(mode!=="demo")return;const p=db.posts.find(x=>x.id===id);if(!p||p.userId!==currentUser||!confirm("Delete this post?"))return;db.posts=db.posts.filter(x=>x.id!==id);saveDatabase();renderFeed()}
+function savePost(id){if(mode!=="demo")return;db.saved[currentUser]=db.saved[currentUser]||[];if(!db.saved[currentUser].includes(id))db.saved[currentUser].push(id);saveDatabase();toast("Post saved.")}
+function renderSaved(){if(mode!=="demo"){document.getElementById("savedPosts").innerHTML='<div class="empty">Saved posts are available in Demo Mode.</div>';return}const ids=db.saved[currentUser]||[],ps=db.posts.filter(p=>ids.includes(p.id));document.getElementById("savedPosts").innerHTML=ps.map(p=>`<div class="card"><b>@${escapeHTML(username(p.userId))}</b><p class="post-text">${escapeHTML(p.text)}</p><button class="danger" onclick="removeSaved('${p.id}')">Remove saved</button></div>`).join("")||'<div class="empty">No saved posts.</div>'}
+function removeSaved(id){db.saved[currentUser]=(db.saved[currentUser]||[]).filter(x=>x!==id);saveDatabase();renderSaved()}
+function createPoll(){if(mode!=="demo")return toast("Polls are currently available in Demo Mode.");const q=prompt("Enter your poll question:"),a=prompt("Enter option one:"),b=prompt("Enter option two:");if(!q?.trim()||!a?.trim()||!b?.trim())return toast("A poll needs a question and two options.");db.posts.unshift({id:makeId(),userId:currentUser,text:"📊 "+q.trim(),createdAt:Date.now(),likes:[],comments:[],poll:{options:[a.trim(),b.trim()],votes:{}}});saveDatabase();renderFeed()}
+function renderPoll(p){const votes=p.poll.votes||{};return`<div class="panel"><b>Poll</b>${p.poll.options.map((o,i)=>`<button class="secondary full" onclick="votePoll('${p.id}',${i})">${escapeHTML(o)} · ${Object.values(votes).filter(v=>v===i).length} vote(s)</button>`).join("")}<p class="small">${Object.keys(votes).length} total votes</p></div>`}
+function votePoll(id,i){if(mode!=="demo")return;const p=db.posts.find(x=>x.id===id);if(!p?.poll)return;p.poll.votes[currentUser]=i;saveDatabase();renderFeed()}
+function addStory(){if(mode!=="demo")return toast("Stories are currently available in Demo Mode.");const i=document.getElementById("storyInput"),t=i.value.trim();if(!t)return;db.stories.unshift({id:makeId(),userId:currentUser,text:t,createdAt:Date.now()});i.value="";saveDatabase();renderStories();toast("Story published.")}
+function renderStories(){const c=document.getElementById("storyList");if(mode!=="demo"){c.innerHTML='<span class="small">Stories are in Demo Mode.</span>';return}db.stories=db.stories.filter(s=>Date.now()-s.createdAt<86400000);c.innerHTML=db.stories.filter(s=>!isBlocked(currentUser,s.userId)).map(s=>`<div class="story" onclick="viewStory('${s.id}')">${avatar(s.userId)}<span>@${escapeHTML(username(s.userId))}</span></div>`).join("");saveDatabase()}
+function viewStory(id){const s=db.stories.find(x=>x.id===id);if(s)alert("@"+username(s.userId)+"\n\n"+s.text)}
 
-function initials(name){
- return String(name||"H").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("").toUpperCase();
-}
+/* DISCOVERY */
+function personCard(u){return`<div class="person">${avatar(u.id)}<div class="person-info"><b>@${escapeHTML(u.username)}</b><small>${escapeHTML(u.bio||"")}</small></div><button onclick="followUser('${u.id}')">${isFollowing(currentUser,u.id)?"Following":"Follow"}</button></div>`}
+function renderDiscover(){const q=(document.getElementById("discoverInput")?.value||"").trim().toLowerCase();const users=mode==="demo"?db.users.filter(u=>u.id!==currentUser&&u.privacy.allowDiscovery!==false&&!isBlocked(currentUser,u.id)&&(u.username.toLowerCase().includes(q)||u.bio.toLowerCase().includes(q))):Object.entries(liveUsers).filter(([id,u])=>id!==currentUser&&u.privacy?.allowDiscovery===true&&(u.username||"").toLowerCase().includes(q)).map(([id,u])=>({...u,id}));const posts=mode==="demo"?visiblePosts().filter(p=>p.text.toLowerCase().includes(q)||username(p.userId).toLowerCase().includes(q)):[];document.getElementById("discoverResults").innerHTML=q?`<h4>People</h4>${users.map(personCard).join("")||'<p class="small">No matching people.</p>'}<h4>Posts</h4>${posts.map(p=>`<div class="comment"><b>@${escapeHTML(username(p.userId))}</b><br>${escapeHTML(p.text)}</div>`).join("")||'<p class="small">No matching posts.</p>'}`:'<p class="small">Search for people, posts and topics.</p>';document.getElementById("suggestedPeople").innerHTML=users.filter(u=>!isFollowing(currentUser,u.id)).slice(0,5).map(personCard).join("")||'<p class="small">No suggestions available.</p>';const tags={};if(mode==="demo")db.posts.forEach(p=>(p.text.match(/#[a-z0-9_]+/gi)||[]).forEach(t=>tags[t]=(tags[t]||0)+1));document.getElementById("trendingTopics").innerHTML=Object.entries(tags).sort((a,b)=>b[1]-a[1]).slice(0,10).map(([t,n])=>`<span class="tag">${escapeHTML(t)} · ${n}</span>`).join("")||'<p class="small">No trending hashtags yet.</p>'}
 
-function avatarHTML(user,large=false){
- const cls=large?"avatar large":"avatar";
- const src=user.avatar && /^https?:\/\//i.test(user.avatar) ? `<img src="${escapeHTML(user.avatar)}" alt="" onerror="this.remove()">` : "";
- return `<div class="${cls}">${src||escapeHTML(initials(user.name))}</div>`;
-}
+/* CONNECT: local demo chat + Firebase live chat */
+function conversationId(a,b){return[a,b].sort().join("_")}
+async function renderChatPeople(){if(mode==="demo"){const ps=db.users.filter(u=>u.id!==currentUser&&!isBlocked(currentUser,u.id));document.getElementById("chatPeople").innerHTML=ps.map(u=>`<div class="person">${avatar(u.id)}<div class="person-info"><b>@${escapeHTML(u.username)}</b><small>Local demo user</small></div><button onclick="openChat('${u.id}')">Message</button></div>`).join("")||'<p class="small">No available users.</p>';return}try{await loadLiveUsers();const ps=Object.entries(liveUsers).filter(([id])=>id!==currentUser).map(([id,u])=>({...u,id}));document.getElementById("chatPeople").innerHTML=ps.map(u=>`<div class="person">${avatar(u.id)}<div class="person-info"><b>@${escapeHTML(u.username||"member")}</b><small>Live HUMAN account</small></div><button onclick="openChat('${u.id}')">Message</button></div>`).join("")||'<p class="small">No other Live accounts yet.</p>'}catch(e){document.getElementById("chatPeople").innerHTML='<p class="small">'+escapeHTML(firebaseError(e))+'</p>'}}
+function detachLiveMessages(){if(liveMessagesRef&&liveMessagesCallback)liveMessagesRef.off("value",liveMessagesCallback);liveMessagesRef=null;liveMessagesCallback=null}
+async function openChat(id){if(!id||id===currentUser||isBlocked(currentUser,id))return toast("Conversation unavailable.");currentChat=id;document.getElementById("chatPanel").classList.remove("hidden");document.getElementById("chatTitle").textContent="Chat with @"+username(id);if(mode==="demo"){renderMessages();return}detachLiveMessages();try{const cid=conversationId(currentUser,id);liveMessagesRef=rtdb.ref("conversations/"+cid+"/messages");liveMessagesCallback=snap=>{const msgs=[];snap.forEach(x=>msgs.push({id:x.key,...x.val()}));renderMessageArray(msgs)};liveMessagesRef.limitToLast(100).on("value",liveMessagesCallback,e=>toast(firebaseError(e)))}catch(e){toast(firebaseError(e))}}
+function closeChat(){currentChat=null;detachLiveMessages();document.getElementById("chatPanel").classList.add("hidden")}
+function renderMessageArray(messages){document.getElementById("messageList").innerHTML=messages.length?messages.map(m=>`<div class="message ${m.from===currentUser?"mine":""}">${escapeHTML(m.text)}<small>${m.from===currentUser?"You":"@"+escapeHTML(username(m.from))} · ${timeAgo(m.time)}</small></div>`).join(""):'<div class="empty">Start a conversation.</div>';const c=document.getElementById("messageList");c.scrollTop=c.scrollHeight}
+function renderMessages(){if(mode!=="demo"||!currentChat)return;const ms=db.messages.filter(m=>(m.from===currentUser&&m.to===currentChat)||(m.from===currentChat&&m.to===currentUser));renderMessageArray(ms)}
+async function sendMessage(){if(!currentChat)return toast("Open a conversation first.");const input=document.getElementById("messageInput"),text=input.value.trim();if(!text)return;if(text.length>500)return toast("Message is too long.");if(mode==="demo"){if(isBlocked(currentUser,currentChat))return toast("You cannot message this user.");db.messages.push({id:makeId(),from:currentUser,to:currentChat,text,time:Date.now()});addNotification(currentChat,currentUser,"sent you a message.","message");saveDatabase();renderMessages();input.value="";toast("Message sent in Demo Mode.");return}try{const cid=conversationId(currentUser,currentChat),base=rtdb.ref("conversations/"+cid);await base.child("participants").update({[currentUser]:true,[currentChat]:true});await base.child("messages").push({from:currentUser,to:currentChat,text,time:firebase.database.ServerValue.TIMESTAMP});input.value="";toast("Live message sent.")}catch(e){toast(firebaseError(e))}}
+function callPreview(){toast("Live voice/video calls are not part of this build. A secure WebRTC signalling service and TURN configuration are needed.")}
 
-function toast(message){
- const el=document.getElementById("toast");
- el.textContent=message;el.classList.remove("hidden");
- clearTimeout(window.toastTimer);
- window.toastTimer=setTimeout(()=>el.classList.add("hidden"),2600);
-}
+/* COMMUNITIES, ALERTS, SAFETY, ADMIN */
+function renderCommunities(){if(mode!=="demo"){document.getElementById("communityList").innerHTML='<p class="small">Communities are currently in Demo Mode.</p>';return}document.getElementById("communityList").innerHTML=db.groups.map(g=>`<div class="person"><div class="avatar">#</div><div class="person-info"><b>${escapeHTML(g.name)}</b><small>${escapeHTML(g.description)}</small><small>${g.members.length} demo member(s)</small></div><button onclick="joinCommunity('${g.id}')">${g.members.includes(currentUser)?"Joined":"Join"}</button></div>`).join("")||'<p class="small">No communities yet.</p>'}
+function createCommunity(){if(mode!=="demo")return toast("Communities are currently in Demo Mode.");const n=document.getElementById("communityName").value.trim(),d=document.getElementById("communityDescription").value.trim();if(!n||!d)return toast("Enter a name and description.");db.groups.unshift({id:makeId(),name:n,description:d,members:[currentUser],creator:currentUser});document.getElementById("communityName").value="";document.getElementById("communityDescription").value="";saveDatabase();renderCommunities();toast("Community created.")}
+function joinCommunity(id){const g=db.groups.find(x=>x.id===id);if(!g)return;if(!g.members.includes(currentUser))g.members.push(currentUser);saveDatabase();renderCommunities()}
+function addNotification(to,from,text,type="general"){if(mode!=="demo"||!to||to===from)return;db.notifications.unshift({id:makeId(),recipientId:to,actorId:from,text,type,time:Date.now(),read:false})}
+function renderNotifications(){if(mode!=="demo"){document.getElementById("notificationList").innerHTML='<div class="empty">Live notification inbox is not enabled in this build. Replies are available directly inside Live Connect conversations.</div>';return}const ns=db.notifications.filter(n=>n.recipientId===currentUser);document.getElementById("notificationList").innerHTML=ns.map(n=>`<div class="card"><div class="row">${avatar(n.actorId)}<div><b>@${escapeHTML(username(n.actorId))}</b><div>${escapeHTML(n.text)}</div><p class="small">${timeAgo(n.time)}</p></div></div>${n.type==="message"?`<button class="success full" onclick="replyFromNotification('${n.id}')">Reply to message</button>`:""}${n.read?"<span class='small'>Read</span>":`<button class="secondary full" onclick="markNotification('${n.id}')">Mark as read</button>`}</div>`).join("")||'<div class="empty">No notifications.</div>'}
+function replyFromNotification(id){const n=db.notifications.find(x=>x.id===id&&x.recipientId===currentUser);if(!n||n.type!=="message")return toast("Message notification not found.");showView("connect");openChat(n.actorId);setTimeout(()=>document.getElementById("messageInput")?.focus(),100)}
+function markNotification(id){const n=db.notifications.find(x=>x.id===id&&x.recipientId===currentUser);if(n)n.read=true;saveDatabase();renderNotifications()}
+function clearNotifications(){if(mode!=="demo")return;db.notifications=db.notifications.filter(n=>n.recipientId!==currentUser);saveDatabase();renderNotifications()}
+function openUserActions(id){const c=prompt("Actions for @"+username(id)+"\n1 = Block user\n2 = Report user\n3 = Cancel");if(c==="1")blockUser(id);if(c==="2")reportUser(id)}
+function blockUser(id){if(mode!=="demo")return toast("Live blocking is not enabled yet.");if(!id||id===currentUser)return;const u=me();if(!confirm("Block @"+username(id)+"?"))return;u.blocked.push(id);u.following=u.following.filter(x=>x!==id);const t=getUser(id);if(t){t.following=t.following.filter(x=>x!==currentUser);t.followers=t.followers.filter(x=>x!==currentUser);t.requests=t.requests.filter(x=>x!==currentUser)}if(currentChat===id)closeChat();saveDatabase();refreshApp();toast("User blocked in Demo Mode.")}
+function reportPost(id){if(mode!=="demo")return;db.reports.unshift({id:makeId(),type:"post",targetId:id,reporter:currentUser,time:Date.now(),status:"Pending"});saveDatabase();toast("Report submitted.")}
+function reportUser(id){if(mode!=="demo")return;db.reports.unshift({id:makeId(),type:"user",targetId:id,reporter:currentUser,time:Date.now(),status:"Pending"});saveDatabase();toast("Report submitted.")}
+function renderAdmin(){const u=me();if(mode!=="demo"||!u?.isAdmin){document.getElementById("adminStats").innerHTML="";document.getElementById("adminReports").innerHTML='<div class="notice">Admin Centre is a local demo preview for the demo administrator only.</div>';document.getElementById("adminUsers").innerHTML="";return}document.getElementById("adminStats").innerHTML=`<div class="stat"><strong>${db.users.length}</strong><small>Users</small></div><div class="stat"><strong>${db.posts.length}</strong><small>Posts</small></div><div class="stat"><strong>${db.reports.length}</strong><small>Reports</small></div>`;document.getElementById("adminReports").innerHTML=db.reports.map(r=>`<div class="card"><b>${escapeHTML(r.type.toUpperCase())} REPORT</b><p class="small">Reported by @${escapeHTML(username(r.reporter))} · ${escapeHTML(r.status)}</p><button class="success" onclick="resolveReport('${r.id}')">Resolve</button><button class="danger" onclick="removeReport('${r.id}')">Remove</button></div>`).join("")||'<p class="small">No reports submitted.</p>';document.getElementById("adminUsers").innerHTML=db.users.map(x=>`<div class="person">${avatar(x.id)}<div class="person-info"><b>@${escapeHTML(x.username)}</b><small>${x.isAdmin?"Demo administrator":"Demo member"}</small></div>${x.id!==currentUser?`<button class="secondary" onclick="blockUser('${x.id}')">Block</button>`:""}</div>`).join("")}
+function resolveReport(id){const r=db.reports.find(x=>x.id===id);if(r)r.status="Resolved";saveDatabase();renderAdmin()}
+function removeReport(id){db.reports=db.reports.filter(x=>x.id!==id);saveDatabase();renderAdmin()}
+function renderIntelligence(){if(mode!=="demo"){document.getElementById("statsGrid").innerHTML='<div class="stat"><strong>Live</strong><small>Account</small></div>';document.getElementById("activityInsights").innerHTML='<p class="small">Live activity analytics will be added after the feed backend is connected.</p>';document.getElementById("safetyInfo").innerHTML='<p class="small">Basic content safety checks run on Demo Mode posts only.</p>';return}const ps=db.posts.filter(p=>p.userId===currentUser),likes=ps.reduce((n,p)=>n+p.likes.length,0),comments=ps.reduce((n,p)=>n+p.comments.length,0),u=me();document.getElementById("statsGrid").innerHTML=`<div class="stat"><strong>${ps.length}</strong><small>Your posts</small></div><div class="stat"><strong>${u.followers.length}</strong><small>Followers</small></div><div class="stat"><strong>${u.following.length}</strong><small>Following</small></div>`;document.getElementById("activityInsights").innerHTML=`<div class="comment">Reactions: <b>${likes}</b></div><div class="comment">Comments: <b>${comments}</b></div><div class="comment">Messages sent: <b>${db.messages.filter(m=>m.from===currentUser).length}</b></div><div class="comment">Communities joined: <b>${db.groups.filter(g=>g.members.includes(currentUser)).length}</b></div>`;document.getElementById("safetyInfo").innerHTML=`<div class="comment">Posts checked: <b>${db.posts.length}</b></div><div class="comment">Basic spam warnings: <b>${db.posts.filter(p=>checkSpam(p.text)).length}</b></div><p class="small">Rule-based demo only, not AI moderation.</p>`}
+function refreshApp(){if(!currentUser)return;if(mode==="demo")updateCurrentUser();renderFeed();renderDiscover();renderChatPeople();renderCommunities();renderSaved();renderIntelligence();renderNotifications();renderFollowRequests();renderAdmin();if(mode==="demo"&&currentChat)renderMessages()}
+document.getElementById("messageInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendMessage()});
+document.getElementById("postInput").addEventListener("keydown",e=>{if(e.ctrlKey&&e.key==="Enter")createPost()});
+startWelcomeExperience();
 
-function enterDemoMode(){
- state=loadState();
- currentUser="you";
- document.getElementById("authSection").classList.add("hidden");
- document.getElementById("appSection").classList.remove("hidden");
- document.getElementById("logoutButton").classList.remove("hidden");
- document.getElementById("connectionStatus").textContent="Demo mode";
- document.getElementById("modeLabel").textContent="Demo Mode · Data saved on this device";
- renderAll();
- toast("Welcome to HUMAN Demo Mode");
-}
-
-function logout(){
- currentUser=null;activeChat=null;
- document.getElementById("appSection").classList.add("hidden");
- document.getElementById("authSection").classList.remove("hidden");
- document.getElementById("logoutButton").classList.add("hidden");
- document.getElementById("connectionStatus").textContent="Demo ready";
-}
-
-function refreshApp(){
- if(!currentUser)return;
- state=loadState();
- renderAll();
- toast("HUMAN refreshed");
-}
-
-function showView(name){
- document.querySelectorAll(".view").forEach(v=>v.classList.add("hidden"));
- document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
- const view=document.getElementById("view-"+name);
- if(view)view.classList.remove("hidden");
- const nav=document.getElementById("nav-"+name);
- if(nav)nav.classList.add("active");
- renderView(name);
-}
-
-function renderAll(){
- renderFeed();renderStories();renderProfile();renderDiscover();renderChatPeople();
- renderCommunities();renderSaved();renderNotifications();renderIntelligence();renderAdmin();renderSidebar();
-}
-
-function renderView(name){
- const renderers={feed:renderFeed,discover:renderDiscover,connect:renderChatPeople,communities:renderCommunities,identity:renderProfile,saved:renderSaved,notifications:renderNotifications,intelligence:renderIntelligence,admin:renderAdmin};
- if(renderers[name])renderers[name]();
-}
-
-function renderStories(){
- const el=document.getElementById("storyList");
- el.innerHTML=state.stories.map(s=>{
-  const p=person(s.user);
-  return `<div class="story">${avatarHTML(p)}<div>${escapeHTML(p.name)}</div><div class="small">${escapeHTML(s.text)}</div></div>`;
- }).join("")||'<div class="empty">No stories yet.</div>';
-}
-
-function addStory(){
- const input=document.getElementById("storyInput");
- const text=input.value.trim();if(!text)return toast("Write a story first");
- state.stories.unshift({id:"s"+Date.now(),user:"you",text});
- input.value="";saveState();renderStories();toast("Story published");
-}
-
-function createPost(){
- const input=document.getElementById("postInput");
- const text=input.value.trim();if(!text)return toast("Write something first");
- state.posts.unshift({id:"p"+Date.now(),user:"you",text,time:Date.now(),likes:[],comments:[],saved:false});
- input.value="";saveState();renderFeed();renderSidebar();toast("Your post is live in the demo");
-}
-
-function createPoll(){
- const question=prompt("Enter your poll question:");
- if(!question||!question.trim())return;
- const first=prompt("Enter poll option 1:");
- if(!first||!first.trim())return;
- const second=prompt("Enter poll option 2:");
- if(!second||!second.trim())return;
- state.posts.unshift({id:"p"+Date.now(),user:"you",text:question.trim(),time:Date.now(),likes:[],comments:[],saved:false,poll:{options:[first.trim(),second.trim()],votes:{}}});
- saveState();renderFeed();toast("Poll created");
-}
-
-function timeAgo(time){
- const mins=Math.max(0,Math.floor((Date.now()-time)/60000));
- if(mins<1)return "Just now";if(mins<60)return mins+"m ago";
- const hours=Math.floor(mins/60);if(hours<24)return hours+"h ago";
- return Math.floor(hours/24)+"d ago";
-}
-
-function renderPost(post){
- const p=person(post.user);
- const liked=post.likes.includes("you");
- const comments=post.comments.map((c,i)=>`<div class="comment"><strong>${escapeHTML(person(c.user).name)}:</strong> ${escapeHTML(c.text)} ${post.user==="you"||c.user==="you"?`<button class="secondary" onclick="deleteComment('${post.id}',${i})" style="padding:3px 7px;font-size:10px">Delete</button>`:""}</div>`).join("");
- let poll="";
- if(post.poll){
-  poll=`<div class="panel"><strong>Poll</strong>${post.poll.options.map((option,i)=>{
-   const votes=Object.values(post.poll.votes||{}).filter(v=>v===i).length;
-   return `<div class="row between" style="margin-top:9px"><span>${escapeHTML(option)} · ${votes} votes</span><button class="secondary" onclick="votePoll('${post.id}',${i})">Vote</button></div>`;
-  }).join("")}</div>`;
- }
- return `<article class="card">
-  <div class="row between"><div class="row">${avatarHTML(p)}<div><div class="user-name">${escapeHTML(p.name)}</div><div class="small">@${escapeHTML(p.username)} · ${timeAgo(post.time)}</div></div></div>
-  <button class="secondary" onclick="reportPost('${post.id}')">Report</button></div>
-  <div class="post-text">${escapeHTML(post.text)}</div>${poll}
-  <div class="post-actions">
-   <button class="secondary" onclick="toggleLike('${post.id}')">${liked?"♥":"♡"} ${post.likes.length}</button>
-   <button class="secondary" onclick="focusComment('${post.id}')">Comment ${post.comments.length}</button>
-   <button class="secondary" onclick="toggleSave('${post.id}')">${post.saved?"Saved":"Save"}</button>
-   ${post.user==="you"?`<button class="danger" onclick="deletePost('${post.id}')">Delete</button>`:""}
-  </div>
-  <div id="comments-${post.id}">${comments}</div>
-  <div class="comment-form"><input id="comment-${post.id}" maxlength="300" placeholder="Write a comment..."><button onclick="addComment('${post.id}')">Send</button></div>
- </article>`;
-}
-
-function renderFeed(){
- const el=document.getElementById("feedPosts");
- el.innerHTML=state.posts.map(renderPost).join("")||'<div class="empty">No posts yet. Start the conversation.</div>';
-}
-
-function toggleLike(id){
- const post=state.posts.find(p=>p.id===id);if(!post)return;
- const index=post.likes.indexOf("you");
- if(index>=0)post.likes.splice(index,1);else post.likes.push("you");
- saveState();renderFeed();renderSidebar();
-}
-
-function addComment(id){
- const input=document.getElementById("comment-"+id);
- const text=input.value.trim();if(!text)return;
- const post=state.posts.find(p=>p.id===id);if(!post)return;
- post.comments.push({user:"you",text});input.value="";
- if(post.user!=="you")addNotification("You commented on "+person(post.user).name+"'s post.");
- saveState();renderFeed();toast("Comment added");
-}
-
-function deleteComment(id,index){
- const post=state.posts.find(p=>p.id===id);if(!post)return;
- if(post.comments[index]?.user!=="you"&&post.user!=="you")return toast("You cannot delete that comment");
- post.comments.splice(index,1);saveState();renderFeed();
-}
-
-function focusComment(id){
- const input=document.getElementById("comment-"+id);
- if(input)input.focus();
-}
-
-function deletePost(id){
- const post=state.posts.find(p=>p.id===id);
- if(!post||post.user!=="you")return;
- if(!confirm("Delete this post?"))return;
- state.posts=state.posts.filter(p=>p.id!==id);saveState();renderFeed();renderSidebar();toast("Post deleted");
-}
-
-function toggleSave(id){
- const post=state.posts.find(p=>p.id===id);if(!post)return;
- post.saved=!post.saved;saveState();renderFeed();renderSaved();toast(post.saved?"Post saved":"Post removed from saved");
-}
-
-function votePoll(id,index){
- const post=state.posts.find(p=>p.id===id);if(!post||!post.poll)return;
- post.poll.votes=post.poll.votes||{};
- post.poll.votes.you=index;saveState();renderFeed();toast("Vote recorded");
-}
-
-function reportPost(id){
- const reason=prompt("Why are you reporting this post?");
- if(!reason||!reason.trim())return;
- state.reports.push({id:"r"+Date.now(),postId:id,reason:reason.trim(),time:Date.now(),status:"Pending"});
- addNotification("Your report has been recorded in the demo.");
- saveState();renderAdmin();toast("Report submitted");
-}
-
-function addNotification(text){
- state.notifications.unshift({id:"n"+Date.now(),text,time:Date.now(),read:false});
-}
-
-function renderDiscover(){
- if(!state)return;
- const query=(document.getElementById("discoverInput")?.value||"").toLowerCase().trim();
- const people=[{id:"you",...state.profile},...demoPeople.filter(p=>p.id!=="you")];
- const matchingPeople=people.filter(p=>(p.name+" "+p.username+" "+p.bio).toLowerCase().includes(query));
- const matchingPosts=state.posts.filter(p=>p.text.toLowerCase().includes(query));
- document.getElementById("discoverResults").innerHTML=
-  (matchingPeople.length?matchingPeople.map(p=>personCard(p)).join(""):"")+
-  matchingPosts.map(p=>`<div class="comment"><strong>${escapeHTML(person(p.user).name)}</strong><p>${escapeHTML(p.text)}</p></div>`).join("")+
-  (!matchingPeople.length&&!matchingPosts.length?'<div class="empty">No matching results.</div>':"");
- document.getElementById("trendingTopics").innerHTML=["#HUMAN","#Technology","#Learning","#Ideas","#Community"].map(t=>`<span class="tag">${t}</span>`).join("");
- document.getElementById("suggestedPeople").innerHTML=demoPeople.filter(p=>!state.following.includes(p.id)).map(p=>personCard(p,true)).join("")||'<div class="small">You are following everyone in this demo list.</div>';
-}
-
-function personCard(p,followButton=false){
- return `<div class="person">${avatarHTML(p)}<div class="person-info"><strong>${escapeHTML(p.name)}</strong><small>@${escapeHTML(p.username)} · ${escapeHTML(p.bio)}</small></div>${p.id!=="you"?(state.following.includes(p.id)?`<button class="secondary" onclick="toggleFollow('${p.id}')">Following</button>`:`<button onclick="toggleFollow('${p.id}')">Follow</button>`):""}</div>`;
-}
-
-function toggleFollow(id){
- if(state.following.includes(id))state.following=state.following.filter(x=>x!==id);
- else{state.following.push(id);addNotification("You are now following "+person(id).name+".");}
- saveState();renderDiscover();renderSidebar();renderNotifications();
-}
-
-function renderChatPeople(){
- const el=document.getElementById("chatPeople");if(!el)return;
- el.innerHTML=demoPeople.filter(p=>p.id!=="you").map(p=>`<div class="person">${avatarHTML(p)}<div class="person-info"><strong>${escapeHTML(p.name)}</strong><small>@${escapeHTML(p.username)}</small></div><button onclick="openChat('${p.id}')">Message</button></div>`).join("");
-}
-
-function openChat(id){
- activeChat=id;
- if(!state.chats[id])state.chats[id]=[];
- document.getElementById("chatPanel").classList.remove("hidden");
- document.getElementById("chatTitle").textContent="Chat with "+person(id).name;
- renderMessages();
-}
-
-function closeChat(){
- activeChat=null;document.getElementById("chatPanel").classList.add("hidden");
-}
-
-function renderMessages(){
- if(!activeChat)return;
- const messages=state.chats[activeChat]||[];
- document.getElementById("messageList").innerHTML=messages.map(m=>`<div class="message ${m.from==="you"?"mine":""}">${escapeHTML(m.text)}<small>${m.from==="you"?"You":escapeHTML(person(m.from).name)} · ${timeAgo(m.time)}</small></div>`).join("")||'<div class="empty">Start the conversation.</div>';
- const list=document.getElementById("messageList");list.scrollTop=list.scrollHeight;
-}
-
-function sendMessage(){
- const input=document.getElementById("messageInput");
- const text=input.value.trim();if(!text||!activeChat)return;
- state.chats[activeChat]=state.chats[activeChat]||[];
- state.chats[activeChat].push({from:"you",text,time:Date.now()});
- input.value="";saveState();renderMessages();toast("Demo message sent");
-}
-
-function simulateReply(){
- if(!activeChat)return;
- const replies=[
-  "Thanks for your message!",
-  "Interesting idea. Tell me more.",
-  "I agree. Let's keep sharing ideas.",
-  "That sounds useful!",
-  "Good to hear from you."
- ];
- const reply=replies[Math.floor(Math.random()*replies.length)];
- state.chats[activeChat].push({from:activeChat,text:reply,time:Date.now()});
- addNotification(person(activeChat).name+" replied to your demo message.");
- saveState();renderMessages();renderNotifications();
-}
-
-function createCommunity(){
- const name=document.getElementById("communityName").value.trim();
- const description=document.getElementById("communityDescription").value.trim();
- if(!name)return toast("Enter a community name");
- state.communities.unshift({id:"c"+Date.now(),name,description,members:["you"]});
- document.getElementById("communityName").value="";
- document.getElementById("communityDescription").value="";
- saveState();renderCommunities();toast("Community created");
-}
-
-function renderCommunities(){
- const el=document.getElementById("communityList");if(!el)return;
- el.innerHTML=state.communities.map(c=>`<div class="card"><h3>${escapeHTML(c.name)}</h3><p class="muted">${escapeHTML(c.description)}</p><div class="row between"><span class="small">${c.members.length} members</span>${c.members.includes("you")?'<span class="tag">Joined</span>':`<button onclick="joinCommunity('${c.id}')">Join</button>`}</div></div>`).join("")||'<div class="empty">No communities yet.</div>';
-}
-
-function joinCommunity(id){
- const c=state.communities.find(x=>x.id===id);if(!c)return;
- if(!c.members.includes("you"))c.members.push("you");
- saveState();renderCommunities();toast("You joined "+c.name);
-}
-
-function renderProfile(){
- const p=state.profile;
- document.getElementById("profileName").textContent=p.name;
- document.getElementById("profileUsername").textContent="@"+p.username;
- document.getElementById("profileBio").textContent=p.bio;
- document.getElementById("profileAvatar").innerHTML=avatarHTML(p,true).replace(/^<div class="avatar large">/,"").replace(/<\/div>$/,"");
- document.getElementById("editName").value=p.name;
- document.getElementById("editUsername").value=p.username;
- document.getElementById("editBio").value=p.bio;
- document.getElementById("editAvatar").value=p.avatar;
- document.getElementById("privateProfile").checked=p.private;
- document.getElementById("allowDiscovery").checked=p.discover;
- document.getElementById("showActivity").checked=p.activity;
-}
-
-function saveProfile(){
- const name=document.getElementById("editName").value.trim();
- const username=document.getElementById("editUsername").value.trim().replace(/^@/,"").replace(/\s/g,"");
- const bio=document.getElementById("editBio").value.trim();
- const avatar=document.getElementById("editAvatar").value.trim();
- if(!name||!username)return toast("Name and username are required");
- if(!/^[a-zA-Z0-9_.]{3,24}$/.test(username))return toast("Username must be 3–24 characters using letters, numbers, dots or underscores");
- if(avatar&&!/^https?:\/\//i.test(avatar))return toast("Avatar must be an HTTP or HTTPS image URL");
- state.profile={...state.profile,name,username,bio,avatar};
- saveState();renderProfile();renderSidebar();renderFeed();renderDiscover();toast("Profile updated");
-}
-
-function savePrivacy(){
- state.profile.private=document.getElementById("privateProfile").checked;
- state.profile.discover=document.getElementById("allowDiscovery").checked;
- state.profile.activity=document.getElementById("showActivity").checked;
- saveState();toast("Privacy preferences saved");
-}
-
-function renderSaved(){
- const saved=state.posts.filter(p=>p.saved);
- document.getElementById("savedPosts").innerHTML=saved.map(renderPost).join("")||'<div class="empty">You have no saved posts.</div>';
-}
-
-function renderNotifications(){
- document.getElementById("notificationList").innerHTML=state.notifications.map(n=>`<div class="comment"><div>${escapeHTML(n.text)}</div><small>${timeAgo(n.time)} · ${n.read?"Read":"Unread"}</small></div>`).join("")||'<div class="empty">No notifications.</div>';
- state.notifications.forEach(n=>n.read=true);saveState();
-}
-
-function clearNotifications(){
- state.notifications=[];saveState();renderNotifications();toast("Notifications cleared");
-}
-
-function renderIntelligence(){
- const myPosts=state.posts.filter(p=>p.user==="you");
- const likes=myPosts.reduce((sum,p)=>sum+p.likes.length,0);
- const comments=myPosts.reduce((sum,p)=>sum+p.comments.length,0);
- document.getElementById("statsGrid").innerHTML=`
- <div class="stat"><strong>${myPosts.length}</strong><small>Posts</small></div>
- <div class="stat"><strong>${likes}</strong><small>Likes received</small></div>
- <div class="stat"><strong>${comments}</strong><small>Comments</small></div>`;
- document.getElementById("activityInsights").innerHTML=`<p>You are following ${state.following.length} demo users.</p><p>You have joined ${state.communities.filter(c=>c.members.includes("you")).length} communities.</p><p>You have ${state.notifications.length} notifications in this demo.</p>`;
- document.getElementById("safetyInfo").innerHTML="<p>Reports are recorded in the demo admin area.</p><p>Privacy settings are stored locally in this browser.</p><p>Demo accounts are simulated. No real users are contacted.</p>";
-}
-
-function renderAdmin(){
- document.getElementById("adminStats").innerHTML=`
- <div class="stat"><strong>${state.posts.length}</strong><small>Posts</small></div>
- <div class="stat"><strong>${state.reports.length}</strong><small>Reports</small></div>
- <div class="stat"><strong>${demoPeople.length}</strong><small>Demo users</small></div>`;
- document.getElementById("adminReports").innerHTML=state.reports.map(r=>`<div class="comment"><strong>Report ${escapeHTML(r.id)}</strong><p>${escapeHTML(r.reason)}</p><small>${timeAgo(r.time)} · ${escapeHTML(r.status)}</small></div>`).join("")||'<div class="empty">No reports submitted.</div>';
- document.getElementById("adminUsers").innerHTML=demoPeople.map(p=>`<div class="person">${avatarHTML(p)}<div class="person-info"><strong>${escapeHTML(p.name)}</strong><small>@${escapeHTML(p.username)}</small></div><span class="tag">Demo</span></div>`).join("");
-}
-
-function renderSidebar(){
- const p=state.profile;
- document.getElementById("sideAvatar").innerHTML=avatarHTML(p).replace(/^<div class="avatar">/,"").replace(/<\/div>$/,"");
- document.getElementById("sideName").textContent=p.name;
- document.getElementById("sideUsername").textContent="@"+p.username;
- document.getElementById("sidePosts").textContent=state.posts.filter(x=>x.user==="you").length;
- document.getElementById("sideLikes").textContent=state.posts.filter(x=>x.user==="you").reduce((a,x)=>a+x.likes.length,0);
- document.getElementById("sideFriends").textContent=state.following.length;
-}
-
-document.addEventListener("keydown",e=>{
- if(e.key==="Enter"&&e.target.id==="messageInput")sendMessage();
- if(e.key==="Enter"&&e.target.id==="storyInput")addStory();
-});
-
+/* Restore an existing Firebase login on reload. Demo mode remains opt-in. */
+try{initFirebase();auth.onAuthStateChanged(user=>{if(user&&!currentUser)startLive(user).catch(e=>toast(firebaseError(e)))})}catch(e){document.getElementById("connectionStatus").textContent="Demo ready"}
 </script>
 </body>
 </html>
