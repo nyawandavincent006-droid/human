@@ -241,12 +241,29 @@ function viewStory(id){const s=db.stories.find(x=>x.id===id);if(!s||blocked(s.us
 function searchAll(q){state.search=q;const target=$('mainContent');if(!q.trim()){state.search=null;renderPage(state.page);return}const s=q.toLowerCase().trim(),users=db.users.filter(u=>u.id!==state.user&&!blocked(u.id)&&(!u.private||me().following.includes(u.id))&&`${u.name} ${u.bio}`.toLowerCase().includes(s)),posts=db.posts.filter(p=>canSeePost(p)&&p.text.toLowerCase().includes(s)),groups=db.groups.filter(g=>`${g.name} ${g.desc}`.toLowerCase().includes(s));target.innerHTML=`<div class="sectionhead"><div><div class="eyebrow">Search</div><h1>“${esc(q)}”</h1></div><button class="btn" data-action="clear-search">Clear search</button></div><section class="card"><h2>People</h2>${users.map(personCard).join('')||'<p class="muted">No visible profiles found.</p>'}</section><section class="card"><h2>Communities</h2>${groups.map(groupCard).join('')||'<p class="muted">No matching communities.</p>'}</section><section><h2>Posts</h2>${posts.map(postHTML).join('')||'<div class="card empty">No visible posts found.</div>'}</section>`}
 function refreshCounts(){if(!me())return;$('alertCount').textContent=db.alerts.filter(a=>a.to===state.user&&!a.read).length;$('pulsePosts').textContent=db.posts.length;$('pulsePeople').textContent=db.users.length;$('pulseGroups').textContent=db.groups.length;const sug=db.users.filter(u=>u.id!==state.user&&!blocked(u.id)&&(!u.private||me().following.includes(u.id))&&!me().following.includes(u.id)).slice(0,3);$('suggestions').innerHTML=sug.map(u=>`<div class="people"><div class="avatar">${avatarHTML(u)}</div><div class="personinfo"><b>${esc(u.name)}</b><span class="small muted">Suggested</span></div><button class="btn tiny" data-action="follow" data-id="${esc(u.id)}" aria-label="Follow ${esc(u.name)}">Follow</button></div>`).join('')||'<p class="small muted">No suggestions yet.</p>'}
 function toggleTheme(){state.theme=state.theme==='dark'?'light':'dark';document.body.classList.toggle('dark',state.theme==='dark');persistPref('human_theme',state.theme);if(me())renderNav()}
-function wallpaperApply(){const i=((state.wallpaper%WALLS.length)+WALLS.length)%WALLS.length;state.wallpaper=i;const login=$('loginScreen');const atmospheres=[
-      'radial-gradient(ellipse at 12% 12%,rgba(197,219,204,.75),transparent 38%),radial-gradient(ellipse at 88% 88%,rgba(232,199,174,.62),transparent 36%),linear-gradient(135deg,#f7f4ed,#e8eee7 52%,#f1e6d9)',
-      'radial-gradient(ellipse at 18% 20%,rgba(174,207,184,.65),transparent 34%),radial-gradient(ellipse at 82% 72%,rgba(215,226,206,.6),transparent 38%),linear-gradient(135deg,#e8eee7,#d5e3d9 50%,#f3f0e8)',
-      'radial-gradient(ellipse at 20% 15%,rgba(125,140,173,.32),transparent 36%),radial-gradient(ellipse at 80% 85%,rgba(174,126,100,.24),transparent 35%),linear-gradient(135deg,#252a35,#343442 55%,#282b35)',
-      'radial-gradient(ellipse at 15% 18%,rgba(190,218,230,.7),transparent 36%),radial-gradient(ellipse at 82% 80%,rgba(231,215,188,.55),transparent 38%),linear-gradient(135deg,#e7edf2,#d7e5e9 52%,#f4eadb)'
-    ];login.style.backgroundColor=WALL_FALLBACKS[i];login.style.backgroundImage=atmospheres[i];document.querySelectorAll('.wall-btn').forEach(b=>b.classList.toggle('active',Number(b.dataset.index)===i))}
+
+function wallpaperApply(){
+
+ const i = ((state.wallpaper % WALLS.length) + WALLS.length) % WALLS.length;
+
+ state.wallpaper = i;
+
+ const login = $('loginScreen');
+
+ login.style.backgroundColor = WALL_FALLBACKS[i];
+
+ login.style.backgroundImage =
+   `linear-gradient(90deg,rgba(12,25,20,.38),rgba(12,25,20,.08)),url("${WALLS[i]}")`;
+
+ document.querySelectorAll('.wall-btn').forEach(button => {
+  button.classList.toggle(
+   'active',
+   Number(button.dataset.index) === i
+  );
+ });
+
+}
+
 function setWallpaper(i){state.wallpaper=Number(i)||0;persistPref('human_wallpaper',String(state.wallpaper));wallpaperApply()}
 function rotateWallpaper(){setWallpaper((state.wallpaper+1)%WALLS.length)}
 const weatherCodes={0:'Clear sky',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',80:'Rain showers',81:'Rain showers',82:'Heavy showers',95:'Thunderstorm'};
