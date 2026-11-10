@@ -132,8 +132,23 @@ body.dark #loginScreen .wall-btn.active{background:#a3c4a9;color:#1e2922;border-
 (()=>{'use strict';
 const $=id=>document.getElementById(id),DAY=86400000;
 const QUOTES=[["Whatever you do, work at it with all your heart, as working for the Lord.","Colossians 3:23"],["Be kind and compassionate to one another, forgiving each other.","Ephesians 4:32"],["Let all that you do be done in love.","1 Corinthians 16:14"],["A gentle answer turns away wrath, but a harsh word stirs up anger.","Proverbs 15:1"],["Encourage one another and build each other up.","1 Thessalonians 5:11"],["The Lord is my shepherd; I shall not want.","Psalm 23:1"]];
-const WALLS = ["", "", "", ""];
-const WALL_FALLBACKS = ["#f5f2eb", "#e8eee7", "#282b35", "#e7edf2"];
+
+const WALLS = [
+ "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1531366936337-7c912a4589a7?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1920&q=85",
+ "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=1920&q=85"
+];
+
+const WALL_FALLBACKS = [
+ "#f2c9d5","#829b83","#252b42","#a9c5d6",
+ "#253b58","#e9bd8e","#b9a9d2","#b47d64"
+];
+
 const NAV=[["home","⌂","Home"],["discover","⌕","Discover"],["connect","↔","Connect"],["communities","◎","Communities"],["messages","▤","Messages"],["profile","◉","Profile"],["saved","▣","Saved"],["intelligence","✳","Reflection"],["alerts","◇","Alerts"],["admin","A","Admin"]];
 const defaults=()=>({users:[],posts:[],messages:[],alerts:[],groups:[{id:'g1',name:'Creators & Builders',desc:'Ideas, projects and making things happen.',members:12,joined:[],owner:''},{id:'g2',name:'Campus Community',desc:'Student life, learning and opportunities.',members:25,joined:[],owner:''},{id:'g3',name:'Positive Living',desc:'Encouragement and everyday growth.',members:18,joined:[],owner:''}],saved:[],blocks:[],reports:[],stories:[],intentions:[]});
 function loadDB(){let d;try{d=JSON.parse(localStorage.getItem('human30_db')||'null')}catch{d=null}if(!d||typeof d!=='object')d=defaults();const base=defaults();for(const k in base)if(!Array.isArray(d[k]))d[k]=base[k];
