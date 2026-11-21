@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f3f0e8">
-<meta name="description" content="HUMAN 3.0 — a local space for genuine connection and practical daily reflection.">
-<title>HUMAN 3.0 — Be human. Be real.</title>
+<meta name="description" content="HUMAN — a space for genuine connection, ideas and growth.">
+<title>HUMAN 5.0 — A world of human connection</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%23486b59'/%3E%3Ctext x='50' y='68' text-anchor='middle' font-size='60' fill='white' font-family='Arial,sans-serif'%3EH%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +43,127 @@ body.dark #loginScreen .wall-btn.active{background:#a3c4a9;color:#1e2922;border-
 @media(max-width:700px){.login-live-grid{grid-template-columns:1fr 1.15fr;gap:9px}.login-live{padding:13px}.login-live-clock{font-size:22px}}
 @media(max-width:700px){.topinner{padding:9px 12px;gap:8px}.topinner .brand{font-size:18px}.topinner .search{padding:10px 9px;font-size:13px}.wrap{padding:13px}.layout{display:block}.sidebar{display:none}.main{padding-bottom:75px}.bottomnav{position:fixed;z-index:20;display:flex;left:0;right:0;bottom:0;justify-content:space-around;background:var(--paper);border-top:1px solid var(--line);padding:7px 2px calc(7px + env(safe-area-inset-bottom))}.bottomnav button{display:grid;justify-items:center;gap:1px;border:0;background:transparent;color:var(--muted);font-size:9px;padding:3px}.bottomnav button.active{color:var(--accent);font-weight:700}.bottomnav span{font:18px var(--serif)}.login{grid-template-columns:1fr}.loginleft{padding:35px 24px 18px;min-height:360px}.loginleft h1{font-size:53px}.loginright{padding:20px}.hero{padding:23px;min-height:230px}.messages{grid-template-columns:1fr}.chatlist{border:0;border-bottom:1px solid var(--line);display:flex;overflow:auto;padding:0 0 8px}.chatitem{min-width:140px}.chatwindow{padding:11px 0 0}.two{grid-template-columns:1fr}.profile-cover{height:155px}.profile-head{padding:0 7px}.profile-avatar{width:82px;height:82px}.card{padding:15px}.topbar .btn{padding:8px}.sectionhead h1,.sectionhead h2{font-size:20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
+
+/* HUMAN 4.0: premium midnight-blue visual identity */
+:root{color-scheme:light;--canvas:#f3f6fb;--paper:#fff;--soft:#eaf0f8;--ink:#142238;--muted:#66758b;--line:#dce5f0;--accent:#2563eb;--accent-soft:#e6efff;--sage:#1763b6;--sage-soft:#e5f1ff;--gold:#e5a83b;--shadow:0 16px 48px rgba(24,49,86,.075);--display:"Manrope",sans-serif;--body:"DM Sans",sans-serif;--serif:"Newsreader",serif}
+body.dark{color-scheme:dark;--canvas:#080f1d;--paper:#101c2e;--soft:#17263b;--ink:#edf4ff;--muted:#9aabc2;--line:#263a55;--accent:#63a4ff;--accent-soft:#172f52;--sage:#7db8ff;--sage-soft:#172f49;--gold:#f2bd59;--shadow:0 18px 50px rgba(0,0,0,.24)}
+body{background:var(--canvas);letter-spacing:-.08px}
+.topbar{background:color-mix(in srgb,var(--canvas) 88%,transparent);border-bottom-color:var(--line)}
+.topinner{min-height:68px}.brand{font-size:23px;letter-spacing:-1.7px;color:var(--ink)}.brand span{color:var(--accent)}
+.search{border-radius:999px;background:var(--soft);border-color:transparent;padding:12px 17px}.field{border-radius:12px;background:var(--paper)}
+.btn{border-radius:12px;padding:10px 15px}.btn.primary{background:linear-gradient(120deg,#2563eb,#3989f5);border-color:#2563eb;box-shadow:0 7px 18px #2563eb30}
+.card{border-radius:20px;border-color:var(--line);box-shadow:var(--shadow)}
+.layout{grid-template-columns:230px minmax(0,1fr) 275px;gap:22px}.sidebar,.rightcol{top:86px}
+.navbtn{padding:12px 14px;border-radius:12px;transition:background .18s,color .18s,transform .18s}.navbtn:hover{transform:translateX(2px)}.navbtn.active{background:var(--accent-soft);color:var(--accent)}.nav-symbol{font-family:var(--body);font-size:18px}
+.hero{min-height:285px;padding:38px;border-radius:24px;color:#fff;background:radial-gradient(circle at 82% 18%,#59a6ff59,transparent 28%),linear-gradient(125deg,#0b1830,#123c75 58%,#176bd0);box-shadow:0 20px 48px #123c752e}
+body.dark .hero{color:#fff;background:radial-gradient(circle at 82% 18%,#59a6ff40,transparent 28%),linear-gradient(125deg,#0b1830,#123c75 58%,#176bd0)}
+.hero:after{border-color:#ffffff32;box-shadow:0 0 0 25px #ffffff0c,0 0 0 52px #ffffff0a,0 0 0 82px #ffffff08}
+.hero .eyebrow{color:#9ccaff}.hero h1{font-family:var(--display);font-weight:800;letter-spacing:-2.6px;line-height:1.02;max-width:650px}.hero p{opacity:.82;font-size:15px;max-width:520px}.hero .quote{font-size:13px;opacity:.9}.quote-ref{color:#a8ceff}
+.tag{background:var(--sage-soft);color:var(--sage);border-radius:999px}
+.avatar{background:linear-gradient(145deg,#dcecff,#b9d7ff);color:#1754a0;font-family:var(--display)}
+body.dark .avatar{background:linear-gradient(145deg,#183c66,#23558a);color:#dcecff}
+.storyring{background:linear-gradient(135deg,#2878ed,#7bc5ff);padding:3px}.storyring span{font-family:var(--display)}
+.post{border-radius:19px}.post-actions{gap:7px}.post-actions button{border-radius:10px;padding:9px 12px}.post-actions button:hover,.post-actions button.is-on{background:var(--accent-soft);color:var(--accent)}
+.inspiration{border-left:3px solid var(--accent)}.stat{border-radius:14px}.sectionhead h1,.sectionhead h2{letter-spacing:-.8px}
+.people{padding:12px 2px}.cover{background:linear-gradient(120deg,#123c75,#4b9af0,#b6d9ff)}.profile-avatar{box-shadow:0 8px 24px #0a1e6026}
+.tab.active{background:var(--accent-soft);color:var(--accent)}.pill{background:var(--accent-soft);color:var(--accent)}
+.clock,.login-live-clock{color:var(--accent)}.weather-art{background:var(--sage-soft);color:var(--sage)}
+.bubble.mine{background:#2563eb;color:#fff}.bubble{border-radius:16px}.modal{border-radius:21px}.toast{border-radius:13px}
+.login{background:var(--canvas);background-image:radial-gradient(ellipse at 12% 12%,#4e91e729,transparent 36%),radial-gradient(ellipse at 88% 88%,#3a77d021,transparent 34%)}
+.loginleft{padding:clamp(34px,7vw,100px);background:radial-gradient(circle at 80% 18%,#59a6ff47,transparent 27%),linear-gradient(135deg,#09172d,#103d78 62%,#176bd0);color:#fff}
+body.dark .loginleft{background:radial-gradient(circle at 80% 18%,#59a6ff38,transparent 27%),linear-gradient(135deg,#09172d,#103d78 62%,#176bd0);color:#fff}
+.loginleft:after{border-color:#ffffff30;box-shadow:0 0 0 28px #ffffff0c,0 0 0 58px #ffffff09,0 0 0 92px #ffffff07}
+.loginleft .eyebrow{color:#a8ceff}.loginleft h1{font:800 clamp(48px,6.4vw,82px)/.98 var(--display);letter-spacing:-3.5px;max-width:650px}.loginleft p{color:#e3efff;opacity:.86}
+.loginleft .card{background:#ffffff12!important;border-color:#ffffff28!important;color:#fff;backdrop-filter:blur(12px)}.loginleft .card .eyebrow{color:#a8ceff}.loginleft .quote-ref{color:#a8ceff}
+.loginright{background:transparent}.loginbox{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:clamp(22px,3vw,34px);box-shadow:0 24px 80px #122d551f}.loginbox h2{font-size:27px;letter-spacing:-1px}.loginbox .btn.primary{background:linear-gradient(120deg,#2563eb,#3989f5);min-height:49px}
+.legal-note{background:var(--soft);border-radius:12px}.wall-btn{border-color:#ffffff44;background:#ffffff16;color:#fff}.wall-btn.active{background:#fff;color:#174b8d}
+.login-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;max-width:560px}
+.login-quick>div{display:grid;gap:2px;padding:10px 11px;border:1px solid #ffffff26;border-radius:13px;background:#ffffff12;backdrop-filter:blur(8px)}
+.login-quick span{font-size:16px;color:#9ccaff}.login-quick b{font-size:11px;line-height:1.3;color:#fff}.login-quick small{font-size:10px;color:#e3efff;opacity:.75}
+body.dark .login-quick>div{background:#ffffff0c;border-color:#ffffff20}
+.bottomnav{background:var(--paper);border-top-color:var(--line);backdrop-filter:blur(18px)}.bottomnav button.active{color:var(--accent)}
+@media(max-width:1080px){.layout{grid-template-columns:205px minmax(0,1fr)}}
+@media(max-width:700px){.topinner{min-height:58px}.brand{font-size:20px}.layout{display:block}.hero{min-height:250px;padding:25px;border-radius:20px}.hero h1{font-size:clamp(34px,10vw,48px)}.loginleft{min-height:390px;padding:34px 23px 24px}.loginleft h1{font-size:clamp(43px,12vw,59px);letter-spacing:-2.4px}.loginright{padding:18px}.loginbox{border-radius:20px}.login-quick{gap:6px}.login-quick>div{padding:8px 7px}.login-quick b{font-size:10px}.login-quick small{font-size:9px}.bottomnav{box-shadow:0 -8px 28px #14284610}}
+@media(prefers-reduced-motion:no-preference){.card{transition:border-color .2s,box-shadow .2s}.card:hover{border-color:color-mix(in srgb,var(--accent) 22%,var(--line))}}
+
+
+/* HUMAN 5.0 | Living atmosphere */
+html{background:var(--canvas)}
+body{background:transparent;min-height:100vh}
+#livingWallpaper{
+  position:fixed;inset:0;width:100%;height:100%;z-index:0;
+  pointer-events:none;opacity:.92;
+}
+#loginScreen,#app{position:relative;z-index:1}
+#app{background:transparent}
+#loginScreen{
+  background-position:center;
+  background-size:cover;
+  isolation:isolate;
+}
+#loginScreen:before{
+  content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    linear-gradient(115deg,rgba(4,13,29,.76),rgba(5,24,53,.35) 52%,rgba(5,15,35,.18)),
+    linear-gradient(130deg,rgba(28,116,255,.15),transparent 45%,rgba(0,226,190,.13));
+  background-size:180% 180%;
+  animation:humanAurora 18s ease-in-out infinite alternate;
+}
+#loginScreen>*{position:relative;z-index:1}
+#loginScreen .loginleft{
+  background:linear-gradient(145deg,rgba(5,17,38,.48),rgba(7,31,67,.24));
+  color:#fff;
+  backdrop-filter:blur(1.5px);
+}
+#loginScreen .loginright{
+  background:linear-gradient(145deg,rgba(5,15,32,.16),rgba(7,23,48,.42));
+  backdrop-filter:blur(3px);
+}
+#loginScreen .loginbox{
+  background:rgba(248,251,255,.91);
+  border:1px solid rgba(255,255,255,.62);
+  box-shadow:0 28px 90px rgba(0,10,30,.28);
+  backdrop-filter:blur(22px);
+}
+body.dark #loginScreen .loginbox{background:rgba(11,24,43,.91);border-color:#ffffff20}
+.loginleft h1{max-width:720px;text-shadow:0 8px 38px rgba(0,0,0,.18)}
+.loginleft .card{background:rgba(8,25,49,.38)!important;border:1px solid rgba(255,255,255,.2)!important;backdrop-filter:blur(16px)}
+.login-live{background:rgba(8,25,49,.36)!important;border:1px solid rgba(255,255,255,.2)!important;color:#fff}
+.login-live .muted,.login-live .login-live-date,.login-live .login-weather-place,.login-live .login-weather-note{color:#dceaff}
+.login-live .tag{background:#ffffff20;color:#d9ebff}
+.login-live .weather-art{background:#ffffff20;color:#fff}
+.login-quick>div{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.2)}
+.wall-picker{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:16px}
+.wall-picker .small{color:#e4efff}
+.wall-btn{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:7px 12px;background:rgba(255,255,255,.1);color:#fff;font-size:11px;font-weight:700;backdrop-filter:blur(12px)}
+.wall-btn.active{background:#fff;color:#174b8d}
+#loginScreen .small[style*="opacity"]{color:#dceaff}
+.hero{position:relative;isolation:isolate;overflow:hidden}
+.hero:before{
+  content:"";position:absolute;inset:-40%;z-index:-1;pointer-events:none;
+  background:conic-gradient(from 20deg,transparent,#5bb4ff45,transparent,#42e5c445,transparent);
+  filter:blur(38px);animation:heroOrbit 22s linear infinite;
+}
+.card,.topbar,.bottomnav{backdrop-filter:blur(14px)}
+@keyframes humanAurora{
+  0%{background-position:0% 20%;filter:hue-rotate(0deg)}
+  50%{background-position:100% 80%;filter:hue-rotate(18deg)}
+  100%{background-position:15% 100%;filter:hue-rotate(-12deg)}
+}
+@keyframes heroOrbit{to{transform:rotate(360deg)}}
+@media(max-width:700px){
+  #loginScreen .loginleft{min-height:unset;padding:30px 20px 20px}
+  #loginScreen .loginright{padding:16px}
+  #loginScreen .loginbox{margin:0 auto;max-width:520px}
+  .loginleft h1{font-size:clamp(42px,12vw,64px)}
+  .login-quick{margin-top:13px}
+  .wall-picker{margin-top:13px}
+}
+@media(prefers-reduced-motion:reduce){
+  #livingWallpaper{display:none}
+  #loginScreen:before,.hero:before{animation:none}
+}
+
 </style>
   <script>(function() {
   var initialized = false;
@@ -80,9 +201,10 @@ body.dark #loginScreen .wall-btn.active{background:#a3c4a9;color:#1e2922;border-
   <script>window.REPLIT_APP_THEME_TOKENS = {"color":[{"suffix":"background","expr":"hsl(var(--background))"},{"suffix":"foreground","expr":"hsl(var(--foreground))"},{"suffix":"border","expr":"hsl(var(--border))"},{"suffix":"input","expr":"hsl(var(--input))"},{"suffix":"ring","expr":"hsl(var(--ring))"},{"suffix":"card","expr":"hsl(var(--card))"},{"suffix":"card-foreground","expr":"hsl(var(--card-foreground))"},{"suffix":"card-border","expr":"hsl(var(--card-border))"},{"suffix":"popover","expr":"hsl(var(--popover))"},{"suffix":"popover-foreground","expr":"hsl(var(--popover-foreground))"},{"suffix":"popover-border","expr":"hsl(var(--popover-border))"},{"suffix":"primary","expr":"hsl(var(--primary))"},{"suffix":"primary-foreground","expr":"hsl(var(--primary-foreground))"},{"suffix":"primary-border","expr":"var(--primary-border)"},{"suffix":"secondary","expr":"hsl(var(--secondary))"},{"suffix":"secondary-foreground","expr":"hsl(var(--secondary-foreground))"},{"suffix":"secondary-border","expr":"var(--secondary-border)"},{"suffix":"muted","expr":"hsl(var(--muted))"},{"suffix":"muted-foreground","expr":"hsl(var(--muted-foreground))"},{"suffix":"muted-border","expr":"var(--muted-border)"},{"suffix":"accent","expr":"hsl(var(--accent))"},{"suffix":"accent-foreground","expr":"hsl(var(--accent-foreground))"},{"suffix":"accent-border","expr":"var(--accent-border)"},{"suffix":"destructive","expr":"hsl(var(--destructive))"},{"suffix":"destructive-foreground","expr":"hsl(var(--destructive-foreground))"},{"suffix":"destructive-border","expr":"var(--destructive-border)"},{"suffix":"chart-1","expr":"hsl(var(--chart-1))"},{"suffix":"chart-2","expr":"hsl(var(--chart-2))"},{"suffix":"chart-3","expr":"hsl(var(--chart-3))"},{"suffix":"chart-4","expr":"hsl(var(--chart-4))"},{"suffix":"chart-5","expr":"hsl(var(--chart-5))"},{"suffix":"sidebar","expr":"hsl(var(--sidebar))"},{"suffix":"sidebar-foreground","expr":"hsl(var(--sidebar-foreground))"},{"suffix":"sidebar-border","expr":"hsl(var(--sidebar-border))"},{"suffix":"sidebar-primary","expr":"hsl(var(--sidebar-primary))"},{"suffix":"sidebar-primary-foreground","expr":"hsl(var(--sidebar-primary-foreground))"},{"suffix":"sidebar-primary-border","expr":"var(--sidebar-primary-border)"},{"suffix":"sidebar-accent","expr":"hsl(var(--sidebar-accent))"},{"suffix":"sidebar-accent-foreground","expr":"hsl(var(--sidebar-accent-foreground))"},{"suffix":"sidebar-accent-border","expr":"var(--sidebar-accent-border)"},{"suffix":"sidebar-ring","expr":"hsl(var(--sidebar-ring))"}],"font":[{"suffix":"sans","expr":"var(--app-font-sans)"},{"suffix":"serif","expr":"var(--app-font-serif)"},{"suffix":"mono","expr":"var(--app-font-mono)"}],"radius":[{"suffix":"sm","expr":"calc(var(--radius) - 4px)"},{"suffix":"md","expr":"calc(var(--radius) - 2px)"},{"suffix":"lg","expr":"var(--radius)"},{"suffix":"xl","expr":"calc(var(--radius) + 4px)"}]};</script>
   </head>
 <body>
+<canvas id="livingWallpaper" aria-hidden="true"></canvas>
 <section id="loginScreen" class="login">
  <div class="loginleft">
-  <div class="brand">HUMAN <span>3.0</span></div>
+  <div class="brand">HUMAN <span>5.0</span></div>
   <div class="eyebrow" style="margin-top:20px">Be human. Be real.</div>
   <h1>A little more<br>human, together.</h1>
   <p>A quieter corner for honest connection, useful reflection, and the people who help us grow.</p>
@@ -110,12 +232,12 @@ body.dark #loginScreen .wall-btn.active{background:#a3c4a9;color:#1e2922;border-
   <label class="small muted" for="loginName">Display name</label><input class="field" id="loginName" name="name" maxlength="30" autocomplete="nickname" placeholder="How should we call you?" required>
   <label class="small muted" for="loginEmail">Email <span>(optional)</span></label><input class="field" id="loginEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com">
   <label class="small muted" for="loginRole">Preview role</label><select class="field" id="loginRole"><option value="member">Community member</option><option value="admin">Local admin centre</option></select>
-  <button class="btn primary" type="submit" style="width:100%;margin-top:17px">Enter HUMAN 3.0</button>
+  <button class="btn primary" type="submit" style="width:100%;margin-top:17px">Enter HUMAN</button>
   <p class="legal-note" style="margin-top:14px">This is a single-browser local preview. Profile/login, feed, messages, communities and notifications are not shared or secure accounts. True cross-device accounts, social sharing, moderation and secure admin need a backend and authentication service.</p>
  </form></div>
 </section>
 <div id="app" class="hidden">
- <header class="topbar"><div class="topinner"><div class="brand">HUMAN <span>3.0</span></div><label class="search-wrap" style="flex:1"><span class="hidden">Search HUMAN</span><input id="globalSearch" class="search" aria-label="Search people, posts, communities" placeholder="Search people, posts, communities"></label><button class="btn ghost" data-action="theme" aria-label="Toggle light and dark appearance" title="Toggle appearance">◐</button><button class="btn ghost" data-action="page" data-page="alerts" aria-label="Notifications">Alerts <span id="alertCount" class="pill">0</span></button><button class="avatar" id="topAvatar" data-action="page" data-page="profile" aria-label="Open your profile">H</button></div></header>
+ <header class="topbar"><div class="topinner"><div class="brand">HUMAN <span>5.0</span></div><label class="search-wrap" style="flex:1"><span class="hidden">Search HUMAN</span><input id="globalSearch" class="search" aria-label="Search people, posts, communities" placeholder="Search people, posts, communities"></label><button class="btn ghost" data-action="theme" aria-label="Toggle light and dark appearance" title="Toggle appearance">◐</button><button class="btn ghost" data-action="page" data-page="alerts" aria-label="Notifications">Alerts <span id="alertCount" class="pill">0</span></button><button class="avatar" id="topAvatar" data-action="page" data-page="profile" aria-label="Open your profile">H</button></div></header>
  <div class="wrap"><div class="layout">
   <aside class="sidebar"><div class="card profile-mini"><div class="avatar" id="sideAvatar">H</div><div><b id="sideName">Member</b><div class="small muted">Your HUMAN space</div></div></div><nav class="navlist" id="sideNav" aria-label="Main navigation"></nav><div class="card"><div class="eyebrow">Your controls</div><p class="small muted">Adjust the space to suit you.</p><label class="small"><input type="checkbox" id="themeSwitch"> Light appearance</label><button class="btn ghost" style="width:100%;margin-top:11px" data-action="logout">Sign out</button></div></aside>
   <main class="main" id="mainContent" tabindex="-1"></main>
@@ -131,6 +253,63 @@ body.dark #loginScreen .wall-btn.active{background:#a3c4a9;color:#1e2922;border-
 <script>
 (()=>{'use strict';
 const $=id=>document.getElementById(id),DAY=86400000;
+
+function startLivingWallpaper(){
+ const canvas=$('livingWallpaper');
+ if(!canvas)return;
+ const ctx=canvas.getContext('2d',{alpha:true});
+ if(!ctx)return;
+ const reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(reduce)return;
+ let w=0,h=0,dpr=1,raf=0,last=0;
+ const blobs=[
+  {x:.12,y:.20,r:.34,dx:.00010,dy:.00008,h:212},
+  {x:.82,y:.18,r:.30,dx:-.00008,dy:.00011,h:188},
+  {x:.58,y:.84,r:.38,dx:.00007,dy:-.00009,h:228},
+  {x:.10,y:.82,r:.24,dx:.00012,dy:-.00006,h:166}
+ ];
+ const dots=Array.from({length:46},()=>({x:Math.random(),y:Math.random(),r:.5+Math.random()*1.5,a:.12+Math.random()*.32,s:.08+Math.random()*.24}));
+ function resize(){
+  dpr=Math.min(window.devicePixelRatio||1,1.6);
+  w=window.innerWidth;h=window.innerHeight;
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+  canvas.style.width=w+'px';canvas.style.height=h+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+ }
+ function draw(t){
+  if(document.hidden){raf=0;return}
+  if(t-last<32){raf=requestAnimationFrame(draw);return}
+  last=t;
+  ctx.clearRect(0,0,w,h);
+  const dark=document.body.classList.contains('dark');
+  blobs.forEach(b=>{
+   b.x+=b.dx*16;b.y+=b.dy*16;
+   if(b.x<-.12||b.x>1.12)b.dx*=-1;
+   if(b.y<-.12||b.y>1.12)b.dy*=-1;
+   const radius=Math.max(w,h)*b.r;
+   const g=ctx.createRadialGradient(b.x*w,b.y*h,0,b.x*w,b.y*h,radius);
+   g.addColorStop(0,`hsla(${b.h},95%,${dark?57:63}%,${dark?.16:.105})`);
+   g.addColorStop(.48,`hsla(${b.h+24},90%,55%,${dark?.075:.055})`);
+   g.addColorStop(1,'rgba(30,100,220,0)');
+   ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+  });
+  dots.forEach(p=>{
+   p.y-=p.s*.0008;
+   if(p.y<-.02){p.y=1.02;p.x=Math.random()}
+   ctx.beginPath();ctx.arc(p.x*w,p.y*h,p.r,0,Math.PI*2);
+   ctx.fillStyle=`rgba(${dark?'164,202,255':'65,119,190'},${p.a})`;ctx.fill();
+  });
+  raf=requestAnimationFrame(draw);
+ }
+ resize();
+ window.addEventListener('resize',resize,{passive:true});
+ document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){if(raf)cancelAnimationFrame(raf);raf=0}
+  else if(!raf)raf=requestAnimationFrame(draw);
+ });
+ raf=requestAnimationFrame(draw);
+}
+
 const QUOTES=[["Whatever you do, work at it with all your heart, as working for the Lord.","Colossians 3:23"],["Be kind and compassionate to one another, forgiving each other.","Ephesians 4:32"],["Let all that you do be done in love.","1 Corinthians 16:14"],["A gentle answer turns away wrath, but a harsh word stirs up anger.","Proverbs 15:1"],["Encourage one another and build each other up.","1 Thessalonians 5:11"],["The Lord is my shepherd; I shall not want.","Psalm 23:1"]];
 
 const WALLS = [
@@ -234,7 +413,7 @@ function reportItem(type,id){db.reports.push({type,id,created:Date.now()});if(sa
 function blockUser(id){if(id===state.user)return toast('You cannot block your own profile.');if(!userBy(id).id)return;db.blocks=db.blocks.filter(b=>!(b.by===state.user&&b.id===id));db.blocks.push({by:state.user,id});me().following=me().following.filter(x=>x!==id);userBy(id).following=userBy(id).following.filter(x=>x!==state.user);userBy(id).followers=userBy(id).followers.filter(x=>x!==state.user);me().followers=me().followers.filter(x=>x!==id);me().blocked=Array.from(new Set([...(me().blocked||[]),id]));if(save()){closeModal();renderPage(state.page);toast('Profile blocked locally.')}}
 function unblockUser(id){db.blocks=db.blocks.filter(b=>!(b.by===state.user&&b.id===id));me().blocked=(me().blocked||[]).filter(x=>x!==id);save();blockedList()}
 function blockedList(){const ids=db.blocks.filter(b=>b.by===state.user).map(b=>b.id);modal('Blocked profiles',ids.length?ids.map(id=>`<div class="people"><b>${esc(userBy(id).name)}</b><button class="btn tiny" data-action="unblock" data-id="${esc(id)}">Unblock</button></div>`).join(''):'<p class="muted">You have not blocked anyone.</p>')}
-function resetDemo(){if(!confirm('Remove all HUMAN 3.0 local data from this browser? This cannot be undone.'))return;try{localStorage.removeItem('human30_db');localStorage.removeItem('human30_session')}catch{}db=defaults();state.user=null;logout();toast('Local data removed.')}
+function resetDemo(){if(!confirm('Remove all HUMAN local data from this browser? This cannot be undone.'))return;try{localStorage.removeItem('human30_db');localStorage.removeItem('human30_session')}catch{}db=defaults();state.user=null;logout();toast('Local data removed.')}
 function createStory(){modal('Add a story',`<form data-form="story"><p class="small muted">A short text moment, visible to profiles that can see your public activity for 24 hours.</p><textarea class="field" name="text" maxlength="400" required placeholder="A moment I want to remember..."></textarea><button class="btn primary" type="submit">Share story</button></form>`)}
 function publishStory(text){if(!text.trim())return toast('Write a story first.');db.stories.unshift({id:uid(),user:state.user,text:text.trim(),created:Date.now()});if(save()){closeModal();renderPage('home');toast('Story shared in this browser.')}}
 function viewStory(id){const s=db.stories.find(x=>x.id===id);if(!s||blocked(s.user)||!canSeeProfile(userBy(s.user)))return;modal(esc(userBy(s.user).name),`<p class="serif" style="font-size:24px">${esc(s.text)}</p><p class="small muted">${timeAgo(s.created)}</p>`)}
@@ -285,20 +464,10 @@ document.addEventListener('change',e=>{if(e.target.id==='themeSwitch')toggleThem
 function readPostImage(input){const f=input.files[0];if(!f)return;if(!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size>3*1024*1024){toast('Choose a JPG, PNG or WebP image under 3 MB.');input.value='';return}const r=new FileReader();r.onerror=()=>toast('This image could not be read.');r.onload=()=>{pendingImage=String(r.result||'');$('postImageName').textContent='Photo ready to publish.'};r.readAsDataURL(f)}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('modalRoot').innerHTML)closeModal()});
 window.addEventListener('storage',e=>{if(e.key==='human30_db'){db=loadDB();if(me())renderPage(state.page)}});
-wallpaperApply();setQuote();updateClock();loadWeather();setInterval(updateClock,1000);setInterval(rotateQuote,9000);setInterval(rotateWallpaper,14000);setInterval(loadWeather,1800000);
+startLivingWallpaper();wallpaperApply();setQuote();updateClock();loadWeather();setInterval(updateClock,1000);setInterval(rotateQuote,9000);setInterval(rotateWallpaper,14000);setInterval(loadWeather,1800000);
 if(state.user&&me())startApp();else{try{localStorage.removeItem('human30_session')}catch{}}
 })();
 </script>
 </body>
 </html>
 
-<style>
-.login-quick{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;max-width:560px}
-.login-quick>div{display:grid;gap:2px;padding:10px 11px;border:1px solid #486b5918;border-radius:12px;background:#ffffff42}
-.login-quick span{font-size:16px;color:#486b59}
-.login-quick b{font-size:11px;line-height:1.3}
-.login-quick small{font-size:10px;opacity:.68}
-body.dark .login-quick>div{background:#ffffff08;border-color:#ffffff12}
-body.dark .login-quick span{color:#a3c4a9}
-@media(max-width:700px){.login-quick{gap:6px}.login-quick>div{padding:8px 7px}.login-quick b{font-size:10px}.login-quick small{font-size:9px}}
-</style>
